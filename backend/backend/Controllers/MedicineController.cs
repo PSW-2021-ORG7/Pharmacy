@@ -20,10 +20,13 @@ namespace backend.Controllers
 
         private readonly IConfiguration _configuration;
         private MedicineService medicineService;
+        private AllergenService allergenService;
 
-        public MedicineController(IConfiguration configuration,IMedicineRepository medicineRepository)
+        public MedicineController(IConfiguration configuration,IMedicineRepository medicineRepository
+            ,IAllergenRepository allergenRepository)
         {
-            medicineService = new MedicineService(medicineRepository);
+            allergenService = new AllergenService(allergenRepository);
+             medicineService = new MedicineService(medicineRepository);
             _configuration = configuration;
         }
 
@@ -35,7 +38,17 @@ namespace backend.Controllers
         [HttpPost]
          public IActionResult CreateMedicine()
         {
-            var medicine = new Medicine("mezym");
+            var medicine = new Medicine();
+            medicine.Name = "panadol";
+            medicine.SideEffect.Add("mucnina");
+            medicine.SideEffect.Add("glavobolja");
+            medicine.DosageInMilligrams = 300;
+            medicine.WayOfConsumption = "Posle jela";
+            var allergen = new Allergen();
+            allergen.IngredientNames.Add("sok");
+            allergen.IngredientNames.Add("voda");
+            medicine.Allergens.Add(allergen);
+            allergenService.Save(allergen);
             medicineService.Save(medicine);
             return Ok("Succesfully added medicine");
 
