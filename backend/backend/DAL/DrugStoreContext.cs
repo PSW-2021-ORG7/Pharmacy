@@ -1,5 +1,4 @@
 ﻿using backend.Model;
-using backend.Model.ModelConfiguration;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.DAL
@@ -9,10 +8,7 @@ namespace backend.DAL
         public DrugStoreContext(DbContextOptions<DrugStoreContext> options) : base(options) { }
 
         public DbSet<Medicine> Medicine { get; set; }
+        public DbSet<Allergen> Allergen { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new MedicineConfiguration());
-        }
     }
 }

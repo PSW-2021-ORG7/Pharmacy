@@ -45,7 +45,7 @@ namespace backend
             //Dependency injection
 
             services.AddScoped<IMedicineRepository, MedicineRepository>();
-
+            services.AddScoped<IAllergenRepository, AllergenRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

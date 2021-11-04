@@ -1,4 +1,4 @@
-﻿using backend.DAL;
+using backend.DAL;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using System;
@@ -19,7 +19,9 @@ namespace backend.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Medicine> GetAll() => _dataContext.Medicine.ToList();
+        public List<Medicine> GetAll() { 
+            return _dataContext.Medicine.ToList();
+         }
 
         public void Save(Medicine entity)
         {
