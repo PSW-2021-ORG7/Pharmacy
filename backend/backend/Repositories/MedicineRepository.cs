@@ -1,4 +1,4 @@
-﻿using backend.DAL;
+using backend.DAL;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using System;

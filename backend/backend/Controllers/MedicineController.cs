@@ -26,7 +26,7 @@ namespace backend.Controllers
             ,IAllergenRepository allergenRepository)
         {
             allergenService = new AllergenService(allergenRepository);
-            medicineService = new MedicineService(medicineRepository);
+             medicineService = new MedicineService(medicineRepository);
             _configuration = configuration;
         }
 
