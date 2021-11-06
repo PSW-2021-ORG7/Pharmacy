@@ -16,15 +16,16 @@ namespace backend.Repositories
 
         public List<Allergen> GetAll() => _dataContext.Allergen.ToList();
 
-        public void Save(Allergen entity)
+        public bool Save(Allergen entity)
         {
             _dataContext.Allergen.Add(entity);
             _dataContext.SaveChanges();
+            return true;
         }
 
-        public void Update(Allergen entity)
+        public bool Update(Allergen entity)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void Delete(Allergen entity)

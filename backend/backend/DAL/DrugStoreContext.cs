@@ -9,6 +9,13 @@ namespace backend.DAL
 
         public DbSet<Medicine> Medicine { get; set; }
         public DbSet<Allergen> Allergen { get; set; }
+        public DbSet<Hospital> Hospital { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Hospital>()
+                .HasIndex(u => u.ApiKey)
+                .IsUnique();
+        }
     }
 }

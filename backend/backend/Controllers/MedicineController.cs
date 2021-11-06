@@ -1,15 +1,9 @@
-﻿using backend.DAL;
-using backend.Model;
+﻿using backend.Model;
 using backend.Repositories.Interfaces;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace backend.Controllers
 {

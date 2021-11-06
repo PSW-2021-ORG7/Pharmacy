@@ -23,15 +23,16 @@ namespace backend.Repositories
             return _dataContext.Medicine.ToList();
          }
 
-        public void Save(Medicine entity)
+        public bool Save(Medicine entity)
         {
             _dataContext.Medicine.Add(entity);
             _dataContext.SaveChanges();
+            return true;
         }
 
-        public void Update(Medicine entity)
+        public bool Update(Medicine entity)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

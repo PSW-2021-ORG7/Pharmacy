@@ -1,4 +1,5 @@
-﻿using backend.Model;
+﻿using backend.DAL;
+using backend.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace backend.Repositories.Interfaces
     public interface IGenericRepository<T> 
     {
         List<T> GetAll();
-        void Save(T entity);
+        bool Save(T entity);
         void Delete(T entity);
-        void Update(T entity);
+        bool Update(T entity);
     }
 }
