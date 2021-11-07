@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft;
 using Newtonsoft.Json.Serialization;
 using backend.DAL;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
 

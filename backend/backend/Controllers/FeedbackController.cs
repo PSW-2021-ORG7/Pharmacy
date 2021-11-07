@@ -4,14 +4,11 @@ using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/feedback")]
+    [Route("api/[controller[")]
     public class FeedbackController : Controller
     {
         private FeedbackService feedbackService;
