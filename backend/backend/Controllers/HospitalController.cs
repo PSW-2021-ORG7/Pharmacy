@@ -30,6 +30,7 @@ namespace backend.Controllers
         {
             return Ok("Succesfully found hospital API");
         }
+
         [HttpPut]
         public IActionResult UpdateHospital(Hospital hospital)
         {
