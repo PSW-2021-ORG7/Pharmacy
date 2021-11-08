@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft;
 using Newtonsoft.Json.Serialization;
 using backend.DAL;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
 
@@ -47,6 +45,7 @@ namespace backend
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

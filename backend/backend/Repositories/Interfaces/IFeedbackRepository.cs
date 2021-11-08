@@ -3,8 +3,7 @@
 
 namespace backend.Repositories.Interfaces
 {
-    public interface IMedicineRepository : IGenericRepository<Medicine>
+    public interface IFeedbackRepository : IGenericRepository<Feedback>
     {
-
     }
 }

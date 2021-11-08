@@ -10,6 +10,7 @@ namespace backend.DAL
         public DbSet<Medicine> Medicine { get; set; }
         public DbSet<Allergen> Allergen { get; set; }
         public DbSet<Hospital> Hospital { get; set; }
+        public DbSet<Feedback> Feedback { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
