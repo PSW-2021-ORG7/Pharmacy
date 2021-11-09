@@ -8,7 +8,7 @@ using System;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller[")]
+    [Route("api/[controller]")]
     public class FeedbackController : Controller
     {
         private FeedbackService feedbackService;
