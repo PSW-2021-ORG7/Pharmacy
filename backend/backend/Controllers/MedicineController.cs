@@ -1,6 +1,7 @@
 ﻿using backend.Model;
 using backend.Repositories.Interfaces;
 using backend.Services;
+using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -9,6 +10,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiKeyAuth]
     public class MedicineController : Controller
     {
 
