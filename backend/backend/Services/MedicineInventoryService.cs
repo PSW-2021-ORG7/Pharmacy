@@ -25,5 +25,15 @@ namespace backend.Services
             if (medicineInventoryRepository.Update(medicineInventory)) return true;
             return false;
         }
+
+        public List<MedicineInventory> UpdateMultipleMedicines(List<MedicineInventory> medicines)
+        {
+            List<MedicineInventory> medicinesUnableToUpdate = new List<MedicineInventory>();
+            foreach (MedicineInventory medicine in medicines)
+            {
+                if (!medicineInventoryRepository.Update(medicine)) medicinesUnableToUpdate.Add(medicine);
+            }
+            return medicinesUnableToUpdate;
+        }
     }
 }
