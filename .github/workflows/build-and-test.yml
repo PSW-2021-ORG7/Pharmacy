@@ -1,0 +1,29 @@
+name: .NET Core Build and Test
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+      
+env:
+  DOTNET_VERSION: '3.1.x'
+    
+jobs:
+  build-and-test:
+    name: Build and Test Application
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:${{ env.DOTNET_VERSION }}
+    
+    steps:
+    - name: Checkout GitHub actions
+      uses: actions/checkout@v2
+        
+    - name: Install dependencies
+      run: dotnet restore ./backend
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore ./backend
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal ./backend
+
