@@ -25,6 +25,8 @@ namespace backend.Repositories
 
         public bool Save(Medicine entity)
         {
+            if (_dataContext.Medicine.Any(m => m.Name == entity.Name)) return false;
+
             _dataContext.Medicine.Add(entity);
             _dataContext.SaveChanges();
             return true;

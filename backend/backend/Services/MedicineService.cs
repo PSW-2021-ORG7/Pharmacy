@@ -10,11 +10,17 @@ namespace backend.Services
     public class MedicineService
     {
         IMedicineRepository medicineRepository;
-
-        public MedicineService(IMedicineRepository medicineRepository) => this.medicineRepository = medicineRepository;
+        IMedicineInventoryRepository medicineInventoryRepository;
+        public MedicineService(IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository) { 
+            this.medicineRepository = medicineRepository;
+            this.medicineInventoryRepository = medicineInventoryRepository;
+        }
 
         public List<Medicine> GetAll() => medicineRepository.GetAll();
 
-        public void Save(Medicine medicine) => medicineRepository.Save(medicine);
+        public bool Save(Medicine medicine) {
+            if (medicineRepository.Save(medicine)) return true;
+            return false;
+        }
     }
 }

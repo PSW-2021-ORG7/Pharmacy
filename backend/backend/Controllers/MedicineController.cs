@@ -15,13 +15,15 @@ namespace backend.Controllers
         private readonly IConfiguration _configuration;
         private MedicineService medicineService;
         private AllergenService allergenService;
+        private MedicineInventoryService medicineInventoryService;
 
         public MedicineController(IConfiguration configuration,IMedicineRepository medicineRepository
-            ,IAllergenRepository allergenRepository)
+            ,IAllergenRepository allergenRepository,IMedicineInventoryRepository medicineInventoryRepository)
         {
             allergenService = new AllergenService(allergenRepository);
-             medicineService = new MedicineService(medicineRepository);
-            _configuration = configuration;
+             medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
+            medicineInventoryService = new MedicineInventoryService(medicineInventoryRepository);
+             _configuration = configuration;
         }
 
         [HttpGet]
@@ -29,6 +31,7 @@ namespace backend.Controllers
         {
             return Ok(medicineService.GetAll());
         }
+
         [HttpPost]
          public IActionResult CreateMedicine()
         {
@@ -43,8 +46,12 @@ namespace backend.Controllers
             allergen.IngredientNames.Add("voda");
             medicine.Allergens.Add(allergen);
             allergenService.Save(allergen);
-            medicineService.Save(medicine);
-            return Ok("Succesfully added medicine");
+            if (medicineService.Save(medicine)) {
+                medicineInventoryService.Save(new MedicineInventory(medicine.MedicineId));
+                return Ok("Succesfully added medicine");
+            }
+
+            return BadRequest("Medicine with that name already exists");
 
         }
 

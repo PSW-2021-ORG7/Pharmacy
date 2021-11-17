@@ -46,6 +46,7 @@ namespace backend
             services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
