@@ -1,4 +1,5 @@
 using backend.DAL;
+using backend.DTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using System;
@@ -13,6 +14,12 @@ namespace backend.Repositories
         private readonly DrugStoreContext _dataContext;
 
         public MedicineRepository(DrugStoreContext dataContext) => _dataContext = dataContext;
+
+        public bool MedicineExists(MedicineQuantityCheck DTO)
+        {
+            if (_dataContext.Medicine.Any(m => m.MedicineId.Equals(DTO.MedicineId)  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
+            return false;
+        }
 
         public void Delete(Medicine entity)
         {

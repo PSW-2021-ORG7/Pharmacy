@@ -14,6 +14,12 @@ namespace backend.Model
             Quantity = 0;
         }
 
+        public MedicineInventory(Guid medicineId,int quantity)
+        {
+            MedicineId = medicineId;
+            Quantity = quantity;
+        }
+
         [Key]
         public Guid MedicineId { get; set; }
 
