@@ -8,11 +8,8 @@ using backend.DAL;
 using Microsoft.EntityFrameworkCore;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
-<<<<<<< HEAD
 using AutoMapper;
-=======
 using backend.Helpers;
->>>>>>> a5e47c0 (feat: Login)
 
 namespace backend
 {
