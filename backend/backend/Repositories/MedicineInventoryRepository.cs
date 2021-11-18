@@ -14,6 +14,13 @@ namespace backend.Repositories
 
         public MedicineInventoryRepository(DrugStoreContext dataContext) => _dataContext = dataContext;
 
+        public bool CheckMedicineQuantity(MedicineInventory medicineInventory)
+        {
+            if (_dataContext.MedicineInventory.Any(m => m.MedicineId.Equals(medicineInventory.MedicineId) 
+            && m.Quantity <= medicineInventory.Quantity)) return true;
+            return false;
+        }
+
         public void Delete(MedicineInventory entity)
         {
             throw new NotImplementedException();
@@ -43,5 +50,7 @@ namespace backend.Repositories
             }
             return false;
         }
+
+       
     }
 }

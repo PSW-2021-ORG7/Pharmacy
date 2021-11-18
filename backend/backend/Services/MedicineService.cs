@@ -1,4 +1,5 @@
-﻿using backend.Model;
+﻿using backend.DTO;
+using backend.Model;
 using backend.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,15 @@ namespace backend.Services
         public bool Save(Medicine medicine) {
             if (medicineRepository.Save(medicine)) return true;
             return false;
+        }
+
+        public bool CheckMedicineQuantity(MedicineQuantityCheck DTO)
+        {
+            if (medicineRepository.MedicineExists(DTO))
+               if(medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(DTO.MedicineId,DTO.Quantity)))
+                    return true;
+            return false;
+
         }
     }
 }
