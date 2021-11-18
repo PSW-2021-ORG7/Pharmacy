@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend", "backend\backend.csproj", "{9873C29B-C2EF-4656-84D2-45A5D2652ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyTests", "PharmacyTests\PharmacyTests.csproj", "{8794E44C-B8CB-4D5A-9C5B-F696AD67DE2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyIntegrationTests", "PharmacyIntegrationTests\PharmacyIntegrationTests.csproj", "{A0B75F90-161D-4356-815B-B5DFC64C5D18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyUnitTests", "PharmacyUnitTests\PharmacyUnitTests.csproj", "{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,14 @@ Global
 		{9873C29B-C2EF-4656-84D2-45A5D2652ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9873C29B-C2EF-4656-84D2-45A5D2652ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9873C29B-C2EF-4656-84D2-45A5D2652ADF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8794E44C-B8CB-4D5A-9C5B-F696AD67DE2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8794E44C-B8CB-4D5A-9C5B-F696AD67DE2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8794E44C-B8CB-4D5A-9C5B-F696AD67DE2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8794E44C-B8CB-4D5A-9C5B-F696AD67DE2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B75F90-161D-4356-815B-B5DFC64C5D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B75F90-161D-4356-815B-B5DFC64C5D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B75F90-161D-4356-815B-B5DFC64C5D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B75F90-161D-4356-815B-B5DFC64C5D18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
