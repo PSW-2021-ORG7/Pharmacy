@@ -21,6 +21,7 @@ namespace backend.Helpers
             _appSettings = appSettings.Value;
         }
 
+        
         public async Task Invoke(HttpContext context, UserService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
@@ -35,6 +36,7 @@ namespace backend.Helpers
         {
             try
             {
+                /*
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -52,6 +54,7 @@ namespace backend.Helpers
 
                 // attach user to context on successful jwt validation
                 context.Items["User"] = userService.GetUserByUsername(userId);
+                */
             }
             catch
             {
@@ -59,5 +62,6 @@ namespace backend.Helpers
                 // user is not attached to context so request won't have access to secure routes
             }
         }
+        
     }
 }

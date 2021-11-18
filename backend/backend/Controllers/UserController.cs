@@ -29,7 +29,7 @@ namespace backend.Controllers
             return Ok(_userService.GetAll());
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("get-user-by-username/{username}")]
         public IActionResult GetUserByUsername(string username)
         {
@@ -40,14 +40,15 @@ namespace backend.Controllers
         [HttpPost("register-client")]
         public IActionResult RegisterClient([FromBody] UserRegistrationDTO userDTO)
         {
-            User newUser = new User();
-            newUser = _mapper.Map<UserRegistrationDTO, User>(userDTO, newUser);
+            User newUser  = _mapper.Map<User>(userDTO);
             newUser.Role = Model.User.UserRole.Client;
-            _userService.RegisterUser(newUser);
 
-            return Ok();
+           if(_userService.RegisterUser(newUser))
+             return Ok(new { message = "Success" });
+
+            return BadRequest(new { message = "Username already exist" });
         }
-
+        /*
         [HttpPost("login")]
         public IActionResult Login(UserLoginRequestDTO loginDTO)
         {
@@ -59,6 +60,6 @@ namespace backend.Controllers
 
             return Ok(response);
         }
-
+        */
     }
 }

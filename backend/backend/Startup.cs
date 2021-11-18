@@ -41,7 +41,7 @@ namespace backend
 
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
-
+            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
 
             //Dependency injection
@@ -52,6 +52,10 @@ namespace backend
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+
+            //
+            services.AddTransient<Services.UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,10 +71,9 @@ namespace backend
 
             app.UseRouting();
 
-
             app.UseAuthorization();
 
-            app.UseMiddleware<JwtMiddleware>();
+           // app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

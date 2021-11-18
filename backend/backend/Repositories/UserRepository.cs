@@ -29,7 +29,7 @@ namespace backend.Repositories
          
         public User GetById(string username)
         {
-            return _dataContext.User.Find(username);
+            return _dataContext.User.SingleOrDefault(u => u.Username == username);
         }
 
         public bool Save(User entity)
