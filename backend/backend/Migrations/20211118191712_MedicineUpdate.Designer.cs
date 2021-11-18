@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211116153710_MedicineInventory")]
-    partial class MedicineInventory
+    [Migration("20211118191712_MedicineUpdate")]
+    partial class MedicineUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,31 +21,6 @@ namespace backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("backend.Model.Allergen", b =>
-                {
-                    b.Property<Guid>("AllergenId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<List<string>>("IngredientNames")
-                        .HasColumnType("text[]");
-
-                    b.Property<Guid?>("MedicineId")
-                        .HasColumnType("uuid");
-
-                    b.Property<List<string>>("MedicineNames")
-                        .HasColumnType("text[]");
-
-                    b.Property<string>("Other")
-                        .HasColumnType("text");
-
-                    b.HasKey("AllergenId");
-
-                    b.HasIndex("MedicineId");
-
-                    b.ToTable("Allergen");
-                });
 
             modelBuilder.Entity("backend.Model.Feedback", b =>
                 {
@@ -101,12 +76,23 @@ namespace backend.Migrations
                     b.Property<int>("DosageInMilligrams")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Manufacturer")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<List<string>>("SideEffect")
+                    b.Property<List<string>>("PossibleReactions")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("PotentialDangers")
+                        .HasColumnType("text");
+
+                    b.Property<List<string>>("SideEffects")
+                        .IsRequired()
                         .HasColumnType("text[]");
 
                     b.Property<string>("WayOfConsumption")
@@ -133,18 +119,6 @@ namespace backend.Migrations
                     b.HasKey("MedicineId");
 
                     b.ToTable("MedicineInventory");
-                });
-
-            modelBuilder.Entity("backend.Model.Allergen", b =>
-                {
-                    b.HasOne("backend.Model.Medicine", null)
-                        .WithMany("Allergens")
-                        .HasForeignKey("MedicineId");
-                });
-
-            modelBuilder.Entity("backend.Model.Medicine", b =>
-                {
-                    b.Navigation("Allergens");
                 });
 #pragma warning restore 612, 618
         }

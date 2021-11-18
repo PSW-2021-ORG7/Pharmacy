@@ -8,6 +8,7 @@ using backend.DAL;
 using Microsoft.EntityFrameworkCore;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
+using AutoMapper;
 
 namespace backend
 {
@@ -40,10 +41,12 @@ namespace backend
 
             services.AddControllers();
 
+            // AutoMapper
+            services.AddAutoMapper(typeof(Startup));
+
             //Dependency injection
 
             services.AddScoped<IMedicineRepository, MedicineRepository>();
-            services.AddScoped<IAllergenRepository, AllergenRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();

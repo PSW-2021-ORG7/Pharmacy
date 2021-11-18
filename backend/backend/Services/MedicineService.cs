@@ -30,7 +30,11 @@ namespace backend.Services
                if(medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(DTO.MedicineId,DTO.Quantity)))
                     return true;
             return false;
+        }
 
+        public Medicine getByName(string name)
+        {
+            return medicineRepository.getByName(name);
         }
     }
 }
