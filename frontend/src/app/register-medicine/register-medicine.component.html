@@ -64,8 +64,12 @@
             <div class="form-group drop-item">
             <input type="file" (change)="onFileSelected($event)" accept="image/*" #file>
             <button type="button" class="btn btn-dark" (click)="file.click()">Upload image</button>
-            <img src={{url}}/>
         </div>
+        </div>
+        <div class="row">
+            <div *ngFor="let url of urls; index as i;">
+                <img src={{url}}/>
+            </div>
         </div>
             <button type="button" class="btnSubmit">Submit</button>
         </div>

@@ -108,7 +108,15 @@ summary:after {
 summary:focus {
 	outline: none;
 }
-
+img{
+	object-fit:fill;
+	max-width: 100%;
+  height: auto;  
+}
+.image-container{
+	width: 30vw;
+	height: 30vh;
+}
 details[open] summary:after {
 	transform: rotate(-45deg) translate(0%, 0%);
 }

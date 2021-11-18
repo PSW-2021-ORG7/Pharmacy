@@ -10,8 +10,8 @@ export class RegisterMedicineComponent implements OnInit {
   sideEffectInput: string = '';
   reactions: string[] = ['ee','ff','cc'];
   reactionInput: string = '';
-  selectedFile: any = null;
-  url: any='';
+  selectedFiles: any[] = [];
+  urls: any[] =[];
   constructor() { }
 
   addReaction(){
@@ -46,13 +46,12 @@ export class RegisterMedicineComponent implements OnInit {
     }
 
     const reader = new FileReader();
-    this.selectedFile = files;
+    this.selectedFiles.push(files);
     reader.readAsDataURL(files[0]); 
     reader.onload = (_event) => { 
-        this.url = reader.result; 
+        this.urls.push(reader.result); 
     }
   }
-
   ngOnInit(): void {
   }
 
