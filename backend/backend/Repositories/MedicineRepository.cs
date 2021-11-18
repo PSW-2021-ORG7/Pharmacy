@@ -30,6 +30,11 @@ namespace backend.Repositories
             return _dataContext.Medicine.ToList();
          }
 
+        public Medicine GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Save(Medicine entity)
         {
             if (_dataContext.Medicine.Any(m => m.Name == entity.Name)) return false;

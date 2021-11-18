@@ -31,5 +31,10 @@ namespace backend.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Allergen GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace backend
                 options.UseNpgsql(Configuration.GetConnectionString("DrugstoreCon")));
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
 
             //Dependency injection
 
@@ -47,6 +48,7 @@ namespace backend
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

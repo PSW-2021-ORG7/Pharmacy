@@ -12,6 +12,7 @@ namespace backend.DAL
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<MedicineInventory> MedicineInventory { get; set; }
+        public DbSet<User> User { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Hospital>()

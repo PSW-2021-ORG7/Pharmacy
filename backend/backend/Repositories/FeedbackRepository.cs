@@ -21,6 +21,11 @@ namespace backend.Repositories
             return _dataContext.Feedback.ToList();
         }
 
+        public Feedback GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Save(Feedback entity)
         {
             _dataContext.Feedback.Add(entity);
