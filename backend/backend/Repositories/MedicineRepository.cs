@@ -21,7 +21,7 @@ namespace backend.Repositories
             return false;
         }
 
-        public void Delete(Medicine entity)
+        public void Delete(Medicine medicine)
         {
             throw new NotImplementedException();
         }
@@ -30,16 +30,21 @@ namespace backend.Repositories
             return _dataContext.Medicine.ToList();
          }
 
-        public bool Save(Medicine entity)
+        public Medicine getByName(string name)
         {
-            if (_dataContext.Medicine.Any(m => m.Name == entity.Name)) return false;
+            return _dataContext.Medicine.SingleOrDefault(m => m.Name == name);
+        }
 
-            _dataContext.Medicine.Add(entity);
+        public bool Save(Medicine medicine)
+        {
+            if (_dataContext.Medicine.Any(m => m.Name == medicine.Name)) return false;
+
+            _dataContext.Medicine.Add(medicine);
             _dataContext.SaveChanges();
             return true;
         }
 
-        public bool Update(Medicine entity)
+        public bool Update(Medicine medicine)
         {
             return true;
         }

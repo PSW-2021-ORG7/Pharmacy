@@ -1,9 +1,12 @@
-﻿using backend.Model;
+﻿using AutoMapper;
+using backend.DTO;
+using backend.Model;
 using backend.Repositories.Interfaces;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-
+using System;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
@@ -11,19 +14,18 @@ namespace backend.Controllers
     [Route("[controller]")]
     public class MedicineController : Controller
     {
-
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
         private MedicineService medicineService;
-        private AllergenService allergenService;
         private MedicineInventoryService medicineInventoryService;
 
-        public MedicineController(IConfiguration configuration,IMedicineRepository medicineRepository
-            ,IAllergenRepository allergenRepository,IMedicineInventoryRepository medicineInventoryRepository)
+        public MedicineController(IConfiguration configuration, IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository,
+            IMapper mapper)
         {
-            allergenService = new AllergenService(allergenRepository);
-             medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
+            medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
             medicineInventoryService = new MedicineInventoryService(medicineInventoryRepository);
-             _configuration = configuration;
+            _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -33,26 +35,25 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-         public IActionResult CreateMedicine()
+        public IActionResult CreateMedicine([FromBody] MedicineDTO medicineDTO)
         {
-            var medicine = new Medicine();
-            medicine.Name = "panadol";
-            medicine.SideEffect.Add("mucnina");
-            medicine.SideEffect.Add("glavobolja");
-            medicine.DosageInMilligrams = 300;
-            medicine.WayOfConsumption = "Posle jela";
-            var allergen = new Allergen();
-            allergen.IngredientNames.Add("sok");
-            allergen.IngredientNames.Add("voda");
-            medicine.Allergens.Add(allergen);
-            allergenService.Save(allergen);
+            Medicine medicine = _mapper.Map<Medicine>(medicineDTO);
+
             if (medicineService.Save(medicine)) {
                 medicineInventoryService.Save(new MedicineInventory(medicine.MedicineId));
                 return Ok("Succesfully added medicine");
             }
 
             return BadRequest("Medicine with that name already exists");
+        }
 
+        [HttpGet("{name}")]
+        public ActionResult<Medicine> GetMedicineByName(string name)
+        {
+            Medicine medicine = medicineService.getByName(name);
+
+            if (medicine == null) return NotFound("This medicine doesn't exist.");
+            return medicine;
         }
 
         
