@@ -8,7 +8,11 @@ using backend.DAL;
 using Microsoft.EntityFrameworkCore;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
+<<<<<<< HEAD
 using AutoMapper;
+=======
+using backend.Helpers;
+>>>>>>> a5e47c0 (feat: Login)
 
 namespace backend
 {
@@ -42,8 +46,12 @@ namespace backend
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
 
+<<<<<<< HEAD
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
+=======
+
+>>>>>>> a5e47c0 (feat: Login)
 
             //Dependency injection
 
@@ -67,7 +75,10 @@ namespace backend
 
             app.UseRouting();
 
+
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -26,7 +26,6 @@ namespace backend.Repositories
         {
             return _dataContext.User.ToList();
         }
-
          
         public User GetById(string username)
         {
