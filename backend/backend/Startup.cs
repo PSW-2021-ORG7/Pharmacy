@@ -8,6 +8,7 @@ using backend.DAL;
 using Microsoft.EntityFrameworkCore;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
+using backend.Helpers;
 
 namespace backend
 {
@@ -41,6 +42,8 @@ namespace backend
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
 
+
+
             //Dependency injection
 
             services.AddScoped<IMedicineRepository, MedicineRepository>();
@@ -64,7 +67,10 @@ namespace backend
 
             app.UseRouting();
 
+
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -4,6 +4,7 @@ using backend.Model;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Nest;
 
 namespace backend.Controllers
 {
@@ -28,6 +29,7 @@ namespace backend.Controllers
             return Ok(_userService.GetAll());
         }
 
+        [Authorize]
         [HttpGet("get-user-by-username/{username}")]
         public IActionResult GetUserByUsername(string username)
         {
@@ -47,13 +49,15 @@ namespace backend.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserLoginDTO loginDTO)
+        public IActionResult Login(UserLoginRequestDTO loginDTO)
         {
-            User user = new User();
-            user = _mapper.Map<UserLoginDTO, User>(loginDTO, user);
-            //authentication?
 
-            return Ok();
+            UserLoginResponseDTO response = _userService.Authenticate(loginDTO);
+
+            if (response == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(response);
         }
 
     }

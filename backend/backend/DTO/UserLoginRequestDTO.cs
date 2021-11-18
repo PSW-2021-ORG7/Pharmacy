@@ -2,11 +2,11 @@
 
 namespace backend.DTO
 {
-    public class UserLoginDTO
+    public class UserLoginRequestDTO
     {
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public UserLoginDTO() {}
+        public UserLoginRequestDTO() {}
     }
 }
