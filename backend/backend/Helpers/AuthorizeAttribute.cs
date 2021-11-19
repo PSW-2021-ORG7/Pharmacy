@@ -4,14 +4,18 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using backend.Model;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+namespace backend.Helpers
 {
-    public void OnAuthorization(AuthorizationFilterContext context)
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
-        User user = (User) context.HttpContext.Items["User"];
-        if (user == null) 
-            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-        
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            User user = (User)context.HttpContext.Items["User"];
+            if (user == null)
+                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+
+        }
     }
 }

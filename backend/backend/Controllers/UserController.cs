@@ -14,7 +14,7 @@ namespace backend.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        private UserService _userService;
+        private readonly UserService _userService;
 
         public UserController(IConfiguration configuration, IMapper mapper, UserService userService)
         {

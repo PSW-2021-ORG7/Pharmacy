@@ -48,9 +48,6 @@ namespace backend
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
-
             //Dependency injection
 
             services.AddScoped<IMedicineRepository, MedicineRepository>();
@@ -78,8 +75,6 @@ namespace backend
             app.UseRouting();
 
             app.UseAuthorization();
-
-           // app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -27,7 +27,12 @@ namespace backend.Repositories
             return _dataContext.User.ToList();
         }
          
-        public User GetById(string username)
+        public User GetById(string id)
+        {
+            return _dataContext.User.Find(id);
+        }
+
+        public User GetByUsername(string username)
         {
             return _dataContext.User.SingleOrDefault(u => u.Username == username);
         }

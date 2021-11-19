@@ -16,7 +16,7 @@ namespace backend.Services
 {
     public class UserService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly AppSettings _appSettings;
 
         public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings)
@@ -32,7 +32,7 @@ namespace backend.Services
 
         public User GetUserByUsername(string username)
         {
-            return _userRepository.GetById(username);
+            return _userRepository.GetByUsername(username);
         }
 
         public bool RegisterUser(User newUser)
