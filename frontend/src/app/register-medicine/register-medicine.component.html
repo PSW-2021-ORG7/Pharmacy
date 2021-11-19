@@ -8,15 +8,20 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Medicine Name *" value=""/>
+                        <input type="text" class="form-control" placeholder="Medicine Name *" [(ngModel)]="name"/>
+                        <p *ngIf="nameError" class="error">Name is required</p>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Manufacturer*" value=""/>
+                        <input type="text" class="form-control" placeholder="Manufacturer*" [(ngModel)]="manufacturer"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Dosage in Milligrams*" value=""/>
+                        <input type="text" class="form-control" placeholder="Dosage in Milligrams*" [(ngModel)]="dosageInMg"/>
+                        <p *ngIf="dosageError" class="error">Dosage needs to be a number</p>
+                    </div>
+                    <div class="form-group drop-item">
+                        <input type="text" class="form-control mr-3" placeholder="Potenital danger*" [(ngModel)]="potentialDanger"/>
                     </div>
                 </div>
                 <div class="row">
@@ -60,18 +65,15 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group drop-item">
-            <input type="file" (change)="onFileSelected($event)" accept="image/*" #file>
-            <button type="button" class="btn btn-dark" (click)="file.click()">Upload image</button>
+    <div class="row mb-4">
+        <div class="col">
+            <textarea placeholder="Way of consumption*" rows="4" cols="60" [(ngModel)]="wayOfConsumption"></textarea>
         </div>
-        </div>
-        <div class="row">
-            <div *ngFor="let url of urls; index as i;">
-                <img src={{url}}/>
-            </div>
-        </div>
-            <button type="button" class="btnSubmit">Submit</button>
+        <div class="col">
+            <textarea placeholder="Description*"rows="4" cols="60" [(ngModel)]="description"></textarea>
+    </div>
+</div>
+            <button type="button" class="btnSubmit" (click)="onSubmit()">Submit</button>
         </div>
     </div>
 </div>

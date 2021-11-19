@@ -12,6 +12,7 @@ namespace backend.Services
     {
         IMedicineRepository medicineRepository;
         IMedicineInventoryRepository medicineInventoryRepository;
+
         public MedicineService(IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository) { 
             this.medicineRepository = medicineRepository;
             this.medicineInventoryRepository = medicineInventoryRepository;

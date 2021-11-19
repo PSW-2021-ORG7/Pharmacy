@@ -1,19 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component} from '@angular/core';
+import { RegisterService } from './register.service';
+import { IMedicine } from '../model/medicine';
 @Component({
   selector: 'app-register-medicine',
   templateUrl: './register-medicine.component.html',
-  styleUrls: ['./register-medicine.component.css']
+  styleUrls: ['./register-medicine.component.css'],
+  providers: [RegisterService]
 })
-export class RegisterMedicineComponent implements OnInit {
+export class RegisterMedicineComponent {
+  constructor(private _registerService: RegisterService) { }
+  name: string = '';
+  dosageInMg: any= '';
   sideEffects: string[] = [];
+  manufacturer: string = '';
   sideEffectInput: string = '';
-  reactions: string[] = ['ee','ff','cc'];
+  reactions: string[] = [];
   reactionInput: string = '';
-  selectedFiles: any[] = [];
-  urls: any[] =[];
-  constructor() { }
-
+  potentialDanger: string = '';
+  potentialDangerInput: string = '';
+  description: string = '';
+  wayOfConsumption: string = '';
+  nameError: boolean = false;
+  dosageError: boolean = false;
   addReaction(){
     if(this.reactionInput != ''){
       this.reactions.push(this.reactionInput)
@@ -35,24 +43,27 @@ export class RegisterMedicineComponent implements OnInit {
     this.sideEffects.splice(i, 1);
   }
 
-  onFileSelected(event: any){
-    const files = event.target.files;
-    if (files.length === 0)
-        return;
-
-    const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-        return;
+  onSubmit(): void{
+    if(this.name === '')this.nameError=true
+    else this.nameError=false;
+    if(this.dosageInMg == '' || isNaN(this.dosageInMg))this.dosageError=true;
+    else this.dosageError=false;
+    if(this.dosageError || this.nameError)
+      return
+    const Medicine: IMedicine = {
+      'Name' : this.name,
+       'Description': this.description,
+       'DosageInMilligrams': parseInt(this.dosageInMg),
+       'Manufacturer': this.manufacturer,
+       'SideEffects' : this.sideEffects,
+       'PossibleReactions': this.reactions,
+       'WayOfConsumption' : this.wayOfConsumption,
+       'PotentialDangers' : this.potentialDanger,
     }
-
-    const reader = new FileReader();
-    this.selectedFiles.push(files);
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
-        this.urls.push(reader.result); 
-    }
-  }
-  ngOnInit(): void {
+    this._registerService.saveMedicine(Medicine)
+      .subscribe(data => console.log(data));
+    
+    console.log(JSON.stringify(Medicine))
   }
 
 }
