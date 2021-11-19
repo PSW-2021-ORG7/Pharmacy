@@ -12,5 +12,6 @@ namespace backend.Repositories.Interfaces
         public Medicine GetByID(Guid id);
         public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams);
         public List<Medicine> MedicineFilterDosageResults(int from, int to);
+        public Medicine GetByNameAndDose(string name, int dose);
     }
 }

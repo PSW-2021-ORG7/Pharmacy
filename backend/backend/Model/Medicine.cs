@@ -10,8 +10,10 @@ namespace backend.Model
     [Table("Medicine")]
     public class Medicine
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid MedicineId { get; private set; }
+
+        public Guid MedicineId { get; set; } 
 
         [Required]
         [MaxLength(50)]
@@ -38,6 +40,7 @@ namespace backend.Model
         public Medicine()
         {
             MedicineId = new Guid();
+            
         }
     }
 }
