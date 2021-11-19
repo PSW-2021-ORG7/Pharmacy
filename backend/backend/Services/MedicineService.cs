@@ -29,8 +29,12 @@ namespace backend.Services
         public bool CheckMedicineQuantity(MedicineQuantityCheck DTO)
         {
             if (medicineRepository.MedicineExists(DTO))
-               if(medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(DTO.MedicineId,DTO.Quantity)))
+            {
+                Medicine foundMedicine = GetByNameAndDose(DTO.Name, DTO.DosageInMg);
+                if (medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(foundMedicine.MedicineId, DTO.Quantity)))
                     return true;
+            }
+               
             return false;
         }
 
@@ -65,7 +69,21 @@ namespace backend.Services
                 default: from = 600; to = int.MaxValue; break;
             }
 
+
             return medicineRepository.GetAll().Where(m => m.DosageInMilligrams >= from && m.DosageInMilligrams <= to).ToList();
+		}
+        public Medicine GetByNameAndDose(string name, int dose)
+        {
+            return medicineRepository.GetByNameAndDose(name,dose);
+        }
+
+        public bool DeleteMedicine(String id)
+        {
+            Medicine medicineToDelete = medicineRepository.GetById(id);
+            if (medicineToDelete == null) return false;
+            
+            medicineRepository.Delete(medicineToDelete);
+            return true;
         }
     }
 }

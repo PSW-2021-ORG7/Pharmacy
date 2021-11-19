@@ -1,5 +1,6 @@
 ﻿using backend.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace backend.DAL
 {
@@ -17,12 +18,17 @@ namespace backend.DAL
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             builder.Entity<Hospital>()
                 .HasIndex(u => u.ApiKey)
                 .IsUnique();
 
             builder.Entity<Ingredient>()
-                .HasIndex(i => i.Name)
+                .HasIndex(i => i.Name);
+				.IsUnique();
+            
+			builder.Entity<Medicine>()
+                .HasIndex(m => m.MedicineId)
                 .IsUnique();
         }
     }

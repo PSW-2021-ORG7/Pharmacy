@@ -47,6 +47,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Route("/check")]
         public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
         {
             return Ok(medicineService.CheckMedicineQuantity(DTO));
@@ -66,7 +67,6 @@ namespace backend.Controllers
                 }
                 return Ok("Succesfully added medicine");
             }
-
             return BadRequest("Medicine with that name and dosage already exists");
         }
 
@@ -111,5 +111,22 @@ namespace backend.Controllers
 
             return dto;
         }
+
+        [HttpGet("{name}/{dose}")]
+        public ActionResult<Medicine> GetMedicineByNameAndDose(string name, int dose)
+        {
+            Medicine medicine = medicineService.GetByNameAndDose(name, dose);
+
+            if (medicine == null) return NotFound("This medicine doesn't exist.");
+            return medicine;
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePharmacy(String id)
+        {
+            if(medicineService.DeleteMedicine(id)) return Ok("Successfully deleted");
+            return NotFound("This medicine doesn't exist.");
+        }
+
     }
 }

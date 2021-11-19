@@ -18,7 +18,7 @@ namespace backend.Repositories
 
         public bool MedicineExists(MedicineQuantityCheck DTO)
         {
-            if (_dataContext.Medicine.Any(m => m.Id.Equals(DTO.MedicineId)  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
+            if (_dataContext.Medicine.Any(m => m.Name.Equals(DTO.Name)  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
             return false;
         }
 
@@ -30,11 +30,22 @@ namespace backend.Repositories
 
         public List<Medicine> GetAll() { 
             return _dataContext.Medicine.Include(m => m.Ingredients).ToList();
-         }
+        }
+
 
        public Medicine GetByName(string name)
         {
             return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Name == name);
+		}
+		
+        public Medicine GetById(string id)
+        {
+            return _dataContext.Medicine.SingleOrDefault(m => m.MedicineId.ToString() == id);
+        }
+
+        public Medicine GetByNameAndDose(string name, int dose)
+        {
+            return _dataContext.Medicine.SingleOrDefault(m => m.Name == name && m.DosageInMilligrams == dose);
         }
 
         public bool Save(Medicine medicine)
@@ -63,6 +74,18 @@ namespace backend.Repositories
         public Medicine GetByID(int id)
         {
             return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Id.Equals(id));
+        }
+
+        public bool DeleteMedicine(String id)
+        {
+            var medicine = _dataContext.Medicine.Find(id);
+            if (medicine == null)
+            {
+                return false;
+            }
+
+            Delete(medicine);
+            return true;
         }
     }
 }
