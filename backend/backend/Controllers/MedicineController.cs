@@ -47,15 +47,34 @@ namespace backend.Controllers
             return BadRequest("Medicine with that name already exists");
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("name/{name}")]
         public ActionResult<Medicine> GetMedicineByName(string name)
         {
-            Medicine medicine = medicineService.getByName(name);
+            Medicine medicine = medicineService.GetByName(name);
 
             if (medicine == null) return NotFound("This medicine doesn't exist.");
             return medicine;
         }
 
-        
+        [HttpGet("id/{id}")]
+        public IActionResult GetMedicineByID(Guid id)
+        {
+            Medicine medicine = medicineService.GetByID(id);
+
+            if (medicine == null) return NotFound("This medicine doesn't exist.");
+            return Ok(medicine);
+        }
+
+        [HttpGet("search")]
+        public IActionResult SearchMedicine([FromBody] MedicineSearchParams searchParams) 
+        {
+            return Ok(medicineService.MedicineSearchResults(searchParams));
+        }
+
+        [HttpGet("filter/{dosage}")]
+        public IActionResult FilterMedicineByDosage(int dosage)
+        {
+            return Ok(medicineService.MedicineFilterDosageResults(dosage));
+        }
     }
 }

@@ -32,9 +32,29 @@ namespace backend.Services
             return false;
         }
 
-        public Medicine getByName(string name)
+        public Medicine GetByName(string name)
         {
-            return medicineRepository.getByName(name);
+            return medicineRepository.GetByName(name);
+        }
+
+        public Medicine GetByID(Guid id)
+        {
+            return medicineRepository.GetByID(id);
+        }
+
+        public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams)
+        {
+            return medicineRepository.MedicineSearchResults(searchParams);
+        }
+
+        public List<Medicine> MedicineFilterDosageResults(int option)
+        {
+            int from;
+            int to = option;
+            if (to > 100) from = option - 100;
+            else from = 0;
+
+            return medicineRepository.MedicineFilterDosageResults(from, to);
         }
     }
 }
