@@ -1,0 +1,15 @@
+.page {
+    margin: 50px 15%;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.filter-and-search {
+    display: flex;
+}
+
+.drop-item {
+    text-align: center;
+}

@@ -1,0 +1,16 @@
+<div class="page">
+    <h1>Our Medicines</h1>
+    <div class="filter-and-search">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-dark" id="dropdownMenuButton" ngbDropdownToggle>Filter by dosage &ensp;</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+              <button ngbDropdownItem class="drop-item" (click)="filterByDosage(100)"> &lt; 100mg </button>
+              <button ngbDropdownItem class="drop-item" (click)="filterByDosage(200)">100mg - 200mg</button>
+              <button ngbDropdownItem class="drop-item" (click)="filterByDosage(300)">200mg - 300mg</button>
+              <button ngbDropdownItem class="drop-item" (click)="filterByDosage(400)">300mg - 400mg</button>
+              <button ngbDropdownItem class="drop-item" (click)="filterByDosage(500)">400mg - 500mg</button>
+              <button ngbDropdownItem class="drop-item" (click)="filterByDosage(600)"> &gt; 500mg </button>
+            </div>
+          </div>
+    </div>
+</div>

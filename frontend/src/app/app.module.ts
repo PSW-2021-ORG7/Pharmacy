@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MedicinesListComponent } from './medicines-list/medicines-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    RegisterMedicineComponent
+    RegisterMedicineComponent,
+    MedicinesListComponent
   ],
   imports: [
     BrowserModule,
