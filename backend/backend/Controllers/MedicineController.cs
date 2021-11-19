@@ -46,14 +46,7 @@ namespace backend.Controllers
             return Ok(_medicineService.GetAll());
         }
 
-        [HttpGet]
-        [Route("/check")]
-        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
-        {
-            return Ok(medicineService.CheckMedicineQuantity(DTO));
-        }
-
-
+       
         [HttpPost]
         public IActionResult CreateMedicine([FromBody] NewMedicineDTO medicineDTO)
         {
@@ -126,6 +119,33 @@ namespace backend.Controllers
         {
             if(medicineService.DeleteMedicine(id)) return Ok("Successfully deleted");
             return NotFound("This medicine doesn't exist.");
+        }
+
+
+        // INVENTORY
+
+        [HttpGet]
+        [Route("/inventory/check")]
+        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
+        {
+            if (medicineService.CheckMedicineQuantity(DTO))
+                return Ok("There is enough medicine available!");
+
+            return BadRequest("Not enough medicine!");
+        }
+
+        [HttpGet]
+        [Route("/inventory")]
+        public IActionResult GetInventory()
+        {
+            return Ok(medicineInventoryService.GetAll());
+        }
+
+        [HttpPut]
+        [Route("/inventory/{id}")]
+        public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
+        {
+            return Ok(medicineInventoryService.Update(medicineInventory));
         }
 
     }
