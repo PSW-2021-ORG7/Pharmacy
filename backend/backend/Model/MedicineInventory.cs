@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace backend.Model
 {
     public class MedicineInventory
     {
+        [JsonConstructor]
         public MedicineInventory(Guid medicineId)
         {
             MedicineId = medicineId;
