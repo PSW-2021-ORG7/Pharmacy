@@ -11,7 +11,7 @@ namespace backend.Model
     public class Medicine
     {
         [Key]
-        public Guid MedicineId { get; set; }
+        public Guid MedicineId { get; private set; }
 
         [Required]
         [MaxLength(50)]
