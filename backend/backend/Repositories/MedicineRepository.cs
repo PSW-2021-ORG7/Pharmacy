@@ -43,7 +43,7 @@ namespace backend.Repositories
 
         public bool Save(Medicine medicine)
         {
-            if (_dataContext.Medicine.Any(m => m.Name == medicine.Name)) return false;
+            if (_dataContext.Medicine.Any(m => m.Name == medicine.Name && m.DosageInMilligrams == medicine.DosageInMilligrams)) return false;
 
             _dataContext.Medicine.Add(medicine);
             _dataContext.SaveChanges();

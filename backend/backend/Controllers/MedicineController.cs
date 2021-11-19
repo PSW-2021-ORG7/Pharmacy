@@ -44,7 +44,7 @@ namespace backend.Controllers
                 return Ok("Succesfully added medicine");
             }
 
-            return BadRequest("Medicine with that name already exists");
+            return BadRequest("Medicine with that name and dosage already exists");
         }
 
         [HttpGet("name/{name}")]

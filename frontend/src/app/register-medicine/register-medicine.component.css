@@ -181,3 +181,13 @@ label {
 	display: block;
 	cursor: pointer;
 }
+
+textarea{
+	border-radius: 10px;
+	border-color: #DADADA;
+}
+
+.error{
+	color:red;
+	margin-left: 10px;
+}
