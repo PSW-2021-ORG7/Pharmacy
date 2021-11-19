@@ -35,6 +35,7 @@ namespace backend.Repositories
             throw new NotImplementedException();
         }
 
+
        public Medicine getByName(string name)
         {
             return _dataContext.Medicine.SingleOrDefault(m => m.Name == name);

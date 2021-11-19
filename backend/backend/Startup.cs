@@ -41,6 +41,9 @@ namespace backend
                 options.UseNpgsql(Configuration.GetConnectionString("DrugstoreCon")));
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
 
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));

@@ -4,7 +4,7 @@ using backend.Model;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-
+using Nest;
 
 namespace backend.Controllers
 {
