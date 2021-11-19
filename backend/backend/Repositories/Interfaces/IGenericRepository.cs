@@ -9,5 +9,7 @@ namespace backend.Repositories.Interfaces
         bool Save(T entity);
         void Delete(T entity);
         bool Update(T entity);
+
+        T GetById(string id);
     }
 }

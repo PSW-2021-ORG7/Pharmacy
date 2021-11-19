@@ -30,7 +30,13 @@ namespace backend.Repositories
             return _dataContext.Medicine.ToList();
          }
 
-        public Medicine getByName(string name)
+        public Medicine GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+       public Medicine getByName(string name)
         {
             return _dataContext.Medicine.SingleOrDefault(m => m.Name == name);
         }
