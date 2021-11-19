@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
 using AutoMapper;
+using backend.Helpers;
 
 namespace backend
 {
@@ -40,6 +41,9 @@ namespace backend
                 options.UseNpgsql(Configuration.GetConnectionString("DrugstoreCon")));
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
 
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
@@ -50,6 +54,11 @@ namespace backend
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+
+            //
+            services.AddTransient<Services.UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

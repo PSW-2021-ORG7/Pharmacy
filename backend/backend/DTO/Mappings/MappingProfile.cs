@@ -13,6 +13,9 @@ namespace backend.DTO.Mappings
         {
             CreateMap<MedicineDTO, Medicine>();
             CreateMap<Medicine, MedicineDTO>();
+
+            CreateMap<UserRegistrationDTO, User>();
+            CreateMap<User, UserRegistrationDTO>();
         }
     }
 }
