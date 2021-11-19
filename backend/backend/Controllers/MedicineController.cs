@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using backend.DTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
@@ -41,6 +41,13 @@ namespace backend.Controllers
         {
             return Ok(medicineService.GetAll());
         }
+
+        [HttpGet]
+        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
+        {
+            return Ok(medicineService.CheckMedicineQuantity(DTO));
+        }
+
 
         [HttpPost]
         public IActionResult CreateMedicine([FromBody] MedicineDTO medicineDTO)
