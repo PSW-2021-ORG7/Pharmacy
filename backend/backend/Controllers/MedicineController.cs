@@ -28,6 +28,12 @@ namespace backend.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("test")]
+        public IActionResult GetTest()
+        {
+            return Ok("It works!");
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
