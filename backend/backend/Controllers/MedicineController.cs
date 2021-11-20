@@ -124,14 +124,14 @@ namespace backend.Controllers
 
         // INVENTORY
 
-        [HttpGet]
+        [HttpPost]
         [Route("/inventory/check")]
         public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
         {
             if (medicineService.CheckMedicineQuantity(DTO))
-                return Ok("There is enough medicine available!");
+                return Ok(true);
 
-            return BadRequest("Not enough medicine!");
+            return Ok(false);
         }
 
         [HttpGet]
