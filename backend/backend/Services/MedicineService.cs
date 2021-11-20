@@ -55,6 +55,7 @@ namespace backend.Services
             else from = 0;
 
             return medicineRepository.MedicineFilterDosageResults(from, to);
+        }
 
         public Medicine GetByNameAndDose(string name, int dose)
         {
