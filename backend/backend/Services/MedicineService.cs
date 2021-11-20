@@ -69,9 +69,9 @@ namespace backend.Services
                 default: from = 600; to = int.MaxValue; break;
             }
 
-
             return medicineRepository.GetAll().Where(m => m.DosageInMilligrams >= from && m.DosageInMilligrams <= to).ToList();
 		}
+		
         public Medicine GetByNameAndDose(string name, int dose)
         {
             return medicineRepository.GetByNameAndDose(name,dose);
