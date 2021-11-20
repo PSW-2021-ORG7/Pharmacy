@@ -23,7 +23,8 @@ namespace backend.Repositories
 
         public void Delete(Medicine medicine)
         {
-            throw new NotImplementedException();
+            _dataContext.Medicine.Remove(medicine);
+            _dataContext.SaveChanges();
         }
 
         public List<Medicine> GetAll() { 
@@ -52,7 +53,16 @@ namespace backend.Repositories
 
         public bool Update(Medicine medicine)
         {
-            return true;
+            bool success = false;
+            var result = _dataContext.Medicine.SingleOrDefault(m => m.MedicineId == medicine.MedicineId);
+            if (result != null)
+            {
+                _dataContext.Update(medicine);
+                _dataContext.SaveChanges();
+                success = true;
+            }
+            return success;
+
         }
 
         public Medicine GetByID(Guid id)

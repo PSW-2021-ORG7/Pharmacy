@@ -23,7 +23,8 @@ namespace backend.Repositories
 
         public void Delete(MedicineInventory entity)
         {
-            throw new NotImplementedException();
+            _dataContext.MedicineInventory.Remove(entity);
+            _dataContext.SaveChanges();
         }
 
         public List<MedicineInventory> GetAll()
