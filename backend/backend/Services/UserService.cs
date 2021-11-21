@@ -3,14 +3,8 @@ using backend.Helpers;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Nest;
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 
 namespace backend.Services
 {
@@ -28,11 +22,20 @@ namespace backend.Services
         public List<User> GetAll()
         {
             return _userRepository.GetAll();
-        }
 
-        public User GetUserByUsername(string username)
+        }
+        public User GetUserByUsername (string username)
         {
             return _userRepository.GetByUsername(username);
+
+        }
+
+        public UserLoginRequestDTO GetUserCredentials (string username)
+        {
+            UserLoginRequestDTO credentials = new UserLoginRequestDTO();
+            credentials.Username = username;
+            credentials.Password = GetUserByUsername(username).Password;
+            return credentials;
         }
 
         public bool RegisterUser(User newUser)
@@ -43,30 +46,16 @@ namespace backend.Services
             return false;
         }
 
-        public UserLoginResponseDTO Authenticate(UserLoginRequestDTO userDTO)
+        public bool IsValidUserLoginData(UserLoginRequestDTO userDTO)
         {
             User user = _userRepository.GetAll().SingleOrDefault(u => u.Username == userDTO.Username && u.Password == userDTO.Password);
 
             if (user == null)
-                return null;
+                return false;
 
-            string token = GenerateJwtToken(user);
-            return new UserLoginResponseDTO(user, token);
+            return true;
+
         }
 
-        private string GenerateJwtToken(User user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("Username", user.Username.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
     }
 }

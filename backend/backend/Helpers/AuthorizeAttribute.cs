@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using backend.Model;
+using backend.DTO;
 
 namespace backend.Helpers
 {
@@ -12,10 +12,9 @@ namespace backend.Helpers
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            User user = (User)context.HttpContext.Items["User"];
-            if (user == null)
-                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-
+            var account = (UserLoginRequestDTO)context.HttpContext.Items["User"];
+            if (account == null)
+                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };           
         }
     }
 }
