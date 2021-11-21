@@ -54,8 +54,15 @@ namespace backend.Repositories
         public bool RequestSpecification(Medicine medicine)
         {
             string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
-            File.WriteAllText("Output/output.txt", medicineJsonString);
-            return true;
+            try
+            {
+                File.WriteAllText("Output/output.txt", medicineJsonString);
+                return true;
+            }catch (IOException)
+            {
+                return false;
+            }
+            
         }
 
         public bool Save(Medicine medicine)
