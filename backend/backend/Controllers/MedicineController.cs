@@ -105,7 +105,7 @@ namespace backend.Controllers
             return dto;
         }
 
-        [HttpGet("{name}/{dose}")]
+        [HttpGet("find/{name}/{dose}")]
         public ActionResult<Medicine> GetMedicineByNameAndDose(string name, int dose)
         {
             Medicine medicine = medicineService.GetByNameAndDose(name, dose);
