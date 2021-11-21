@@ -8,8 +8,11 @@ using backend.DAL;
 using Microsoft.EntityFrameworkCore;
 using backend.Repositories.Interfaces;
 using backend.Repositories;
-using AutoMapper;
 using backend.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using static backend.Helpers.JwtMiddleware;
 
 namespace backend
 {
@@ -30,8 +33,8 @@ namespace backend
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
-            //JSON Serializer
-            
+
+            //JSON Serializer           
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
         .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
@@ -42,23 +45,41 @@ namespace backend
 
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            //Authentication
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])) //Configuration["JwtToken:SecretKey"]
+                };
+            });
 
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
             //Dependency injection
-
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-
-            //
+            //Services
             services.AddTransient<Services.UserService>();
+            services.AddTransient<JwtMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +96,10 @@ namespace backend
             app.UseRouting();
 
             app.UseAuthorization();
+
+            var scopeeee = app.ApplicationServices.CreateScope();
+
+            app.UseMiddleware<JWTMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
