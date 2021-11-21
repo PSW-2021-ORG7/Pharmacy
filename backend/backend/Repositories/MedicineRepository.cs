@@ -3,8 +3,10 @@ using backend.DTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +47,15 @@ namespace backend.Repositories
 
         public Medicine GetByNameAndDose(string name, int dose)
         {
-            return _dataContext.Medicine.SingleOrDefault(m => m.Name == name && m.DosageInMilligrams == dose);
+            return  _dataContext.Medicine.SingleOrDefault(m => m.Name == name && m.DosageInMilligrams == dose);
+            
+        }
+
+        public bool RequestSpecification(Medicine medicine)
+        {
+            string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
+            File.WriteAllText("Output/output.txt", medicineJsonString);
+            return true;
         }
 
         public bool Save(Medicine medicine)

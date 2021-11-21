@@ -85,5 +85,13 @@ namespace backend.Services
             medicineRepository.Delete(medicineToDelete);
             return true;
         }
+
+        public bool RequestSpecification(string name, int dose)
+        {
+            Medicine medicine = GetByNameAndDose(name, dose);
+            if (medicineRepository.RequestSpecification(medicine))
+                return true;
+            return false;
+        }
     }
 }

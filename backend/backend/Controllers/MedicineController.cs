@@ -121,6 +121,13 @@ namespace backend.Controllers
             return NotFound("This medicine doesn't exist.");
         }
 
+        [HttpGet("request/{name}/{dose}")]
+
+        public IActionResult RequestSpecification(string name, int dose)
+        {
+            return Ok(medicineService.RequestSpecification(name, dose));
+        }
+
 
         // INVENTORY
 
