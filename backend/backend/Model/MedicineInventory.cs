@@ -8,20 +8,20 @@ namespace backend.Model
 {
     public class MedicineInventory
     {
-        public MedicineInventory(Guid medicineId)
+        public MedicineInventory(int medicineId)
         {
             MedicineId = medicineId;
             Quantity = 0;
         }
 
-        public MedicineInventory(Guid medicineId,int quantity)
+        public MedicineInventory(int medicineId,int quantity)
         {
             MedicineId = medicineId;
             Quantity = quantity;
         }
 
         [Key]
-        public Guid MedicineId { get; set; }
+        public int MedicineId { get; set; }
 
         [Required]
         public int Quantity { get; set; }

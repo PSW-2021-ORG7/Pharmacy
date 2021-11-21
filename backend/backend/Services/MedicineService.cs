@@ -38,7 +38,7 @@ namespace backend.Services
             return medicineRepository.GetByName(name);
         }
 
-        public Medicine GetByID(Guid id)
+        public Medicine GetByID(int id)
         {
             return medicineRepository.GetByID(id);
         }

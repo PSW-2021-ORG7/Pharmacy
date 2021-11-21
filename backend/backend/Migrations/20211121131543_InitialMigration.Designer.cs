@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211118191743_UserRegistrationLogin")]
-    partial class UserRegistrationLogin
+    [Migration("20211121131543_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,29 +22,19 @@ namespace backend.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("backend.Model.Allergen", b =>
+            modelBuilder.Entity("IngredientMedicine", b =>
                 {
-                    b.Property<Guid>("AllergenId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.Property<int>("IngredientsId")
+                        .HasColumnType("integer");
 
-                    b.Property<List<string>>("IngredientNames")
-                        .HasColumnType("text[]");
+                    b.Property<int>("MedicinesId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("MedicineId")
-                        .HasColumnType("uuid");
+                    b.HasKey("IngredientsId", "MedicinesId");
 
-                    b.Property<List<string>>("MedicineNames")
-                        .HasColumnType("text[]");
+                    b.HasIndex("MedicinesId");
 
-                    b.Property<string>("Other")
-                        .HasColumnType("text");
-
-                    b.HasKey("AllergenId");
-
-                    b.HasIndex("MedicineId");
-
-                    b.ToTable("Allergen");
+                    b.ToTable("IngredientMedicine");
                 });
 
             modelBuilder.Entity("backend.Model.Feedback", b =>
@@ -89,11 +79,30 @@ namespace backend.Migrations
                     b.ToTable("Hospital");
                 });
 
+            modelBuilder.Entity("backend.Model.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Ingredient");
+                });
+
             modelBuilder.Entity("backend.Model.Medicine", b =>
                 {
-                    b.Property<Guid>("MedicineId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -101,31 +110,62 @@ namespace backend.Migrations
                     b.Property<int>("DosageInMilligrams")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Manufacturer")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<List<string>>("SideEffect")
+                    b.Property<List<string>>("PossibleReactions")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("PotentialDangers")
+                        .HasColumnType("text");
+
+                    b.Property<List<string>>("SideEffects")
+                        .IsRequired()
                         .HasColumnType("text[]");
 
                     b.Property<string>("WayOfConsumption")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("MedicineId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasKey("Id");
 
                     b.ToTable("Medicine");
                 });
 
+            modelBuilder.Entity("backend.Model.MedicineCombination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("FirstMedicineId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SecondMedicineId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FirstMedicineId");
+
+                    b.HasIndex("SecondMedicineId");
+
+                    b.ToTable("MedicineCombination");
+                });
+
             modelBuilder.Entity("backend.Model.MedicineInventory", b =>
                 {
-                    b.Property<Guid>("MedicineId")
+                    b.Property<int>("MedicineId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
@@ -174,16 +214,38 @@ namespace backend.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("backend.Model.Allergen", b =>
+            modelBuilder.Entity("IngredientMedicine", b =>
                 {
+                    b.HasOne("backend.Model.Ingredient", null)
+                        .WithMany()
+                        .HasForeignKey("IngredientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Model.Medicine", null)
-                        .WithMany("Allergens")
-                        .HasForeignKey("MedicineId");
+                        .WithMany()
+                        .HasForeignKey("MedicinesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Model.Medicine", b =>
+            modelBuilder.Entity("backend.Model.MedicineCombination", b =>
                 {
-                    b.Navigation("Allergens");
+                    b.HasOne("backend.Model.Medicine", "FirstMedicine")
+                        .WithMany()
+                        .HasForeignKey("FirstMedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Model.Medicine", "SecondMedicine")
+                        .WithMany()
+                        .HasForeignKey("SecondMedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FirstMedicine");
+
+                    b.Navigation("SecondMedicine");
                 });
 #pragma warning restore 612, 618
         }

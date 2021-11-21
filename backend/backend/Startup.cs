@@ -70,12 +70,26 @@ namespace backend
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
+            // Swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "Pharmacy API",
+                        Description = "Demo API for showing Pharmacy",
+                        Version = "v1"
+                    });
+            });
+
             //Dependency injection
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IHospitalRepository, HospitalRepository>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IMedicineInventoryRepository, MedicineInventoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<IMedicineCombinationRepository, MedicineCombinationRepository>();
 
             //Services
             services.AddTransient<Services.UserService>();
@@ -105,6 +119,13 @@ namespace backend
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Pharmacy API");
+            });
+
         }
     }
 }

@@ -6,6 +6,7 @@ using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace backend.Controllers
@@ -18,12 +19,14 @@ namespace backend.Controllers
         private readonly IMapper _mapper;
         private MedicineService medicineService;
         private MedicineInventoryService medicineInventoryService;
+        private MedicineCombinationService medicineCombinationService;
 
         public MedicineController(IConfiguration configuration, IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository,
-            IMapper mapper)
+            IMapper mapper, IMedicineCombinationRepository medicineCombinationRepository)
         {
             medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
             medicineInventoryService = new MedicineInventoryService(medicineInventoryRepository);
+            medicineCombinationService = new MedicineCombinationService(medicineCombinationRepository);
             _configuration = configuration;
             _mapper = mapper;
         }
@@ -46,7 +49,11 @@ namespace backend.Controllers
             Medicine medicine = _mapper.Map<Medicine>(medicineDTO);
 
             if (medicineService.Save(medicine)) {
-                medicineInventoryService.Save(new MedicineInventory(medicine.MedicineId));
+                medicineInventoryService.Save(new MedicineInventory(medicine.Id));
+                foreach (int m in medicineDTO.MedicinesToCombineWith)
+                {
+                    medicineCombinationService.Save(medicine.Id, m);
+                }
                 return Ok("Succesfully added medicine");
             }
 
@@ -63,7 +70,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("id/{id}")]
-        public IActionResult GetMedicineByID(Guid id)
+        public IActionResult GetMedicineByID(int id)
         {
             Medicine medicine = medicineService.GetByID(id);
 

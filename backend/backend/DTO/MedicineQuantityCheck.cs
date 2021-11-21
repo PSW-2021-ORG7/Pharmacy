@@ -7,7 +7,7 @@ namespace backend.DTO
 {
     public class MedicineQuantityCheck
     {
-        public Guid MedicineId;
+        public int MedicineId;
         public string Name;
         public int DosageInMg;
         public int Quantity;
