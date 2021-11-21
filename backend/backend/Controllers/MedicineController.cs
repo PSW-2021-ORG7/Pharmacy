@@ -76,7 +76,7 @@ namespace backend.Controllers
             return Ok(medicineService.MedicineFilterDosageResults(dosage));
         }
 
-        [HttpGet("{name}/{dose}")]
+        [HttpGet("find/{name}/{dose}")]
         public ActionResult<Medicine> GetMedicineByNameAndDose(string name, int dose)
         {
             Medicine medicine = medicineService.GetByNameAndDose(name, dose);
