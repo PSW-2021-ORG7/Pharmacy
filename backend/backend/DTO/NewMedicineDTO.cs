@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace backend.DTO
 {
-    public class MedicineDTO
+    public class NewMedicineDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }

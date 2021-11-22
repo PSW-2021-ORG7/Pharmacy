@@ -58,13 +58,14 @@ namespace backend.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] UserLoginRequestDTO data)
         {
-            bool isValid = _userService.IsValidUserLoginData(data);
-            if (isValid)
-            {
-                var tokenString = GenerateJwtToken(data.Username);
-                return Ok(new { Token = tokenString, Message = "Success" });
-            }
-            return BadRequest("Please pass the valid username and password");
+            User user = _userService.GetUserByLoginCredentials(data);
+
+            if(user == null)
+                return BadRequest("Please pass the valid username and password");
+
+            var tokenString = GenerateJwtToken(data.Username);
+            return Ok(new { Token = tokenString, Message = "Success" });
+   
         }
 
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
@@ -94,18 +95,6 @@ namespace backend.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-        /*
-        [HttpPost("login")]
-        public IActionResult Login(UserLoginRequestDTO loginDTO)
-        {
 
-            UserLoginResponseDTO response = _userService.Authenticate(loginDTO);
-
-            if (response == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            return Ok(response);
-        }
-        */
     }
 }

@@ -77,26 +77,5 @@ namespace backend.Repositories
         {
             return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Id.Equals(id));
         }
-
-        public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams)
-        {
-            List<Medicine> searchResults = new List<Medicine>();
-            searchResults = _dataContext.Medicine.Include(m => m.Ingredients)
-                                                 .Where(m => m.Name.ToLower().Contains(searchParams.Name.ToLower()) 
-                                                          && m.Description.ToLower().Contains(searchParams.Description.ToLower())
-                                                          && m.Manufacturer.ToLower().Contains(searchParams.Manufacturer.ToLower())).ToList();
-
-            return searchResults;
-        }
-
-        public List<Medicine> MedicineFilterDosageResults(int from, int to)
-        {
-            List<Medicine> filterResults = new List<Medicine>();
-            if(to < 600)
-                filterResults = _dataContext.Medicine.Where(m => m.DosageInMilligrams >= from && m.DosageInMilligrams <= to).ToList();
-            else
-                filterResults = _dataContext.Medicine.Where(m => m.DosageInMilligrams >= to).ToList();
-            return filterResults;
-        }
     }
 }
