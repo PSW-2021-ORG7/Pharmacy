@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.DTO;
 using backend.Model;
+using backend.Model.Enum;
 using backend.Repositories.Interfaces;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -64,18 +65,21 @@ namespace backend.Controllers
         public ActionResult<Medicine> GetMedicineByName(string name)
         {
             Medicine medicine = _medicineService.GetByName(name);
-
             if (medicine == null) return NotFound("This medicine doesn't exist.");
-            return medicine;
+
+            MedicineForShowingDTO dto = FindMedicineCombination(medicine);
+            return Ok(dto);
         }
 
         [HttpGet("id/{id}")]
         public IActionResult GetMedicineByID(int id)
         {
             Medicine medicine = _medicineService.GetByID(id);
-
             if (medicine == null) return NotFound("This medicine doesn't exist.");
-            return Ok(medicine);
+
+            MedicineForShowingDTO dto = FindMedicineCombination(medicine);
+
+            return Ok(dto);
         }
 
         [HttpGet("search")]
@@ -84,10 +88,19 @@ namespace backend.Controllers
             return Ok(_medicineService.MedicineSearchResults(searchParams));
         }
 
-        [HttpGet("filter/{dosage}")]
-        public IActionResult FilterMedicineByDosage(int dosage)
+        [HttpGet("filter/{option}")]
+        public IActionResult FilterMedicineByDosage(MedicineDosageFilter option)
         {
-            return Ok(_medicineService.MedicineFilterDosageResults(dosage));
+            return Ok(_medicineService.MedicineFilterDosageResults(option));
+        }
+
+        private MedicineForShowingDTO FindMedicineCombination(Medicine medicine)
+        {
+            MedicineForShowingDTO dto = new MedicineForShowingDTO() { Medicine = medicine, MedicinesToCombineWith = new List<Medicine>() };
+            List<MedicineCombination> medicinesToCombineWith = _medicineCombinationService.GetMedicinesCombination(medicine.Id);
+            medicinesToCombineWith.ForEach(m => dto.MedicinesToCombineWith.Add(_medicineService.GetByID(m.SecondMedicineId)));
+
+            return dto;
         }
     }
 }

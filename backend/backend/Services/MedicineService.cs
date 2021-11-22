@@ -1,5 +1,6 @@
 ﻿using backend.DTO;
 using backend.Model;
+using backend.Model.Enum;
 using backend.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -45,17 +46,26 @@ namespace backend.Services
 
         public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams)
         {
-            return medicineRepository.MedicineSearchResults(searchParams);
+            return medicineRepository.GetAll().Where(m => m.Name.ToLower().Contains(searchParams.Name.ToLower())
+                                                          && m.Description.ToLower().Contains(searchParams.Description.ToLower())
+                                                          && m.Manufacturer.ToLower().Contains(searchParams.Manufacturer.ToLower())
+                                                          && m.Ingredients.Any(i => i.Name.ToLower().Contains(searchParams.Ingredient.ToLower())))
+                                                 .ToList();
         }
 
-        public List<Medicine> MedicineFilterDosageResults(int option)
+        public List<Medicine> MedicineFilterDosageResults(MedicineDosageFilter option)
         {
             int from;
-            int to = option;
-            if (to > 100) from = option - 100;
-            else from = 0;
+            int to;
+            switch((int)option)
+            {
+                case 0: from = 0; to = 200; break;
+                case 1: from = 200; to = 400; break;
+                case 2: from = 400; to = 600; break;
+                default: from = 600; to = int.MaxValue; break;
+            }
 
-            return medicineRepository.MedicineFilterDosageResults(from, to);
+            return medicineRepository.GetAll().Where(m => m.DosageInMilligrams >= from && m.DosageInMilligrams <= to).ToList();
         }
     }
 }

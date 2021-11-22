@@ -24,6 +24,11 @@ namespace backend.Repositories
             return _dataContext.MedicineCombination.ToList();
         }
 
+        public List<MedicineCombination> GetByFirstMedicineId(int firstMedicineId)
+        {
+            return _dataContext.MedicineCombination.Where(m => m.FirstMedicineId == firstMedicineId).ToList();
+        }
+
         public bool Save(MedicineCombination entity)
         {
             _dataContext.MedicineCombination.Add(entity);
