@@ -89,5 +89,19 @@ namespace backend.Controllers
         {
             return Ok(medicineService.MedicineFilterDosageResults(dosage));
         }
+
+        [HttpPut("update-inventory")]
+        public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
+        {
+            medicineInventoryService.Update(medicineInventory);
+            return Ok("Succesfully updated inventory");
+        }
+
+        [HttpPut("reduce-quantity")]
+        public IActionResult ReduceQuantity([FromBody] MedicineInventory medicineInventory)
+        {
+            medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
+            return Ok();
+        }
     }
 }

@@ -40,10 +40,23 @@ namespace backend.Repositories
         public bool Save(Medicine medicine)
         {
             if (_dataContext.Medicine.Any(m => m.Name == medicine.Name && m.DosageInMilligrams == medicine.DosageInMilligrams)) return false;
-
-            _dataContext.Medicine.Add(medicine);
+            ExcludeIngredientDuplicates(medicine);
+            _dataContext.Add(medicine);
             _dataContext.SaveChanges();
             return true;
+        }
+
+        private void ExcludeIngredientDuplicates(Medicine medicine)
+        {
+            var duplicates = _dataContext.Ingredient
+                .AsEnumerable()
+                .Where(i => medicine.Ingredients.Any(m => m.Name.Equals(i.Name)))
+                .ToList();
+            foreach (Ingredient duplicate in duplicates)
+            {
+                var itemToRemove = medicine.Ingredients.Single(m => m.Name == duplicate.Name);
+                medicine.Ingredients.Remove(itemToRemove);
+            }
         }
 
         public bool Update(Medicine medicine)

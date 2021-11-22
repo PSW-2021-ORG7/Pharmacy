@@ -44,6 +44,19 @@ namespace backend.Repositories
             var result = _dataContext.MedicineInventory.SingleOrDefault(m => m.MedicineId == entity.MedicineId);
             if (result != null)
             {
+                result.Quantity = entity.Quantity;
+                if (result.Quantity < 0) return false;
+                _dataContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool ReduceMedicineQuantity(MedicineInventory entity)
+        {
+            var result = _dataContext.MedicineInventory.SingleOrDefault(m => m.MedicineId == entity.MedicineId);
+            if (result != null)
+            {
                 result.Quantity -= entity.Quantity;
                 if (result.Quantity < 0) return false;
                 _dataContext.SaveChanges();
@@ -52,6 +65,7 @@ namespace backend.Repositories
             return false;
         }
 
-       
+
+
     }
 }

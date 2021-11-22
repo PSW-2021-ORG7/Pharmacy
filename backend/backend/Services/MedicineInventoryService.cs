@@ -26,6 +26,13 @@ namespace backend.Services
             return false;
         }
 
+        public bool ReduceMedicineQuantity(MedicineInventory medicineInventory)
+        {
+            bool updated = medicineInventoryRepository.ReduceMedicineQuantity(medicineInventory);
+            if (updated) return true;
+            return false;
+        }
+
         public List<MedicineInventory> UpdateMultipleMedicines(List<MedicineInventory> medicines)
         {
             List<MedicineInventory> medicinesUnableToUpdate = new List<MedicineInventory>();
