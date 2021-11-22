@@ -11,7 +11,7 @@ namespace backend.DTO.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<MedicineDTO, Medicine>();
+            CreateMap<NewMedicineDTO, Medicine>();
             CreateMap<Medicine, MedicineForShowingDTO>();
 
             CreateMap<UserRegistrationDTO, User>();
