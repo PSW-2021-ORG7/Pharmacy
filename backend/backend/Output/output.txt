@@ -1,0 +1,15 @@
+{
+  "MedicineId": "3ea9a083-4aa7-436a-b8dc-70e61a786285",
+  "Name": "brufen",
+  "Description": "Lek za bolove.",
+  "DosageInMilligrams": 400,
+  "Manufacturer": "Galenika Hemofarm",
+  "SideEffects": [
+    "malaksalost"
+  ],
+  "PossibleReactions": [
+    "alergija"
+  ],
+  "WayOfConsumption": "Posle jela",
+  "PotentialDangers": "Ne smeju piti mladji od 18 godina!"
+}

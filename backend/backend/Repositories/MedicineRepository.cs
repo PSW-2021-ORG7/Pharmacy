@@ -4,6 +4,7 @@ using backend.Model;
 using backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,12 +58,28 @@ namespace backend.Repositories
             try
             {
                 File.WriteAllText("Output/output.txt", medicineJsonString);
+                upload();
                 return true;
             }catch (IOException)
             {
                 return false;
             }
             
+        }
+
+        public void upload()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.14", "tester", "password")))
+            {
+                client.Connect();
+                string sourceFile = @"C:\Users\Iodum99\Desktop\PSW Projekat\Pharmacy\backend\backend\Output\output.txt";
+                using (Stream stream = File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile));
+                }
+
+                client.Disconnect();
+            }
         }
 
         public bool Save(Medicine medicine)
