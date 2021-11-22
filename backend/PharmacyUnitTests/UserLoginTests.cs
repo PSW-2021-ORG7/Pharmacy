@@ -22,7 +22,7 @@ namespace PharmacyUnitTests
 
             User user = service.GetUserByLoginCredentials(credentials);
 
-            user.ShouldNotBeNull();
+            user.ShouldNotBe(null);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace PharmacyUnitTests
 
             User user = service.GetUserByLoginCredentials(credentials);
 
-            user.ShouldBeNull();
+            user.ShouldBe(null);
         }
 
         private static Mock<IUserRepository> CreateStubRepository()

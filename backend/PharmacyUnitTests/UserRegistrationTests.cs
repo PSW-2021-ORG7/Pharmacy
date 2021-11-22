@@ -10,28 +10,25 @@ namespace PharmacyUnitTests
 {
     public class UserRegistrationAndLoginTests
     {
-        [Fact]
-        public void Register_user_with_same_username()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Register_user(User user, bool notRegistered)
         {
             var stubRepository = CreateStubRepository();
             UserService service = new UserService(stubRepository.Object);
-            User pera = CreateUser("pera", "123");
 
-            bool registrated = service.RegisterUser(pera);
+            bool registered = service.RegisterUser(user);
 
-            registrated.ShouldBeFalse();
+            registered.ShouldBe(notRegistered);
         }
 
-        [Fact]
-        public void Register_user_with_unique_username()
+        public static IEnumerable<object[]> Data()
         {
-            var stubRepository = CreateStubRepository();
-            UserService service = new UserService(stubRepository.Object);
-            User mika = CreateUser("mika", "123");
+            var retval = new List<object[]>();
+            retval.Add(new object[] { CreateUser("pera", "123"), false });
+            retval.Add(new object[] { CreateUser("mika", "123"), true  });
 
-            bool registrated = service.RegisterUser(mika);
-
-            registrated.ShouldBeTrue();
+            return retval;
         }
 
         private static Mock<IUserRepository> CreateStubRepository()
