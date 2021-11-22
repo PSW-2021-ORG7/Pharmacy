@@ -23,11 +23,6 @@ namespace backend.Repositories
             return dB.Hospital.ToList();
         }
 
-        public Hospital GetById(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Save(Hospital entity)
         {
             if (dB.Hospital.Any(h => h.ApiKey == entity.ApiKey)) return false;

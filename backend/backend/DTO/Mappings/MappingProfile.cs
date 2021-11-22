@@ -12,7 +12,7 @@ namespace backend.DTO.Mappings
         public MappingProfile()
         {
             CreateMap<MedicineDTO, Medicine>();
-            CreateMap<Medicine, MedicineDTO>();
+            CreateMap<Medicine, MedicineForShowingDTO>();
 
             CreateMap<UserRegistrationDTO, User>();
             CreateMap<User, UserRegistrationDTO>();

@@ -12,6 +12,8 @@ namespace backend.DAL
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<MedicineInventory> MedicineInventory { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Ingredient> Ingredient { get; set; }
+        public DbSet<MedicineCombination> MedicineCombination { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -19,8 +21,8 @@ namespace backend.DAL
                 .HasIndex(u => u.ApiKey)
                 .IsUnique();
 
-            builder.Entity<Medicine>()
-                .HasIndex(m => m.Name)
+            builder.Entity<Ingredient>()
+                .HasIndex(i => i.Name)
                 .IsUnique();
         }
     }

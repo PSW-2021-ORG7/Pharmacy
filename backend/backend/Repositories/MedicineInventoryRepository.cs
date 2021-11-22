@@ -32,11 +32,6 @@ namespace backend.Repositories
             return _dataContext.MedicineInventory.ToList();
         }
 
-        public MedicineInventory GetById(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Save(MedicineInventory entity)
         {
             _dataContext.MedicineInventory.Add(entity);

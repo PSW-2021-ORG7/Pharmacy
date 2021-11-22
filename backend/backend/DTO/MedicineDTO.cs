@@ -1,4 +1,5 @@
-﻿using System;
+﻿using backend.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,5 +16,7 @@ namespace backend.DTO
         public List<string> PossibleReactions { get; set; }
         public string WayOfConsumption { get; set; }
         public string PotentialDangers { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
+        public List<int> MedicinesToCombineWith { get; set; }
     }
 }

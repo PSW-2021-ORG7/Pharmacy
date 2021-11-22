@@ -2,6 +2,7 @@ using backend.DAL;
 using backend.DTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace backend.Repositories
 
         public bool MedicineExists(MedicineQuantityCheck DTO)
         {
-            if (_dataContext.Medicine.Any(m => m.MedicineId.Equals(DTO.MedicineId)  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
+            if (_dataContext.Medicine.Any(m => m.Id.Equals(DTO.MedicineId)  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
             return false;
         }
 
@@ -28,18 +29,12 @@ namespace backend.Repositories
         }
 
         public List<Medicine> GetAll() { 
-            return _dataContext.Medicine.ToList();
+            return _dataContext.Medicine.Include(m => m.Ingredients).ToList();
          }
-
-
-        public Medicine GetById(string id)
-        {
-            throw new NotImplementedException();
-        }
 
        public Medicine GetByName(string name)
         {
-            return _dataContext.Medicine.SingleOrDefault(m => m.Name == name);
+            return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Name == name);
         }
 
         public bool Save(Medicine medicine)
@@ -54,7 +49,7 @@ namespace backend.Repositories
         public bool Update(Medicine medicine)
         {
             bool success = false;
-            var result = _dataContext.Medicine.SingleOrDefault(m => m.MedicineId == medicine.MedicineId);
+            var result = _dataContext.Medicine.SingleOrDefault(m => m.Id == medicine.Id);
             if (result != null)
             {
                 _dataContext.Update(medicine);
@@ -65,15 +60,16 @@ namespace backend.Repositories
 
         }
 
-        public Medicine GetByID(Guid id)
+        public Medicine GetByID(int id)
         {
-            return _dataContext.Medicine.SingleOrDefault(m => m.MedicineId.Equals(id));
+            return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Id.Equals(id));
         }
 
         public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams)
         {
             List<Medicine> searchResults = new List<Medicine>();
-            searchResults = _dataContext.Medicine.Where(m => m.Name.ToLower().Contains(searchParams.Name.ToLower()) 
+            searchResults = _dataContext.Medicine.Include(m => m.Ingredients)
+                                                 .Where(m => m.Name.ToLower().Contains(searchParams.Name.ToLower()) 
                                                           && m.Description.ToLower().Contains(searchParams.Description.ToLower())
                                                           && m.Manufacturer.ToLower().Contains(searchParams.Manufacturer.ToLower())).ToList();
 

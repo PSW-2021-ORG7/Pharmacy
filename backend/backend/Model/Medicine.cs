@@ -11,7 +11,7 @@ namespace backend.Model
     public class Medicine
     {
         [Key]
-        public Guid MedicineId { get; private set; }
+        public int Id { get; private set; }
 
         [Required]
         [MaxLength(50)]
@@ -35,9 +35,8 @@ namespace backend.Model
 
         public string PotentialDangers { get; set; }
 
-        public Medicine()
-        {
-            MedicineId = new Guid();
-        }
+        public List<Ingredient> Ingredients { get; set; }
+
+        public Medicine() {}
     }
 }
