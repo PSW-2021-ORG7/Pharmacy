@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.DTO;
 using backend.Model;
+using backend.Model.Enum;
 using backend.Repositories.Interfaces;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,18 +18,18 @@ namespace backend.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        private MedicineService medicineService;
-        private MedicineInventoryService medicineInventoryService;
-        private MedicineCombinationService medicineCombinationService;
+        private MedicineService _medicineService;
+        private MedicineInventoryService _medicineInventoryService;
+        private MedicineCombinationService _medicineCombinationService;
 
-        public MedicineController(IConfiguration configuration, IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository,
-            IMapper mapper, IMedicineCombinationRepository medicineCombinationRepository)
+        public MedicineController(IConfiguration configuration, IMapper mapper, IMedicineRepository medicineRepository, 
+            IMedicineInventoryRepository medicineInventoryRepository, IMedicineCombinationRepository medicineCombinationRepository)
         {
-            medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
-            medicineInventoryService = new MedicineInventoryService(medicineInventoryRepository);
-            medicineCombinationService = new MedicineCombinationService(medicineCombinationRepository);
             _configuration = configuration;
             _mapper = mapper;
+            _medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
+            _medicineInventoryService = new MedicineInventoryService(medicineInventoryRepository);
+            _medicineCombinationService = new MedicineCombinationService(medicineCombinationRepository);
         }
 
         [HttpGet("test")]
@@ -40,19 +41,19 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(medicineService.GetAll());
+            return Ok(_medicineService.GetAll());
         }
 
         [HttpPost]
-        public IActionResult CreateMedicine([FromBody] MedicineDTO medicineDTO)
+        public IActionResult CreateMedicine([FromBody] NewMedicineDTO medicineDTO)
         {
             Medicine medicine = _mapper.Map<Medicine>(medicineDTO);
 
-            if (medicineService.Save(medicine)) {
-                medicineInventoryService.Save(new MedicineInventory(medicine.Id));
+            if (_medicineService.Save(medicine)) {
+                _medicineInventoryService.Save(new MedicineInventory(medicine.Id));
                 foreach (int m in medicineDTO.MedicinesToCombineWith)
                 {
-                    medicineCombinationService.Save(medicine.Id, m);
+                    _medicineCombinationService.Save(medicine.Id, m);
                 }
                 return Ok("Succesfully added medicine");
             }
@@ -63,31 +64,43 @@ namespace backend.Controllers
         [HttpGet("name/{name}")]
         public ActionResult<Medicine> GetMedicineByName(string name)
         {
-            Medicine medicine = medicineService.GetByName(name);
-
+            Medicine medicine = _medicineService.GetByName(name);
             if (medicine == null) return NotFound("This medicine doesn't exist.");
-            return medicine;
+
+            MedicineForShowingDTO dto = FindMedicineCombination(medicine);
+            return Ok(dto);
         }
 
         [HttpGet("id/{id}")]
         public IActionResult GetMedicineByID(int id)
         {
-            Medicine medicine = medicineService.GetByID(id);
-
+            Medicine medicine = _medicineService.GetByID(id);
             if (medicine == null) return NotFound("This medicine doesn't exist.");
-            return Ok(medicine);
+
+            MedicineForShowingDTO dto = FindMedicineCombination(medicine);
+
+            return Ok(dto);
         }
 
         [HttpGet("search")]
         public IActionResult SearchMedicine([FromBody] MedicineSearchParams searchParams) 
         {
-            return Ok(medicineService.MedicineSearchResults(searchParams));
+            return Ok(_medicineService.MedicineSearchResults(searchParams));
         }
 
-        [HttpGet("filter/{dosage}")]
-        public IActionResult FilterMedicineByDosage(int dosage)
+        [HttpGet("filter/{option}")]
+        public IActionResult FilterMedicineByDosage(MedicineDosageFilter option)
         {
-            return Ok(medicineService.MedicineFilterDosageResults(dosage));
+            return Ok(_medicineService.MedicineFilterDosageResults(option));
+        }
+
+        private MedicineForShowingDTO FindMedicineCombination(Medicine medicine)
+        {
+            MedicineForShowingDTO dto = new MedicineForShowingDTO() { Medicine = medicine, MedicinesToCombineWith = new List<Medicine>() };
+            List<MedicineCombination> medicinesToCombineWith = _medicineCombinationService.GetMedicinesCombination(medicine.Id);
+            medicinesToCombineWith.ForEach(m => dto.MedicinesToCombineWith.Add(_medicineService.GetByID(m.SecondMedicineId)));
+
+            return dto;
         }
     }
 }

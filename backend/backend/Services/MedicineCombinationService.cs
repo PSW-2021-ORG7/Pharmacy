@@ -1,4 +1,5 @@
-﻿using backend.Repositories.Interfaces;
+﻿using backend.Model;
+using backend.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,21 @@ namespace backend.Services
 {
     public class MedicineCombinationService
     {
-        private IMedicineCombinationRepository medicineCombinationRepository;
+        private IMedicineCombinationRepository _medicineCombinationRepository;
 
         public MedicineCombinationService(IMedicineCombinationRepository medicineCombinationRepository)
         {
-            this.medicineCombinationRepository = medicineCombinationRepository;
+            this._medicineCombinationRepository = medicineCombinationRepository;
         }
 
         public bool Save(int id, int m)
         {
-            return medicineCombinationRepository.Save(new Model.MedicineCombination(id, m));
+            return _medicineCombinationRepository.Save(new Model.MedicineCombination(id, m));
+        }
+
+        public List<MedicineCombination> GetMedicinesCombination(int firstMedicineId)
+        {
+            return _medicineCombinationRepository.GetByFirstMedicineId(firstMedicineId);
         }
     }
 }

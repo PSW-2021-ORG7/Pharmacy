@@ -8,5 +8,6 @@ namespace backend.Repositories.Interfaces
 {
     public interface IMedicineCombinationRepository : IGenericRepository<MedicineCombination>
     {
+        List<MedicineCombination> GetByFirstMedicineId(int firstMedicineId);
     }
 }
