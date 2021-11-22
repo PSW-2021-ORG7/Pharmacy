@@ -60,9 +60,9 @@ namespace backend.Repositories
                 File.WriteAllText("Output/output.txt", medicineJsonString);
                 upload();
                 return true;
-            }catch (IOException)
+            }catch (Exception e)
             {
-                return false;
+                throw (e);
             }
             
         }
