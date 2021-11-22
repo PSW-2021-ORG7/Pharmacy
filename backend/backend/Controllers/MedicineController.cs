@@ -106,14 +106,14 @@ namespace backend.Controllers
         [HttpPut("update-inventory")]
         public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
         {
-            medicineInventoryService.Update(medicineInventory);
+            _medicineInventoryService.Update(medicineInventory);
             return Ok("Succesfully updated inventory");
         }
 
         [HttpPut("reduce-quantity")]
         public IActionResult ReduceQuantity([FromBody] MedicineInventory medicineInventory)
         {
-            medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
+            _medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
             return Ok();
         }
     }
