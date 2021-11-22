@@ -52,14 +52,15 @@ namespace backend.Repositories
             
         }
 
-        public bool RequestSpecification(Medicine medicine)
+        public String RequestSpecification(Medicine medicine)
         {
             string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
             try
             {
-                File.WriteAllText("Output/output.txt", medicineJsonString);
-                upload();
-                return true;
+                string fileName = medicine.Name + "_" + medicine.DosageInMilligrams + ".txt";
+                File.WriteAllText("Output/" + fileName, medicineJsonString);
+                upload(fileName);
+                return fileName;
             }catch (Exception e)
             {
                 throw (e);
@@ -67,12 +68,12 @@ namespace backend.Repositories
             
         }
 
-        public void upload()
+        public void upload(string fileName)
         {
             using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.14", "tester", "password")))
             {
                 client.Connect();
-                string sourceFile = @"C:\Users\Iodum99\Desktop\PSW Projekat\Pharmacy\backend\backend\Output\output.txt";
+                string sourceFile = @"C:\Users\Iodum99\Desktop\PSW Projekat\Pharmacy\backend\backend\Output\" + fileName;
                 using (Stream stream = File.OpenRead(sourceFile))
                 {
                     client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile));

@@ -7,6 +7,7 @@ using backend.Services;
 using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -125,7 +126,7 @@ namespace backend.Controllers
 
         public IActionResult RequestSpecification(string name, int dose)
         {
-            return Ok(medicineService.RequestSpecification(name, dose));
+            return Ok(JsonConvert.SerializeObject(medicineService.RequestSpecification(name, dose)));
         }
 
 

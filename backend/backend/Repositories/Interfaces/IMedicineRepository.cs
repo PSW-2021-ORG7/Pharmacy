@@ -13,6 +13,6 @@ namespace backend.Repositories.Interfaces
         public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams);
         public List<Medicine> MedicineFilterDosageResults(int from, int to);
         public Medicine GetByNameAndDose(string name, int dose);
-        public bool RequestSpecification(Medicine medicine);
+        public String RequestSpecification(Medicine medicine);
     }
 }

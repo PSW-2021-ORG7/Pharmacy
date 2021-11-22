@@ -86,12 +86,11 @@ namespace backend.Services
             return true;
         }
 
-        public bool RequestSpecification(string name, int dose)
+        public String RequestSpecification(string name, int dose)
         {
             Medicine medicine = GetByNameAndDose(name, dose);
-            if (medicineRepository.RequestSpecification(medicine))
-                return true;
-            return false;
+            return medicineRepository.RequestSpecification(medicine);
+
         }
     }
 }
