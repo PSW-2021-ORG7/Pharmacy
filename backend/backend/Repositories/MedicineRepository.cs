@@ -21,7 +21,7 @@ namespace backend.Repositories
 
         public bool MedicineExists(MedicineQuantityCheck DTO)
         {
-            if (_dataContext.Medicine.Any(m => m.Name.Equals(DTO.Name)  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
+            if (_dataContext.Medicine.Any(m => m.Name.ToLower().Equals(DTO.Name.ToLower())  && m.DosageInMilligrams.Equals(DTO.DosageInMg))) return true;
             return false;
         }
 
@@ -48,7 +48,7 @@ namespace backend.Repositories
 
         public Medicine GetByNameAndDose(string name, int dose)
         {
-            return  _dataContext.Medicine.SingleOrDefault(m => m.Name == name && m.DosageInMilligrams == dose);
+            return  _dataContext.Medicine.SingleOrDefault(m => m.Name.ToLower().Equals(name.ToLower()) && m.DosageInMilligrams == dose);
             
         }
 
@@ -76,7 +76,7 @@ namespace backend.Repositories
                 string sourceFile = @"C:\Users\Iodum99\Desktop\PSW Projekat\Pharmacy\backend\backend\Output\" + fileName;
                 using (Stream stream = File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile));
+                    client.UploadFile(stream, @"\public\" + fileName);
                 }
 
                 client.Disconnect();
