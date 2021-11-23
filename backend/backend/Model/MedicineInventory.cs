@@ -15,6 +15,7 @@ namespace backend.Model
             Quantity = 0;
         }
 
+        [JsonConstructor]
         public MedicineInventory(int medicineId,int quantity)
         {
             MedicineId = medicineId;

@@ -41,11 +41,7 @@ namespace backend.Repositories
             return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Name == name);
 		}
 		
-        public Medicine GetById(string id)
-        {
-            return _dataContext.Medicine.SingleOrDefault(m => m.MedicineId.ToString() == id);
-        }
-
+ 
         public Medicine GetByNameAndDose(string name, int dose)
         {
             return  _dataContext.Medicine.SingleOrDefault(m => m.Name.ToLower().Equals(name.ToLower()) && m.DosageInMilligrams == dose);
@@ -73,7 +69,7 @@ namespace backend.Repositories
             using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.14", "tester", "password")))
             {
                 client.Connect();
-                string sourceFile = @"C:\Users\Iodum99\Desktop\PSW Projekat\Pharmacy\backend\backend\Output\" + fileName;
+                string sourceFile = Path.Combine(Environment.CurrentDirectory, @"Output\", fileName);
                 using (Stream stream = File.OpenRead(sourceFile))
                 {
                     client.UploadFile(stream, @"\public\" + fileName);
@@ -111,16 +107,7 @@ namespace backend.Repositories
             return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Id.Equals(id));
         }
 
-        public bool DeleteMedicine(String id)
-        {
-            var medicine = _dataContext.Medicine.Find(id);
-            if (medicine == null)
-            {
-                return false;
-            }
 
-            Delete(medicine);
-            return true;
-        }
+
     }
 }

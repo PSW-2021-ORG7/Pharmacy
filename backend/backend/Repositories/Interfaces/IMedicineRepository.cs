@@ -10,8 +10,6 @@ namespace backend.Repositories.Interfaces
         public bool MedicineExists(MedicineQuantityCheck DTO);
         public Medicine GetByName(string name);
         public Medicine GetByID(int id);
-        public List<Medicine> MedicineSearchResults(MedicineSearchParams searchParams);
-        public List<Medicine> MedicineFilterDosageResults(int from, int to);
         public Medicine GetByNameAndDose(string name, int dose);
         public String RequestSpecification(Medicine medicine);
     }

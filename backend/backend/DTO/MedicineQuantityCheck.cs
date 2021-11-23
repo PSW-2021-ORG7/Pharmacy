@@ -7,10 +7,6 @@ namespace backend.DTO
 {
     public class MedicineQuantityCheck
     {
-<<<<<<< HEAD
-        public int MedicineId;
-=======
->>>>>>> 54295bf (fix: Fixed checkIfAvailable function)
         public string Name;
         public int DosageInMg;
         public int Quantity;

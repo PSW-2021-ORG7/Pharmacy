@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211121131543_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20211123224547_DrugstoreMigration")]
+    partial class DrugstoreMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

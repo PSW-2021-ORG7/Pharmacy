@@ -4,19 +4,16 @@ using backend.Model;
 using backend.Model.Enum;
 using backend.Repositories.Interfaces;
 using backend.Services;
-using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ApiKeyAuth]
+    
     public class MedicineController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -109,16 +106,16 @@ namespace backend.Controllers
         [HttpGet("find/{name}/{dose}")]
         public ActionResult<Medicine> GetMedicineByNameAndDose(string name, int dose)
         {
-            Medicine medicine = medicineService.GetByNameAndDose(name, dose);
+            Medicine medicine = _medicineService.GetByNameAndDose(name, dose);
 
             if (medicine == null) return NotFound("This medicine doesn't exist.");
             return medicine;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletePharmacy(String id)
+        public IActionResult DeletePharmacy(int id)
         {
-            if(medicineService.DeleteMedicine(id)) return Ok("Successfully deleted");
+            if(_medicineService.DeleteMedicine(id)) return Ok("Successfully deleted");
             return NotFound("This medicine doesn't exist.");
         }
 
@@ -126,7 +123,7 @@ namespace backend.Controllers
 
         public IActionResult RequestSpecification(string name, int dose)
         {
-            return Ok(JsonConvert.SerializeObject(medicineService.RequestSpecification(name, dose)));
+            return Ok(JsonConvert.SerializeObject(_medicineService.RequestSpecification(name, dose)));
         }
 
 
@@ -136,7 +133,7 @@ namespace backend.Controllers
         [Route("/inventory/check")]
         public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
         {
-            if (medicineService.CheckMedicineQuantity(DTO))
+            if (_medicineService.CheckMedicineQuantity(DTO))
                 return Ok(true);
 
             return Ok(false);
@@ -146,14 +143,14 @@ namespace backend.Controllers
         [Route("/inventory")]
         public IActionResult GetInventory()
         {
-            return Ok(medicineInventoryService.GetAll());
+            return Ok(_medicineInventoryService.GetAll());
         }
 
         [HttpPut]
         [Route("/inventory/{id}")]
         public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
         {
-            return Ok(medicineInventoryService.Update(medicineInventory));
+            return Ok(_medicineInventoryService.Update(medicineInventory));
         }
 
     }
