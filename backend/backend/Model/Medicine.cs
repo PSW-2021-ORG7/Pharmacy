@@ -10,7 +10,9 @@ namespace backend.Model
     [Table("Medicine")]
     public class Medicine
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
+
         public int Id { get; private set; }
 
         [Required]
@@ -38,5 +40,6 @@ namespace backend.Model
         public List<Ingredient> Ingredients { get; set; }
 
         public Medicine() {}
+
     }
 }
