@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using PdfDocument = PdfSharp.Pdf.PdfDocument;
 
 namespace backend.Repositories
 {
@@ -50,14 +53,55 @@ namespace backend.Repositories
 
         public String RequestSpecification(Medicine medicine)
         {
-            string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
+            /* string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
+             try
+             {
+
+                 string fileName = medicine.Name + "_" + medicine.DosageInMilligrams + ".pdf";
+                 File.WriteAllText("Output/" + fileName, medicineJsonString);
+                 upload(fileName);
+                 return fileName;
+             }catch (Exception e)
+             {
+                 throw (e);
+             }*/
+
             try
             {
-                string fileName = medicine.Name + "_" + medicine.DosageInMilligrams + ".txt";
-                File.WriteAllText("Output/" + fileName, medicineJsonString);
-                upload(fileName);
-                return fileName;
-            }catch (Exception e)
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = medicine.Name + "_" + medicine.DosageInMilligrams;
+                PdfPage page = document.AddPage();
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont font = new XFont("Verdana", 10, XFontStyle.Regular);
+                XFont fontTitle = new XFont("Verdana", 20, XFontStyle.Bold);
+
+                gfx.DrawString("Medicine specification", fontTitle, XBrushes.Goldenrod, 5.0, 25.0);
+                gfx.DrawString("Medicine name:", font, XBrushes.Goldenrod, 5.0, 40.0);
+                gfx.DrawString(medicine.Name, font, XBrushes.Black,
+                                        new XRect(200.0, 35.0, 0.0, 0.0),
+                                        XStringFormats.Center);
+
+                gfx.DrawString("Description: ", font, XBrushes.Goldenrod, 5.0, 60.0);
+                gfx.DrawString(medicine.Description, font, XBrushes.Black,
+                                        new XRect(200.0, 55.0, 0.0, 0.0),
+                                        XStringFormats.Center);
+
+                gfx.DrawString("Way of consumption: ", font, XBrushes.Goldenrod, 5.0, 80.0);
+                gfx.DrawString(medicine.WayOfConsumption, font, XBrushes.Black,
+                                        new XRect(200.0, 75.0, 0.0, 0.0),
+                                        XStringFormats.Center);
+
+                gfx.DrawString("Potential dangers: ", font, XBrushes.Goldenrod, 5.0, 100.0);
+                gfx.DrawString(medicine.PotentialDangers, font, XBrushes.Black,
+                                        new XRect(200.0, 95.0, 0.0, 0.0),
+                                        XStringFormats.Center);
+
+               string filename = "Output" + Path.DirectorySeparatorChar + medicine.Name.Replace(" ", "") + "_" + medicine.DosageInMilligrams + ".pdf";
+               document.Save(filename);
+               return filename;
+            }
+            catch (Exception e)
             {
                 throw (e);
             }
@@ -66,7 +110,7 @@ namespace backend.Repositories
 
         public void upload(string fileName)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.14", "tester", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
             {
                 client.Connect();
                 string sourceFile = Path.Combine(Environment.CurrentDirectory, @"Output\", fileName);

@@ -1,0 +1,16 @@
+{
+  "Id": 3,
+  "Name": "andol",
+  "Description": "string",
+  "DosageInMilligrams": 200,
+  "Manufacturer": "string",
+  "SideEffects": [
+    "string"
+  ],
+  "PossibleReactions": [
+    "string"
+  ],
+  "WayOfConsumption": "string",
+  "PotentialDangers": "string",
+  "Ingredients": null
+}

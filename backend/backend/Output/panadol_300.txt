@@ -1,0 +1,16 @@
+{
+  "Id": 2,
+  "Name": "panadol",
+  "Description": "string",
+  "DosageInMilligrams": 300,
+  "Manufacturer": "string",
+  "SideEffects": [
+    "string"
+  ],
+  "PossibleReactions": [
+    "string"
+  ],
+  "WayOfConsumption": "string",
+  "PotentialDangers": "string",
+  "Ingredients": null
+}
