@@ -53,59 +53,52 @@ namespace backend.Repositories
 
         public String RequestSpecification(Medicine medicine)
         {
-            /* string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
-             try
-             {
-
-                 string fileName = medicine.Name + "_" + medicine.DosageInMilligrams + ".pdf";
-                 File.WriteAllText("Output/" + fileName, medicineJsonString);
-                 upload(fileName);
-                 return fileName;
-             }catch (Exception e)
-             {
-                 throw (e);
-             }*/
-
             try
             {
-                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-                PdfDocument document = new PdfDocument();
-                document.Info.Title = medicine.Name + "_" + medicine.DosageInMilligrams;
-                PdfPage page = document.AddPage();
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Verdana", 10, XFontStyle.Regular);
-                XFont fontTitle = new XFont("Verdana", 20, XFontStyle.Bold);
-
-                gfx.DrawString("Medicine specification", fontTitle, XBrushes.Goldenrod, 5.0, 25.0);
-                gfx.DrawString("Medicine name:", font, XBrushes.Goldenrod, 5.0, 40.0);
-                gfx.DrawString(medicine.Name, font, XBrushes.Black,
-                                        new XRect(200.0, 35.0, 0.0, 0.0),
-                                        XStringFormats.Center);
-
-                gfx.DrawString("Description: ", font, XBrushes.Goldenrod, 5.0, 60.0);
-                gfx.DrawString(medicine.Description, font, XBrushes.Black,
-                                        new XRect(200.0, 55.0, 0.0, 0.0),
-                                        XStringFormats.Center);
-
-                gfx.DrawString("Way of consumption: ", font, XBrushes.Goldenrod, 5.0, 80.0);
-                gfx.DrawString(medicine.WayOfConsumption, font, XBrushes.Black,
-                                        new XRect(200.0, 75.0, 0.0, 0.0),
-                                        XStringFormats.Center);
-
-                gfx.DrawString("Potential dangers: ", font, XBrushes.Goldenrod, 5.0, 100.0);
-                gfx.DrawString(medicine.PotentialDangers, font, XBrushes.Black,
-                                        new XRect(200.0, 95.0, 0.0, 0.0),
-                                        XStringFormats.Center);
-
-               string filename = "Output" + Path.DirectorySeparatorChar + medicine.Name.Replace(" ", "") + "_" + medicine.DosageInMilligrams + ".pdf";
-               document.Save(filename);
-               return filename;
+                string filename = medicine.Name.Replace(" ", "") + "_" + medicine.DosageInMilligrams + ".pdf";
+                PdfDocument document = createDocument(medicine);
+                document.Save("Output/" + filename);
+                upload(filename);
+                return filename;
             }
             catch (Exception e)
             {
                 throw (e);
             }
             
+        }
+
+        private PdfDocument createDocument(Medicine medicine) {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = medicine.Name + "_" + medicine.DosageInMilligrams;
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XFont font = new XFont("Verdana", 10, XFontStyle.Regular);
+            XFont fontTitle = new XFont("Verdana", 20, XFontStyle.Bold);
+
+            gfx.DrawString("Medicine specification", fontTitle, XBrushes.Goldenrod, 5.0, 25.0);
+            gfx.DrawString("Medicine name:", font, XBrushes.Goldenrod, 5.0, 40.0);
+            gfx.DrawString(medicine.Name, font, XBrushes.Black,
+                                    new XRect(200.0, 35.0, 0.0, 0.0),
+                                    XStringFormats.Center);
+
+            gfx.DrawString("Description: ", font, XBrushes.Goldenrod, 5.0, 60.0);
+            gfx.DrawString(medicine.Description, font, XBrushes.Black,
+                                    new XRect(200.0, 55.0, 0.0, 0.0),
+                                    XStringFormats.Center);
+
+            gfx.DrawString("Way of consumption: ", font, XBrushes.Goldenrod, 5.0, 80.0);
+            gfx.DrawString(medicine.WayOfConsumption, font, XBrushes.Black,
+                                    new XRect(200.0, 75.0, 0.0, 0.0),
+                                    XStringFormats.Center);
+
+            gfx.DrawString("Potential dangers: ", font, XBrushes.Goldenrod, 5.0, 100.0);
+            gfx.DrawString(medicine.PotentialDangers, font, XBrushes.Black,
+                                    new XRect(200.0, 95.0, 0.0, 0.0),
+                                    XStringFormats.Center);
+            return document;
+
         }
 
         public void upload(string fileName)
