@@ -4,6 +4,7 @@ using backend.Model;
 using backend.Model.Enum;
 using backend.Repositories.Interfaces;
 using backend.Services;
+using Grpc.Net.Client;
 using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,14 @@ namespace backend.Controllers
             _medicineCombinationService = new MedicineCombinationService(medicineCombinationRepository);
         }
 
+        [HttpGet("test")]
+        public IActionResult GetTest()
+        {
+           
+            
+            return Ok("It works");
+        }
+		
         [HttpGet]
         public IActionResult Get()
         {
