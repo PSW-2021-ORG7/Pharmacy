@@ -28,8 +28,22 @@ namespace backend.Services
 
         public bool ReduceMedicineQuantity(MedicineInventory medicineInventory)
         {
-            bool updated = medicineInventoryRepository.ReduceMedicineQuantity(medicineInventory);
-            if (updated) return true;
+            //bool updated = medicineInventoryRepository.ReduceMedicineQuantity(medicineInventory);
+            MedicineInventory medicine = null;
+            foreach (MedicineInventory changedMedicine in medicineInventoryRepository.GetAll())
+                if (changedMedicine.MedicineId.Equals(medicineInventory.MedicineId))
+                {
+                    medicine = changedMedicine;
+                    break;
+                }
+         
+            if (medicine != null)
+            {
+                medicine.Quantity -= medicineInventory.Quantity;
+                if (medicine.Quantity < 0) return false;
+                medicineInventoryRepository.Save(medicine);
+                return true;
+            }
             return false;
         }
 

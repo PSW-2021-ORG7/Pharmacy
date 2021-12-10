@@ -54,7 +54,8 @@ namespace backend.Repositories
 
         public bool ReduceMedicineQuantity(MedicineInventory entity)
         {
-            var result = _dataContext.MedicineInventory.SingleOrDefault(m => m.MedicineId == entity.MedicineId);
+            var medicines = GetAll();
+            var result = medicines.SingleOrDefault(m => m.MedicineId == entity.MedicineId);
             if (result != null)
             {
                 result.Quantity -= entity.Quantity;

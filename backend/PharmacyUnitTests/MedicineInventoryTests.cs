@@ -27,6 +27,7 @@ namespace PharmacyUnitTests
             MedicineInventory medicineInventory = new MedicineInventory(1, 5);
             List<MedicineInventory> medicineInventories = new List<MedicineInventory>();
             medicineInventories.Add(medicineInventory);
+            stubRepository.Setup(m => m.ReduceMedicineQuantity(It.IsAny<MedicineInventory>()));
             stubRepository.Setup(m => m.GetAll()).Returns(medicineInventories);
             return stubRepository;
         }
