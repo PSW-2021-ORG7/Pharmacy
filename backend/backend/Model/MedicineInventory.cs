@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace backend.Model
             Quantity = 0;
         }
 
+        [JsonConstructor]
         public MedicineInventory(int medicineId,int quantity)
         {
             MedicineId = medicineId;

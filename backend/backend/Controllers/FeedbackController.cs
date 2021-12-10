@@ -1,6 +1,7 @@
 ﻿using backend.Model;
 using backend.Repositories.Interfaces;
 using backend.Services;
+using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,6 +10,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiKeyAuth]
     public class FeedbackController : Controller
     {
         private FeedbackService feedbackService;

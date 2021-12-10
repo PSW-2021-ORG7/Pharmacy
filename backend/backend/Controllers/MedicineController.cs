@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using backend.DTO;
 using backend.Model;
 using backend.Model.Enum;
@@ -6,14 +6,14 @@ using backend.Repositories.Interfaces;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    
     public class MedicineController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -44,6 +44,7 @@ namespace backend.Controllers
             return Ok(_medicineService.GetAll());
         }
 
+       
         [HttpPost]
         public IActionResult CreateMedicine([FromBody] NewMedicineDTO medicineDTO)
         {
@@ -57,7 +58,6 @@ namespace backend.Controllers
                 }
                 return Ok("Succesfully added medicine");
             }
-
             return BadRequest("Medicine with that name and dosage already exists");
         }
 
@@ -103,18 +103,63 @@ namespace backend.Controllers
             return dto;
         }
 
-        [HttpPut("update-inventory")]
-        public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
+        [HttpGet("find/{name}/{dose}")]
+        public ActionResult<Medicine> GetMedicineByNameAndDose(string name, int dose)
         {
-            _medicineInventoryService.Update(medicineInventory);
-            return Ok("Succesfully updated inventory");
+            Medicine medicine = _medicineService.GetByNameAndDose(name, dose);
+
+            if (medicine == null) return NotFound("This medicine doesn't exist.");
+            return medicine;
         }
 
-        [HttpPut("reduce-quantity")]
+        [HttpDelete("{id}")]
+        public IActionResult DeletePharmacy(int id)
+        {
+            if(_medicineService.DeleteMedicine(id)) return Ok("Successfully deleted");
+            return NotFound("This medicine doesn't exist.");
+        }
+
+        [HttpGet("request/{name}/{dose}")]
+
+        public IActionResult RequestSpecification(string name, int dose)
+        {
+            return Ok(JsonConvert.SerializeObject(_medicineService.RequestSpecification(name, dose)));
+        }
+
+
+        // INVENTORY
+
+        [HttpPost]
+        [Route("/inventory/check")]
+        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
+        {
+            if (_medicineService.CheckMedicineQuantity(DTO))
+                return Ok(true);
+
+            return Ok(false);
+        }
+
+        [HttpGet]
+        [Route("/inventory")]
+        public IActionResult GetInventory()
+        {
+            return Ok(_medicineInventoryService.GetAll());
+        }
+
+        [HttpPut]
+        [Route("/inventory/{id}")]
+        public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
+        {
+            return Ok(_medicineInventoryService.Update(medicineInventory));
+        }
+
+
+        [HttpPut("/inventory/reduce-quantity")]
         public IActionResult ReduceQuantity([FromBody] MedicineInventory medicineInventory)
         {
             _medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
             return Ok();
         }
+
     }
 }

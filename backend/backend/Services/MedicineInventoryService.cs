@@ -57,10 +57,16 @@ namespace backend.Services
             return medicinesUnableToUpdate;
         }
 
+
         public bool DeleteMedicineInventory(MedicineInventory medicineInventory)
         {
             medicineInventoryRepository.Delete(medicineInventory);
             return true; //napomena!
+		}
+
+        public List<MedicineInventory> GetAll()
+        {
+            return medicineInventoryRepository.GetAll();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace backend.Repositories
         public bool CheckMedicineQuantity(MedicineInventory medicineInventory)
         {
             if (_dataContext.MedicineInventory.Any(m => m.MedicineId.Equals(medicineInventory.MedicineId) 
-            && m.Quantity <= medicineInventory.Quantity)) return true;
+            && m.Quantity >= medicineInventory.Quantity)) return true;
             return false;
         }
 
@@ -41,7 +41,7 @@ namespace backend.Repositories
 
         public bool Update(MedicineInventory entity)
         {
-            var result = _dataContext.MedicineInventory.SingleOrDefault(m => m.MedicineId == entity.MedicineId);
+            MedicineInventory result = _dataContext.MedicineInventory.SingleOrDefault(m => m.MedicineId.Equals(entity.MedicineId));
             if (result != null)
             {
                 result.Quantity = entity.Quantity;
