@@ -90,7 +90,7 @@ namespace backend
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IMedicineCombinationRepository, MedicineCombinationRepository>();
-
+            services.AddScoped<IOrdersRepository, OrdersRepository>();
             //Services
             services.AddTransient<Services.UserService>();
             services.AddTransient<JwtMiddleware>();
