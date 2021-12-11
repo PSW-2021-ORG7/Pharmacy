@@ -173,6 +173,51 @@ namespace backend.Migrations
                     b.ToTable("MedicineInventory");
                 });
 
+            modelBuilder.Entity("backend.Model.Order", b =>
+                {
+                    b.Property<int>("Order_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Order_Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("backend.Model.OrderItem", b =>
+                {
+                    b.Property<int>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("MedicineId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Order_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("Order_Id");
+
+                    b.ToTable("OrderItem");
+                });
+
             modelBuilder.Entity("backend.Model.User", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -244,6 +289,33 @@ namespace backend.Migrations
                     b.Navigation("FirstMedicine");
 
                     b.Navigation("SecondMedicine");
+                });
+
+            modelBuilder.Entity("backend.Model.Order", b =>
+                {
+                    b.HasOne("backend.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Model.OrderItem", b =>
+                {
+                    b.HasOne("backend.Model.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId");
+
+                    b.HasOne("backend.Model.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("Order_Id");
+
+                    b.Navigation("Medicine");
+                });
+
+            modelBuilder.Entity("backend.Model.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

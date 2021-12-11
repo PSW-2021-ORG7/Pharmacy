@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
-    public partial class DrugstoreMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -150,6 +150,53 @@ namespace backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Order_Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    OrderDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Order_Id);
+                    table.ForeignKey(
+                        name: "FK_Order_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItem",
+                columns: table => new
+                {
+                    OrderItemId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    MedicineId = table.Column<int>(type: "integer", nullable: true),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    Order_Id = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItem", x => x.OrderItemId);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_Medicine_MedicineId",
+                        column: x => x.MedicineId,
+                        principalTable: "Medicine",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_Order_Order_Id",
+                        column: x => x.Order_Id,
+                        principalTable: "Order",
+                        principalColumn: "Order_Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Hospital_ApiKey",
                 table: "Hospital",
@@ -176,6 +223,21 @@ namespace backend.Migrations
                 name: "IX_MedicineCombination_SecondMedicineId",
                 table: "MedicineCombination",
                 column: "SecondMedicineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_UserId",
+                table: "Order",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItem_MedicineId",
+                table: "OrderItem",
+                column: "MedicineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItem_Order_Id",
+                table: "OrderItem",
+                column: "Order_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -196,13 +258,19 @@ namespace backend.Migrations
                 name: "MedicineInventory");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "OrderItem");
 
             migrationBuilder.DropTable(
                 name: "Ingredient");
 
             migrationBuilder.DropTable(
                 name: "Medicine");
+
+            migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }
