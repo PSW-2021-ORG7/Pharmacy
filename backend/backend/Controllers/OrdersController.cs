@@ -35,11 +35,15 @@ namespace backend.Controllers
         }
 
         [HttpGet("history/{id}")]
-        public ActionResult<List<Order>> GetMedicineByName(int id)
+
+        public ActionResult<List<Order>> GetRecentOrder(int id)
         {
             return Ok(ordersService.GetRecentOrders(id));
         }
-
-
+        [HttpPut]
+        public ActionResult<Boolean> Save([FromBody] Order order)
+        {
+            return Ok();
+        } 
     }
 }

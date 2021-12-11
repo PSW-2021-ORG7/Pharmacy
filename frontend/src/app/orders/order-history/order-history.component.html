@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>History of recent orders</h1>
+    <div *ngFor="let order of orders; index as i;" class="list">
+        <div class="wrapper">
+             <h5>Ordered:
+             <span *ngFor="let orderItem of order.OrderItems; index as j; let last = last">
+                {{orderItem.Medicine.Name}} x{{orderItem.Quantiy}} {{orderItem.Medicine.Dosage}}mg<span *ngIf="!last">,</span>
+             </span>
+            </h5>
+            <div class="gap"></div>
+            <div class="bottom ml-1">Date of order: {{changeDate(order.Date)}}
+                <button class="btn btn-primary" (click)="orderAgain(order)">Order again</button>
+            </div>
+        </div>
+    </div>
+</div>

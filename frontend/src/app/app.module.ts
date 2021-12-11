@@ -7,11 +7,13 @@ import { HomeComponent } from './home/home.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderHistoryComponent } from './orders/order-history/order-history.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    RegisterMedicineComponent
+    RegisterMedicineComponent,
+    OrderHistoryComponent
   ],
   imports: [
     BrowserModule,
