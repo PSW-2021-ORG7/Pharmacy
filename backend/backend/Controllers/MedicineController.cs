@@ -153,5 +153,13 @@ namespace backend.Controllers
             return Ok(_medicineInventoryService.Update(medicineInventory));
         }
 
+
+        [HttpPut("/inventory/reduce-quantity")]
+        public IActionResult ReduceQuantity([FromBody] MedicineInventory medicineInventory)
+        {
+            _medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
+            return Ok();
+        }
+
     }
 }

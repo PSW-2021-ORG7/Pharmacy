@@ -26,6 +26,27 @@ namespace backend.Services
             return false;
         }
 
+        public bool ReduceMedicineQuantity(MedicineInventory medicineInventory)
+        {
+            //bool updated = medicineInventoryRepository.ReduceMedicineQuantity(medicineInventory);
+            MedicineInventory medicine = null;
+            foreach (MedicineInventory changedMedicine in medicineInventoryRepository.GetAll())
+                if (changedMedicine.MedicineId.Equals(medicineInventory.MedicineId))
+                {
+                    medicine = changedMedicine;
+                    break;
+                }
+         
+            if (medicine != null)
+            {
+                medicine.Quantity -= medicineInventory.Quantity;
+                if (medicine.Quantity < 0) return false;
+                medicineInventoryRepository.Save(medicine);
+                return true;
+            }
+            return false;
+        }
+
         public List<MedicineInventory> UpdateMultipleMedicines(List<MedicineInventory> medicines)
         {
             List<MedicineInventory> medicinesUnableToUpdate = new List<MedicineInventory>();

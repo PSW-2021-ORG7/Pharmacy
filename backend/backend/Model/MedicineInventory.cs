@@ -21,6 +21,10 @@ namespace backend.Model
             MedicineId = medicineId;
             Quantity = quantity;
         }
+        public MedicineInventory()
+        {
+
+        }
 
         [Key]
         public int MedicineId { get; set; }

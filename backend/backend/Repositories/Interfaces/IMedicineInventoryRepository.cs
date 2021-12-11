@@ -9,5 +9,6 @@ namespace backend.Repositories.Interfaces
     public interface IMedicineInventoryRepository : IGenericRepository<MedicineInventory>
     {
         public bool CheckMedicineQuantity(MedicineInventory medicineInventory);
+        public bool ReduceMedicineQuantity(MedicineInventory entity);
     }
 }
