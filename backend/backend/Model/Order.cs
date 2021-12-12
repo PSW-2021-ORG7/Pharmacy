@@ -26,6 +26,9 @@ namespace backend.Model
         [Required]
         public OrderStatus Status;
 
+        [Required]
+        public Boolean deliveryReqired;
+
         public Order(){}
     }
 }
