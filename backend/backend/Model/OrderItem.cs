@@ -17,8 +17,16 @@ namespace backend.Model
         [Required]
         public int Quantity { get; set; }
 
+        [Required]
+        public double PriceForSingleEntity { get; set; }
+
         public OrderItem()
         {
+        }
+
+        public double getPriceForAll()
+        {
+            return Quantity * PriceForSingleEntity;
         }
     }
 }
