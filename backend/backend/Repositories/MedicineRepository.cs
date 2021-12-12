@@ -122,7 +122,25 @@ namespace backend.Repositories
             return _dataContext.Medicine.Include(m => m.Ingredients).SingleOrDefault(m => m.Id.Equals(id));
         }
 
+        public bool DownloadPrescriptionSFTP(String fileName)
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.1.3", "tester", "password")))
+            {
+                client.Connect();
 
+                string sourceFileServer = @"\public\" + fileName;
+                string sourceFileLocal = Path.Combine(Environment.CurrentDirectory, @"Downloads\", fileName);
+
+
+                using (Stream stream = File.OpenWrite(sourceFileLocal))
+                {
+                    client.DownloadFile(sourceFileServer, stream);
+                }
+
+                client.Disconnect();
+            }
+            return true;
+        }
 
     }
 }

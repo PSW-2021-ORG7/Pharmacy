@@ -14,14 +14,16 @@ namespace backend.Services
         IMedicineRepository medicineRepository;
         IMedicineInventoryRepository medicineInventoryRepository;
 
-        public MedicineService(IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository) { 
+        public MedicineService(IMedicineRepository medicineRepository, IMedicineInventoryRepository medicineInventoryRepository)
+        {
             this.medicineRepository = medicineRepository;
             this.medicineInventoryRepository = medicineInventoryRepository;
         }
 
         public List<Medicine> GetAll() => medicineRepository.GetAll();
 
-        public bool Save(Medicine medicine) {
+        public bool Save(Medicine medicine)
+        {
             if (medicineRepository.Save(medicine)) return true;
             return false;
         }
@@ -34,7 +36,7 @@ namespace backend.Services
                 if (medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(foundMedicine.Id, DTO.Quantity)))
                     return true;
             }
-               
+
             return false;
         }
 
@@ -61,7 +63,7 @@ namespace backend.Services
         {
             int from;
             int to;
-            switch((int)option)
+            switch ((int)option)
             {
                 case 0: from = 0; to = 200; break;
                 case 1: from = 200; to = 400; break;
@@ -70,18 +72,18 @@ namespace backend.Services
             }
 
             return medicineRepository.GetAll().Where(m => m.DosageInMilligrams >= from && m.DosageInMilligrams <= to).ToList();
-		}
-		
+        }
+
         public Medicine GetByNameAndDose(string name, int dose)
         {
-            return medicineRepository.GetByNameAndDose(name,dose);
+            return medicineRepository.GetByNameAndDose(name, dose);
         }
 
         public bool DeleteMedicine(int id)
         {
             Medicine medicineToDelete = medicineRepository.GetByID(id);
             if (medicineToDelete == null) return false;
-            
+
             medicineRepository.Delete(medicineToDelete);
             return true;
         }
@@ -90,6 +92,20 @@ namespace backend.Services
         {
             Medicine medicine = GetByNameAndDose(name, dose);
             return medicineRepository.RequestSpecification(medicine);
+
+        }
+
+        public bool DownloadPrescriptionSFTP(String fileName)
+        {
+            try
+            {
+                return medicineRepository.DownloadPrescriptionSFTP(fileName);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
 
         }
     }

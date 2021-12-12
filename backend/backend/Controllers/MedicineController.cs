@@ -162,5 +162,13 @@ namespace backend.Controllers
             return Ok();
         }
 
+        //Prescriptions
+
+        [HttpGet("downloadPrescription/{fileName}")]
+        public IActionResult DownloadPrescriptionSFTP(string fileName)
+        {
+            return Ok(_medicineService.DownloadPrescriptionSFTP(fileName));
+        }
+
     }
 }
