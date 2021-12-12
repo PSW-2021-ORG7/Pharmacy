@@ -1,5 +1,5 @@
-﻿using Grpc.Core;
-using PrimerWebApi.Protos;
+﻿using backend.Protos;
+using Grpc.Core;
 using System;
 using System.Threading.Tasks;
 

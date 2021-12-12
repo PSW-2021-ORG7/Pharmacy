@@ -15,8 +15,8 @@ using System.Text;
 using static backend.Helpers.JwtMiddleware;
 using System;
 using Grpc.Core;
-using PrimerWebApi.Protos;
 using backend.GrpcServices;
+using backend.Protos;
 
 namespace backend
 {
@@ -133,6 +133,7 @@ namespace backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGrpcService<MedicineGrpcService>().RequireHost("*:5001");
 
             });
 
@@ -146,7 +147,7 @@ namespace backend
             server = new Server
             {
                 Services = { NetGrpcService.BindService(new MedicineGrpcService()) },
-                Ports = { new ServerPort("localhost", 4111, ServerCredentials.Insecure) }
+                Ports = { new ServerPort("localhost", 5001, ServerCredentials.Insecure) }
             };
             server.Start();
 

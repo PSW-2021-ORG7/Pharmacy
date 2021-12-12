@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package rs.ac.uns.ftn.grpc;
-option csharp_namespace = "PrimerWebApi.Protos";
+option csharp_namespace = "backend.Protos";
 
 message MessageProto {
   string message = 1;
