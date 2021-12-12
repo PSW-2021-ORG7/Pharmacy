@@ -14,9 +14,14 @@ COPY "/backend" .
 RUN dotnet build "backend.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "backend.csproj" -c Release -o /app/publish
+ENV PATH $PATH:/root/.dotnet/tools
+RUN dotnet tool install -g dotnet-ef && \
+    dotnet publish "backend.csproj" -c Release -o /app/publish && \
+    dotnet-ef migrations script -p "backend.csproj" -o /app/scripts/init-pharmacy.sql
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+WORKDIR /app/publish
+VOLUME /app/scripts
 ENTRYPOINT ["dotnet", "backend.dll"]
