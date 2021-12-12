@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../order-service';
-
 @Component({
-  selector: 'app-order-history',
-  templateUrl: './order-history.component.html',
-  styleUrls: ['./order-history.component.css'],
+  selector: 'app-order-pharmacist',
+  templateUrl: './order-pharmacist.component.html',
+  styleUrls: ['./order-pharmacist.component.css'],
   providers: [OrderService]
 })
-export class OrderHistoryComponent implements OnInit {
+export class OrderPharmacistComponent implements OnInit {
+
   orders: any= [
     {
+      Order_Id : 1,
       OrderItems:[
         {
       Medicine: {
@@ -34,9 +35,10 @@ export class OrderHistoryComponent implements OnInit {
       UserId : 2
     },
     Date: new Date(2021, 10, 11),
-    OrderStatus: 'Delivered'
+    OrderStatus: 'PickUpRequest'
     },
     {
+      Order_Id : 2,
       OrderItems:[
         {
       Medicine: {
@@ -52,9 +54,10 @@ export class OrderHistoryComponent implements OnInit {
       UserId : 2
     },
     Date: new Date(2021, 10, 11),
-    OrderStatus: 'Delivered'
+    OrderStatus: 'OrderRequest'
     },
     {
+      Order_Id : 3,
       OrderItems:[
         {
       Medicine: {
@@ -70,21 +73,30 @@ export class OrderHistoryComponent implements OnInit {
       UserId : 2
     },
     Date: new Date(2021, 10, 11),
-    OrderStatus: 'Delivered'
+    OrderStatus: 'PickUpRequest'
     },
    
   ];
   constructor(private _orderService: OrderService) { }
 
-  changeDate(date : Date){
-    return date.toLocaleDateString("sr-RS")
+  getStatus(status : String){
+    if(status == "PickUpRequest") return "Pick up request"
+    else return "Order request"
+  }
+  getButton(status : String){
+    if(status == "PickUpRequest") return "Confirm pick up request"
+    else return "Assign courier"
   }
   orderAgain(order : any){
-    order.OrderStatus = 'OrderRequest'
-    console.log(order)
-    this._orderService.updateReorder(order)
-    alert('Order succesfully created!')
+     if(confirm("Are you sure you want to confirm request?")){
+        const orderDto = {
+          Order_id : order.Order_Id,
+          OrderStatus : order.OrderStatus
+        }
+        this._orderService.changeStatus(orderDto);
+     }  
   }
+
   ngOnInit(): void {
   }
 

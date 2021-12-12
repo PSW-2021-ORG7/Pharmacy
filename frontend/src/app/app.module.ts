@@ -8,12 +8,14 @@ import { RegisterMedicineComponent } from './register-medicine/register-medicine
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderHistoryComponent } from './orders/order-history/order-history.component';
+import { OrderPharmacistComponent } from './orders/order-pharmacist/order-pharmacist.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RegisterMedicineComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    OrderPharmacistComponent
   ],
   imports: [
     BrowserModule,

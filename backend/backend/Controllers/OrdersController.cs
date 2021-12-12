@@ -40,10 +40,21 @@ namespace backend.Controllers
         {
             return Ok(ordersService.GetRecentOrders(id));
         }
-        [HttpPut]
+        [HttpPost]
         public ActionResult<Boolean> Save([FromBody] Order order)
         {
             return Ok();
-        } 
+        }
+        [HttpGet("requests")]
+        public ActionResult<List<Order>> GetRequests()
+        {
+            return Ok(ordersService.GetOrdersRequests());
+        }
+
+        [HttpPut("update-reorder")]
+        public ActionResult<List<Order>> UpdateReorder([FromBody] Order order)
+        {
+            return Ok(ordersService.UpdateReorder(order));
+        }
     }
 }

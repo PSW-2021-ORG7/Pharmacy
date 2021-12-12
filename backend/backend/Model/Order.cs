@@ -27,5 +27,12 @@ namespace backend.Model
         public OrderStatus Status;
 
         public Order(){}
+
+        public Order(int id, OrderStatus status)
+        {
+            OrderDate = DateTime.Now;
+            Status = status;
+            Order_Id = id;
+        }
     }
 }

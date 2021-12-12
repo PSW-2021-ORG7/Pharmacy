@@ -30,6 +30,15 @@ namespace backend.Services
 
         }
 
+        public List<Order> GetOrdersRequests()
+        {
+            List<Order> orders = new List<Order>();
+            foreach (Order order in orderRepository.GetAll())
+                if (order.Status.Equals(OrderStatus.PickUpRequest) || order.Status.Equals(OrderStatus.OrderRequest))
+                    orders.Add(order);
+            return orders;
+        }
+
         internal Boolean UpdateStatus(OrderStatusDto orderStatus)
         {
             Order order=orderRepository.GetById(orderStatus.Order_id);
@@ -37,6 +46,17 @@ namespace backend.Services
                 throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             order.Status = orderStatus.OrderStatus;
             return orderRepository.Update(order);
+        }
+
+        internal object UpdateReorder(Order order)
+        {
+            if (orderRepository.Update(order))
+            {
+                List<Order> orders = GetOrdersRequests();
+                return orders;
+            }
+            else
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
         }
     }
 }
