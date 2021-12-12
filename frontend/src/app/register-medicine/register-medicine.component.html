@@ -1,0 +1,79 @@
+<div class="container register-form mt-5">
+    <div class="form">
+        <div class="note">
+            <p>Register medicine</p>
+        </div>
+
+        <div class="form-content form-color">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Medicine Name *" [(ngModel)]="name"/>
+                        <p *ngIf="nameError" class="error">Name is required</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Manufacturer*" [(ngModel)]="manufacturer"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Dosage in Milligrams*" [(ngModel)]="dosageInMg"/>
+                        <p *ngIf="dosageError" class="error">Dosage needs to be a number</p>
+                    </div>
+                    <div class="form-group drop-item">
+                        <input type="text" class="form-control mr-3" placeholder="Potenital danger*" [(ngModel)]="potentialDanger"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mr-5">
+                        <div class="form-group drop-item">
+                            <input type="text" class="form-control mr-3" placeholder="Side effect*" [(ngModel)]="sideEffectInput"/>
+                            <div (click)="addSideEffect()"><i class="fas fa-plus fa-2x icon"></i></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <details>
+                                <summary>Side Effects</summary>
+                                <ul>
+                                    <li *ngFor="let sideEffect of sideEffects; index as i;" [value]="sideEffect">
+                                        <div class="drop-item"><button ngbDropdownItem class="drop-button">{{sideEffect}}</button><div (click)="removeSideEffect(i)"><i class="fas fa-times icon"></i></div></div>
+                                    </li>
+                                </ul>
+                            </details>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col mr-5">
+                    <div class="form-group drop-item">
+                        <input type="text" class="form-control mr-3" placeholder="Reaction*" [(ngModel)]="reactionInput"/>
+                        <div (click)="addReaction()"><i class="fas fa-plus fa-2x icon"></i></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <details>
+                            <summary>Reactions</summary>
+                            <ul>
+                                <li *ngFor="let reaction of reactions; index as i;" [value]="reaction">
+                                    <div class="drop-item"><button ngbDropdownItem class="drop-button">{{reaction}}</button><div (click)="removeReaction(i)"><i class="fas fa-times icon"></i></div></div>
+                                </li>
+                            </ul>
+                        </details>
+                </div>
+            </div>
+        </div>
+    <div class="row mb-4">
+        <div class="col">
+            <textarea placeholder="Way of consumption*" rows="4" cols="60" [(ngModel)]="wayOfConsumption"></textarea>
+        </div>
+        <div class="col">
+            <textarea placeholder="Description*"rows="4" cols="60" [(ngModel)]="description"></textarea>
+    </div>
+</div>
+            <button type="button" class="btnSubmit" (click)="onSubmit()">Submit</button>
+        </div>
+    </div>
+</div>
