@@ -19,6 +19,7 @@ namespace backend.DAL
         public DbSet<Ingredient> Ingredient { get; set; }
         public DbSet<MedicineCombination> MedicineCombination { get; set; }
         public DbSet<Order> Order { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
