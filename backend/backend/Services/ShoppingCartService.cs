@@ -70,6 +70,7 @@ namespace backend.Services
             return successfullyUpdated;
         }
 
+
         public ShoppingCart GetByUser(Guid userId)
         {
             ShoppingCart sc = shoppingCartsRepository.GetByUserID(userId);
@@ -166,5 +167,6 @@ namespace backend.Services
 
             return shoppingCart;
         }
+
     }
 }

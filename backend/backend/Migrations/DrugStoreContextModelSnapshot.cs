@@ -356,14 +356,9 @@ namespace backend.Migrations
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
-            {
-                b.HasOne("backend.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                b.Navigation("User");
-            });
         }
+#pragma warning restore 612, 618
     }
 }
+    
+
