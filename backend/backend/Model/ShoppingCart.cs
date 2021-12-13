@@ -21,13 +21,13 @@ namespace backend.Model
         public User User { get; set; }
 
         public ShoppingCart() { }
-
         public ShoppingCart(User u, List<OrderItem> items, int id)
         {
             this.ShoppingCart_Id = id;
             this.User = u;
             this.ShoppingCartItem = new List<OrderItem>();
         }
+
 
 
         public double getFinalPrice()
