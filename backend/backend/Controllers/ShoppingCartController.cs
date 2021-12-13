@@ -12,6 +12,7 @@ using System.Net;
 using System.Threading.Tasks;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
+
 namespace backend.Controllers
 {
     [ApiController]
@@ -62,7 +63,6 @@ namespace backend.Controllers
             }
             return Ok(sc);
         }
-
 
 
     }

@@ -13,6 +13,7 @@ namespace backend.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ShoppingCart_Id { get; set; } 
+
         [Required]
         public List<OrderItem> ShoppingCartItem { get; set; }
 
