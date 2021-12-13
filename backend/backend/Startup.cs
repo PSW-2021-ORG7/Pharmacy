@@ -94,8 +94,10 @@ namespace backend
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IMedicineCombinationRepository, MedicineCombinationRepository>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddScoped<IShoppingCartsRepository, ShoppingCartsRepository>();
             //Services
             services.AddTransient<Services.UserService>();
+            services.AddTransient<Services.ShoppingCartService>();
             services.AddTransient<JwtMiddleware>();
         }
 
