@@ -1,17 +1,32 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, retry } from "rxjs";
 import { ShoppingCart} from "src/app/model/shopping-cart"
 import {environment} from "src/environments/environment"
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ShoppingCartService{
-    private url=environment.baseUrlPharmacy;
+    private base_url=environment.baseUrlPharmacy+"ShoppingCart";
+
     constructor(private _http: HttpClient){}
 
- getShoppingCart(LoggedUserId: number) : Observable<ShoppingCart>{
+ getShoppingCart(LoggedUserId: string) : Observable<ShoppingCart>{
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get<ShoppingCart>(this.url + "/ShoppingCart/9d958778-280c-41d9-9b40-2099e9c56739")
+        alert(this.base_url+"/1518ad26-adec-403d-93c1-651823d31f8d");
+        return this._http.get<ShoppingCart>(this.base_url+"/1518ad26-adec-403d-93c1-651823d31f8d")
+        
     }
+makeAnOrder(order : any) : Observable<ShoppingCart>{
+    alert("Making an order")
+    return this._http.post<ShoppingCart>(this.base_url+"/make_an_order", order);
+}
+
+updateQuantity(UpdateQu : any) : Observable<ShoppingCart>{
+    alert("Updating quantity")
+    
+    return this._http.post<ShoppingCart>(this.base_url+"/update_quantity", UpdateQu);
+}
 }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrlPharmacy: 'https://localhost:64677/',
+  baseUrlPharmacy: 'http://localhost:64677/',
 };
 
 /*
