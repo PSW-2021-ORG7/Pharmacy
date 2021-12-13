@@ -367,7 +367,6 @@ namespace backend.Migrations
                 {
                     b.Navigation("ShoppingCartItem");
                 });
-
 #pragma warning restore 612, 618
         }
     }
