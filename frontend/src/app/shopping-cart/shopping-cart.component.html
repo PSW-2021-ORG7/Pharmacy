@@ -1,0 +1,58 @@
+<main class="scart">
+    <div class="basket">
+    <h2>Users's shopping cart</h2>
+    <div class="basket-labels">
+        <ul>
+        <li class="item item-heading">Item</li>
+        <li class="price">Price</li>
+        <li class="quantity">Quantity</li>
+        <li class="subtotal">Subtotal</li>
+        </ul>
+    </div>
+    <div class="basket-product" *ngFor="let item of items">
+            <div class="item">
+                <div class="product-details">
+                    <h1><strong><span class="item-quantity">{{item.quantity}}</span> x {{item.price}}</strong> </h1>
+                    <p><strong>{{item.Medicine.name}}</strong></p>
+                </div>
+            </div>
+            <div class="price">{{item.price}}</div>
+            <div class="quantity">
+            <input type="number" v-on:change="changeQuantityInCart(item)" onkeydown="return false" v-bind:id="a.artical.nameArtical+a.artical.restaurant+'q'"  v-bind:value=item.quantity min="1" class="quantity-field">
+            </div>
+            <div class="subtotal"><span>{{item.price * item.quantity}}</span></div>
+            <div class="remove">
+            <button>Remove</button>
+            </div>
+    </div>
+    </div>
+<aside>
+  <div class="summary">
+    <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+    <div class="summary-subtotal">
+      <div class="subtotal-title">Subtotal</div>
+      <div class="subtotal-value final-value" id="basket-subtotal">shoppingcart.price</div>
+      <div class="summary-promo hide"></div>
+    </div>
+    <div class="summary-subtotal">
+      <div class="subtotal-title">Discount</div>
+      <div class="discount-value">loggedUser.discount</div>
+      <div class="summary-promo hide"></div>
+    </div>
+    <div class="summary-total">
+      <div class="total-title">Total</div>
+      <div class="total-value final-value" id="basket-total">Price with discount</div>
+    </div>
+    <div class="summary-total">
+    <label for="receive">Where would you like to pick up your order?</label>
+  <select name="receive" id="ways_of_receiving">
+    <option value="pickup">Pick up in store</option>
+    <option value="deliver">Home delivery</option>
+  </select>
+</div>
+    <div class="summary-checkout">
+      <button v-on:click="checkout()" class="checkout-cta">Checkout</button>
+    </div>
+  </div>
+</aside>
+</main>

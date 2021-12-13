@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace backend.Repositories
 {
-    public class ShoppingCardsRepository : IShoppingCardsRepository
+    public class ShoppingCartsRepository : IShoppingCartsRepository
     {
         private readonly DrugStoreContext dB;
 
-        public ShoppingCardsRepository(DrugStoreContext dataContext) => dB = dataContext;
+        public ShoppingCartsRepository(DrugStoreContext dataContext) => dB = dataContext;
 
         public void Delete(ShoppingCart entity)
         {
@@ -24,6 +24,17 @@ namespace backend.Repositories
         public List<ShoppingCart> GetAll()
         {
             return dB.ShoppingCart.Include(m => m).ToList();
+        }
+
+        public ShoppingCart GetByUserID(Guid userID)
+        {
+            //userID = getFirstUserId();
+            return dB.ShoppingCart.SingleOrDefault(s => s.User.UserId == userID);
+        }
+
+        private Guid getFirstUserId()
+        {
+            return GetAll()[0].User.UserId;
         }
 
         public bool Save(ShoppingCart entity)

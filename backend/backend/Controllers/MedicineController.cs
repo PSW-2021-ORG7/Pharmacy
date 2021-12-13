@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace backend.Controllers
 {
