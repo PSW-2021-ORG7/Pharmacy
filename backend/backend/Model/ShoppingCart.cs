@@ -29,8 +29,6 @@ namespace backend.Model
             this.ShoppingCartItem = new List<OrderItem>();
         }
 
-
-
         public double getFinalPrice()
         {
             double finalPrice = 0;
