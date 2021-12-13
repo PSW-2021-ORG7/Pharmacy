@@ -364,7 +364,6 @@ namespace backend.Migrations
 
                 b.Navigation("User");
             });
-#pragma warning restore 612, 618
         }
     }
 }
