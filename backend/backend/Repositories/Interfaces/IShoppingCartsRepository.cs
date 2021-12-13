@@ -10,5 +10,6 @@ namespace backend.Repositories.Interfaces
     public interface IShoppingCartsRepository : IGenericRepository<ShoppingCart>
     {
         public ShoppingCart GetByUserID(Guid userID);
+        public ShoppingCart GetByID(int id);
     }
 }

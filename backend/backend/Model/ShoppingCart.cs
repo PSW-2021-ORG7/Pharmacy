@@ -22,9 +22,8 @@ namespace backend.Model
 
         public ShoppingCart() { }
 
-        public ShoppingCart(User u, List<OrderItem> items, int id)
+        public ShoppingCart(User u, List<OrderItem> items)
         {
-            this.ShoppingCart_Id = id;
             this.User = u;
             this.ShoppingCartItem = new List<OrderItem>();
         }

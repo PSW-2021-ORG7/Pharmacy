@@ -39,29 +39,45 @@ namespace backend.Controllers
 
 
         [HttpPost("update_quantity")]
-        public ActionResult<Boolean>  UpdateItemQuantityInCart([FromBody] UpdateShoppingCartsItemQuantityDTO updateShoppingCartsItemQuantityDTO)
+        public ActionResult<ShoppingCartFrontDTO>  UpdateItemQuantityInCart([FromBody] UpdateShoppingCartsItemQuantityDTO updateShoppingCartsItemQuantityDTO)
         {
             Boolean successfullyUpdated = false;
-            if(updateShoppingCartsItemQuantityDTO == null || updateShoppingCartsItemQuantityDTO.newQuantity<0)
+            if (updateShoppingCartsItemQuantityDTO == null || updateShoppingCartsItemQuantityDTO.newQuantity<0)
             {
                 throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
             }
+
+            successfullyUpdated = shoppingCartService.UpdateItemQuantityInCart(updateShoppingCartsItemQuantityDTO);
+
+            if(!successfullyUpdated)            
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
             else
             {
-                successfullyUpdated = shoppingCartService.UpdateItemQuantityInCart(updateShoppingCartsItemQuantityDTO);
-                return Ok(successfullyUpdated);
+                ShoppingCart updatedSC = shoppingCartService.GetById(updateShoppingCartsItemQuantityDTO.ShoppingCarts_Id);
+                ShoppingCartFrontDTO scTransformed = _mapper.Map<ShoppingCartFrontDTO>(updatedSC);
+
+                return Ok(scTransformed);
             }
         }
 
         [HttpGet("{user_id?}")]
-        public ActionResult<ShoppingCart> GetByUser(Guid user_id)
+        public ActionResult<ShoppingCartFrontDTO> GetByUser(Guid user_id)
         {
             ShoppingCart sc =  shoppingCartService.GetByUser(user_id);
             if (sc == null)
             {
                 throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
-            return Ok(sc);
+            ShoppingCartFrontDTO scTransformed = _mapper.Map<ShoppingCartFrontDTO>(sc);
+            return Ok(scTransformed);
+        }
+
+        [HttpPost("make_an_order")]
+        public ActionResult<ShoppingCartFrontDTO> makeAnOrder([FromBody] MakeAnOrderDTO makeAnOrderDTO)
+        {
+            ShoppingCart sc = shoppingCartService.MakeAnOrder(makeAnOrderDTO);
+            ShoppingCartFrontDTO scTransformed = _mapper.Map<ShoppingCartFrontDTO>(sc);
+            return Ok(scTransformed);
         }
 
 
