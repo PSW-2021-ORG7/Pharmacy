@@ -9,6 +9,7 @@ namespace backend.DAL
 {
     public class DrugStoreContext : DbContext
     {
+        public DrugStoreContext() { }
         public DrugStoreContext(DbContextOptions<DrugStoreContext> options) : base(options) { }
 
         public DbSet<Medicine> Medicine { get; set; }
@@ -21,8 +22,14 @@ namespace backend.DAL
         public DbSet<Order> Order { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<Ad> Ad { get; set; }
-
         public DbSet<OrderItem> OrderItem { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            String connection = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=psql;";
+            optionsBuilder.UseNpgsql(connection);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Hospital>()

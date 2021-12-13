@@ -2,9 +2,10 @@ using AutoMapper;
 using backend.DTO;
 using backend.Model;
 using backend.Model.Enum;
+using backend.Protos;
 using backend.Repositories.Interfaces;
 using backend.Services;
-using Grpc.Net.Client;
+using Grpc.Core;
 using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -133,7 +134,7 @@ namespace backend.Controllers
 
 
         // INVENTORY
-
+        /*
         [HttpPost]
         [Route("/inventory/check")]
         public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck quantityCheck)
@@ -142,6 +143,28 @@ namespace backend.Controllers
                 return Ok(true);
 
             return BadRequest(false);
+        }
+        */
+        
+        [HttpPost]
+        [Route("/inventory/check")]
+        public IActionResult CheckIfAvailableGrpc([FromBody] MedicineQuantityCheck DTO)
+        {
+            bool response = false;
+            var input = new MedicineQuantityCheckRequest
+            {
+                Name = DTO.Name,
+                DosageInMg = DTO.DosageInMg,
+                Quantity = DTO.Quantity
+            };
+            var channel = new Channel("localhost:5001/", ChannelCredentials.Insecure);
+            var client = new NetGrpcService.NetGrpcServiceClient(channel);
+            var reply = client.CheckIfAvailable(input);
+            response = reply.Response;
+
+            if (response) return Ok(response);
+            else return BadRequest(response);
+ 
         }
 
         [HttpGet]

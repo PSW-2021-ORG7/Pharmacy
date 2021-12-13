@@ -3,16 +3,16 @@ syntax = "proto3";
 package rs.ac.uns.ftn.grpc;
 option csharp_namespace = "backend.Protos";
 
-message MessageProto {
-  string message = 1;
-  int64 randomInteger = 2;
+message MedicineQuantityCheckRequest {
+    string Name = 1;
+    int32 DosageInMg = 2;
+    int32 Quantity = 3;
 }
 
-message MessageResponseProto {
-  string response = 1;
-  string status = 2;
+message MedicineQuantityCheckResponse {
+  bool response = 1;
 }
 
 service NetGrpcService {
-  rpc transfer (MessageProto) returns (MessageResponseProto);
+  rpc CheckIfAvailable (MedicineQuantityCheckRequest) returns (MedicineQuantityCheckResponse);
 }
