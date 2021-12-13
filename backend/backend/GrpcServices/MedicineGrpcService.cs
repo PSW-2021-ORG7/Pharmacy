@@ -12,6 +12,7 @@ namespace backend.GrpcServices
     public class MedicineGrpcService : NetGrpcService.NetGrpcServiceBase
     {
         private MedicineService _medicineService = new MedicineService(new MedicineRepository(new DrugStoreContext()), new MedicineInventoryRepository(new DrugStoreContext()));
+        private MedicineInventoryService _medicineInventoryService = new MedicineInventoryService(new MedicineInventoryRepository(new DrugStoreContext()));
         public override Task<MedicineQuantityCheckResponse> CheckIfAvailable(MedicineQuantityCheckRequest request, ServerCallContext context)
         {
             MedicineQuantityCheckResponse response = new MedicineQuantityCheckResponse();
@@ -19,6 +20,14 @@ namespace backend.GrpcServices
             return Task.FromResult(response);
         }
 
+        public override Task<UpdateInventoryResponse> UpdateInventory(UpdateInventoryRequest request, ServerCallContext context)
+        {
+            MedicineInventory inventory = new MedicineInventory(request.MedicineId);
+            inventory.Quantity = request.Quantity;
 
+            UpdateInventoryResponse response = new UpdateInventoryResponse();
+            response.Response = _medicineInventoryService.Update(inventory);
+            return Task.FromResult(response);
+        }
     }
 }

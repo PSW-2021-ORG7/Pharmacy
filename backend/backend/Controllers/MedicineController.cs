@@ -174,6 +174,7 @@ namespace backend.Controllers
             return Ok(_medicineInventoryService.GetAll());
         }
 
+        /*
         [HttpPut]
         [Route("/inventory/{id}")]
         public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
@@ -186,6 +187,25 @@ namespace backend.Controllers
         public IActionResult UpdateMedicinePrice([FromBody] MedicineInventory medicineInventory)
         {
             return Ok(_medicineInventoryService.Update(medicineInventory));
+        }
+        */
+
+        [HttpPut]
+        [Route("/inventory/{id}")]
+        public IActionResult UpdateInventoryGrpc([FromBody] MedicineInventory medicineInventory)
+        {
+            bool response = false;
+            var input = new UpdateInventoryRequest
+            {
+                MedicineId = medicineInventory.MedicineId,
+                Quantity = medicineInventory.Quantity
+            };
+            var channel = new Channel("localhost:5001/", ChannelCredentials.Insecure);
+            var client = new NetGrpcService.NetGrpcServiceClient(channel);
+            var reply = client.UpdateInventory(input);
+            response = reply.Response;
+
+            return Ok(response);
         }
 
         [HttpPut("/inventory/reduce-quantity")]
