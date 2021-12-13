@@ -14,9 +14,12 @@ namespace backend.Model
         [Key]
         public int ShoppingCart_Id { get; set; } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 25cbcaf (feat: shopping cart added)
+=======
+>>>>>>> 25cbcaf02d2f4ba3ff011a7397ca23740df5b107
         [Required]
         public List<OrderItem> ShoppingCartItem { get; set; }
 
@@ -24,6 +27,7 @@ namespace backend.Model
         public User User { get; set; }
 
         public ShoppingCart() { }
+<<<<<<< HEAD
 <<<<<<< HEAD
         public ShoppingCart(User u, List<OrderItem> items, int id)
         {
@@ -33,6 +37,8 @@ namespace backend.Model
         }
 =======
 >>>>>>> 25cbcaf (feat: shopping cart added)
+=======
+>>>>>>> 25cbcaf02d2f4ba3ff011a7397ca23740df5b107
 
         public double getFinalPrice()
         {

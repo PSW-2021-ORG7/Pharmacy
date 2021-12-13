@@ -358,10 +358,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Model.ShoppingCart", b =>
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {
                     b.Navigation("ShoppingCartItem");
                 });
 =======
+=======
+>>>>>>> 25cbcaf02d2f4ba3ff011a7397ca23740df5b107
             {
                 b.HasOne("backend.Model.User", "User")
                         .WithMany()
@@ -369,7 +372,10 @@ namespace backend.Migrations
 
                 b.Navigation("User");
             });
+<<<<<<< HEAD
 >>>>>>> 25cbcaf (feat: shopping cart added)
+=======
+>>>>>>> 25cbcaf02d2f4ba3ff011a7397ca23740df5b107
 #pragma warning restore 612, 618
         }
     }
