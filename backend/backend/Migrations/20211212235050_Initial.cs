@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -171,6 +171,25 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    ShoppingCart_Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.ShoppingCart_Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderItem",
                 columns: table => new
                 {
@@ -178,7 +197,9 @@ namespace backend.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MedicineId = table.Column<int>(type: "integer", nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    Order_Id = table.Column<int>(type: "integer", nullable: true)
+                    PriceForSingleEntity = table.Column<double>(type: "double precision", nullable: false),
+                    Order_Id = table.Column<int>(type: "integer", nullable: true),
+                    ShoppingCart_Id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,6 +215,12 @@ namespace backend.Migrations
                         column: x => x.Order_Id,
                         principalTable: "Order",
                         principalColumn: "Order_Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_ShoppingCarts_ShoppingCart_Id",
+                        column: x => x.ShoppingCart_Id,
+                        principalTable: "ShoppingCarts",
+                        principalColumn: "ShoppingCart_Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -238,6 +265,16 @@ namespace backend.Migrations
                 name: "IX_OrderItem_Order_Id",
                 table: "OrderItem",
                 column: "Order_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItem_ShoppingCart_Id",
+                table: "OrderItem",
+                column: "ShoppingCart_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -268,6 +305,9 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "User");

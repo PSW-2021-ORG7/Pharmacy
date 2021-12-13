@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace backend.Repositories.Interfaces
 {
-    public interface IShoppingCardsRepository : IGenericRepository<ShoppingCart>
+    public interface IShoppingCartsRepository : IGenericRepository<ShoppingCart>
     {
+        public ShoppingCart GetByUserID(Guid userID);
     }
 }

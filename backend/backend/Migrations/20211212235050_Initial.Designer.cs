@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211211180944_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211212235050_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -208,7 +208,13 @@ namespace backend.Migrations
                     b.Property<int?>("Order_Id")
                         .HasColumnType("integer");
 
+                    b.Property<double>("PriceForSingleEntity")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ShoppingCart_Id")
                         .HasColumnType("integer");
 
                     b.HasKey("OrderItemId");
@@ -217,7 +223,26 @@ namespace backend.Migrations
 
                     b.HasIndex("Order_Id");
 
+                    b.HasIndex("ShoppingCart_Id");
+
                     b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+                {
+                    b.Property<int>("ShoppingCart_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ShoppingCart_Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("backend.Model.User", b =>
@@ -312,12 +337,30 @@ namespace backend.Migrations
                         .WithMany("OrderItems")
                         .HasForeignKey("Order_Id");
 
+                    b.HasOne("backend.Model.ShoppingCart", null)
+                        .WithMany("ShoppingCartItem")
+                        .HasForeignKey("ShoppingCart_Id");
+
                     b.Navigation("Medicine");
+                });
+
+            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+                {
+                    b.HasOne("backend.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Model.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+                {
+                    b.Navigation("ShoppingCartItem");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,6 +16,7 @@ namespace backend.DTO.Mappings
 
             CreateMap<UserRegistrationDTO, User>();
             CreateMap<User, UserRegistrationDTO>();
+
         }
     }
 }
