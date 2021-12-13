@@ -24,10 +24,10 @@ namespace backend.Model
         public DateTime OrderDate { get; set; }
 
         [Required]
-        public OrderStatus Status;
+        public OrderStatus Status { get; set; }
 
         [Required]
-        public Boolean deliveryReqired;
+        public Boolean deliveryReqired { get; set; }
 
         public Order(){}
     }
