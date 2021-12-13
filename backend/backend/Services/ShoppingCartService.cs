@@ -21,6 +21,7 @@ namespace backend.Services
             this.medicineRepository = mr;
         }
 
+
         public bool UpdateItemQuantityInCart(UpdateShoppingCartsItemQuantityDTO updateShoppingCartsItemQuantityDTO)
         {
             bool successfullyUpdated = false;
@@ -68,6 +69,7 @@ namespace backend.Services
             
             return successfullyUpdated;
         }
+
 
         public ShoppingCart GetByUser(Guid userId)
         {
@@ -165,5 +167,6 @@ namespace backend.Services
 
             return shoppingCart;
         }
+
     }
 }

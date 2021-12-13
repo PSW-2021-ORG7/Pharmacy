@@ -13,7 +13,10 @@ namespace backend.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ShoppingCart_Id { get; set; } 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 25cbcaf (feat: shopping cart added)
         [Required]
         public List<OrderItem> ShoppingCartItem { get; set; }
 
@@ -21,12 +24,15 @@ namespace backend.Model
         public User User { get; set; }
 
         public ShoppingCart() { }
+<<<<<<< HEAD
         public ShoppingCart(User u, List<OrderItem> items, int id)
         {
             this.ShoppingCart_Id = id;
             this.User = u;
             this.ShoppingCartItem = new List<OrderItem>();
         }
+=======
+>>>>>>> 25cbcaf (feat: shopping cart added)
 
         public double getFinalPrice()
         {

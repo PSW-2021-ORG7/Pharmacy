@@ -357,9 +357,19 @@ namespace backend.Migrations
                 });
 
             modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+<<<<<<< HEAD
                 {
                     b.Navigation("ShoppingCartItem");
                 });
+=======
+            {
+                b.HasOne("backend.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                b.Navigation("User");
+            });
+>>>>>>> 25cbcaf (feat: shopping cart added)
 #pragma warning restore 612, 618
         }
     }
