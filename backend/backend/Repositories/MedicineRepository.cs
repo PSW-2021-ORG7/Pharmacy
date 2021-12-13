@@ -97,9 +97,11 @@ namespace backend.Repositories
                                         new XRect(200.0, 95.0, 0.0, 0.0),
                                         XStringFormats.Center);
 
-               string filename = "Output" + Path.DirectorySeparatorChar + medicine.Name.Replace(" ", "") + "_" + medicine.DosageInMilligrams + ".pdf";
-               document.Save(filename);
-               return filename;
+                string filename = medicine.Name.Replace(" ", "") + "_" + medicine.DosageInMilligrams + ".pdf";
+                string path = Path.Combine(Environment.CurrentDirectory, @"Output\", filename);
+                document.Save(path);
+                upload(filename);
+                return filename;
             }
             catch (Exception e)
             {
@@ -110,7 +112,7 @@ namespace backend.Repositories
 
         public void upload(string fileName)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.1.3", "tester", "password")))
             {
                 client.Connect();
                 string sourceFile = Path.Combine(Environment.CurrentDirectory, @"Output\", fileName);
