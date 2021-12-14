@@ -126,9 +126,9 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("/inventory/check")]
-        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
+        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck quantityCheck)
         {
-            if (_medicineService.CheckMedicineQuantity(DTO))
+            if (_medicineService.CheckMedicineQuantity(quantityCheck))
                 return Ok(true);
 
             return Ok(false);

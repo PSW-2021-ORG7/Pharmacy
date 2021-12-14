@@ -28,12 +28,12 @@ namespace backend.Services
             return false;
         }
 
-        public bool CheckMedicineQuantity(MedicineQuantityCheck DTO)
+        public bool CheckMedicineQuantity(MedicineQuantityCheck Quantitycheck)
         {
-            if (medicineRepository.MedicineExists(DTO))
+            if (medicineRepository.MedicineExists(Quantitycheck))
             {
-                Medicine foundMedicine = GetByNameAndDose(DTO.Name, DTO.DosageInMg);
-                if (medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(foundMedicine.Id, DTO.Quantity)))
+                Medicine foundMedicine = GetByNameAndDose(Quantitycheck.Name, Quantitycheck.DosageInMg);
+                if (medicineInventoryRepository.CheckMedicineQuantity(new MedicineInventory(foundMedicine.Id, Quantitycheck.Quantity)))
                     return true;
             }
 
