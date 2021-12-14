@@ -7,15 +7,18 @@ import { HomeComponent } from './home/home.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component'
 import { OrderHistoryComponent } from './orders/order-history/order-history.component';
 import { OrderPharmacistComponent } from './orders/order-pharmacist/order-pharmacist.component';
+import { from } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RegisterMedicineComponent,
     OrderHistoryComponent,
-    OrderPharmacistComponent
+    OrderPharmacistComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,

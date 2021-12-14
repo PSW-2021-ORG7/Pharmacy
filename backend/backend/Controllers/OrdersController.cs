@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace backend.Controllers
 {
@@ -20,6 +21,11 @@ namespace backend.Controllers
 
         private readonly IConfiguration _configuration;
 
+        [HttpGet("test")]
+        public IActionResult GetTest()
+        {
+            return Ok("It works!");
+        }
         public OrdersController(IOrdersRepository ordersRepository, IConfiguration configuration)
         {
             this._configuration = configuration;

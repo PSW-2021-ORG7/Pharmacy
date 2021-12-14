@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using static backend.Helpers.JwtMiddleware;
+using System;
 
 namespace backend
 {
@@ -40,8 +41,10 @@ namespace backend
         .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             //EntityFramework 
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_P");
+            if (connectionString == null) connectionString = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=1234;";
             services.AddDbContext<DrugStoreContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DrugstoreCon")));
+                options.UseNpgsql(connectionString));
 
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
@@ -91,8 +94,10 @@ namespace backend
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IMedicineCombinationRepository, MedicineCombinationRepository>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddScoped<IShoppingCartsRepository, ShoppingCartsRepository>();
             //Services
             services.AddTransient<Services.UserService>();
+            services.AddTransient<Services.ShoppingCartService>();
             services.AddTransient<JwtMiddleware>();
         }
 

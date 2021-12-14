@@ -29,7 +29,8 @@ namespace backend.Repositories
          
         public User GetById(string id)
         {
-            return _dataContext.User.Find(id);
+            Guid id1 = Guid.Parse(id);
+            return _dataContext.User.Find(id1);
         }
 
         public User GetByUsername(string username)

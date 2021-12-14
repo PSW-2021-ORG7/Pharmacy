@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace backend.Repositories
 {
-    public class ShoppingCardsRepository : IShoppingCardsRepository
+    public class ShoppingCartsRepository : IShoppingCartsRepository
     {
         private readonly DrugStoreContext dB;
 
-        public ShoppingCardsRepository(DrugStoreContext dataContext) => dB = dataContext;
+        public ShoppingCartsRepository(DrugStoreContext dataContext) => dB = dataContext;
 
         public void Delete(ShoppingCart entity)
         {
@@ -23,12 +23,25 @@ namespace backend.Repositories
 
         public List<ShoppingCart> GetAll()
         {
-            return dB.ShoppingCart.Include(m => m).ToList();
+            return dB.ShoppingCart.Include(m => m.User).ToList();
+        }
+
+        public ShoppingCart GetByUserID(Guid userID)
+        {
+            //userID = getFirstUserId();
+            var cart = dB.ShoppingCart.Include(c => c.User).Include(b => b.ShoppingCartItem).ThenInclude(sci => sci.Medicine).FirstOrDefault(s => s.User.UserId == userID);
+            return cart;
+        }
+
+
+        private Guid getFirstUserId()
+        {
+            return GetAll()[0].User.UserId;
         }
 
         public bool Save(ShoppingCart entity)
         {
-            if (dB.ShoppingCart.Any(m => m.User == entity.User))
+            if (dB.ShoppingCart.Any(m => m.User.UserId.Equals(entity.User.UserId)))
             {
                 Update(entity);
                 return false;
@@ -51,6 +64,9 @@ namespace backend.Repositories
             return false;
         }
 
-       
+        public ShoppingCart GetByID(int id)
+        {
+            return dB.ShoppingCart.Include(c => c.User).Include(b => b.ShoppingCartItem).ThenInclude(sci => sci.Medicine).SingleOrDefault(s => s.ShoppingCart_Id == id);
+        }
     }
 }
