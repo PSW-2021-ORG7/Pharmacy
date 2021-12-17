@@ -17,6 +17,7 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnInit() : void{
     this._shoppingCartService.getShoppingCart("2").subscribe(data => this.shoppingCart = data);
+    console.log(this.shoppingCart)
     this.selected_pickup = "pickup";
   }
 

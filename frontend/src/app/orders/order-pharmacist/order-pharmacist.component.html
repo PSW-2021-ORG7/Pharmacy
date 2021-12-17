@@ -4,12 +4,13 @@
         <div class="wrapper">
              <h5>Ordered:
              <span *ngFor="let orderItem of order.OrderItems; index as j; let last = last">
-                {{orderItem.Medicine.Name}} x{{orderItem.Quantiy}} {{orderItem.Medicine.Dosage}}mg<span *ngIf="!last">,</span>
+                {{orderItem.Medicine.Name}} x{{orderItem.Quantity}} {{orderItem.Medicine.Dosage}}mg<span *ngIf="!last">,</span>
              </span>
             </h5>
-            <div class="gap"></div>
-            <div class="bottom ml-1">Date of order: {{getStatus(order.OrderStatus)}}
-                <button class="btn btn-primary" (click)="orderAgain(order)">{{getButton(order.OrderStatus)}}</button>
+            <div><h5>User: {{order.User.FirstName}} {{order.User.LastName}}</h5> </div>
+            <h6>Price: {{getPrice(order.OrderItems)}}</h6>
+            <div class="bottom ml-1">Request type:: {{getStatus(order.Status)}}
+                <button class="btn btn-primary" (click)="updateStatus(order)">{{getButton(order.Status)}}</button>
             </div>
         </div>
     </div>

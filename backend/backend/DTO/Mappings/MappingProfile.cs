@@ -16,7 +16,8 @@ namespace backend.DTO.Mappings
 
             CreateMap<UserRegistrationDTO, User>();
             CreateMap<User, UserRegistrationDTO>();
-
+            CreateMap<OrderDTO, Order>();
+            CreateMap<OrderWithIdDTO,Order>();
             CreateMap<ShoppingCart, ShoppingCartFrontDTO>()
                // .IncludeMembers(s => s.User, s => s.ShoppingCart_Id, s => s.ShoppingCartItem)
                 .ForMember(dest => dest.items, opt => opt.MapFrom(s => s.ShoppingCartItem))

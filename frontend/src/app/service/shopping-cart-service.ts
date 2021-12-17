@@ -15,8 +15,8 @@ export class ShoppingCartService{
 
  getShoppingCart(LoggedUserId: string) : Observable<ShoppingCart>{
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        alert(this.base_url+"/1518ad26-adec-403d-93c1-651823d31f8d");
-        return this._http.get<ShoppingCart>(this.base_url+"/1518ad26-adec-403d-93c1-651823d31f8d")
+        alert(this.base_url+"/e3d01b16-53ec-42f9-a6f6-010d7bfb1e7c");
+        return this._http.get<ShoppingCart>(this.base_url+"/b0bc0a9c-e6bd-462c-ad3e-e6a8238c5858")
         
     }
 makeAnOrder(order : any) : Observable<ShoppingCart>{

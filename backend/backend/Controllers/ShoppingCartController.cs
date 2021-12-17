@@ -28,7 +28,6 @@ namespace backend.Controllers
             this._configuration = configuration;
             this._mapper = mapper;
             this.shoppingCartService = shoppingCartService;
-            
         }
 
         [HttpGet("test")]

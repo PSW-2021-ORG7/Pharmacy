@@ -8,96 +8,42 @@ import { OrderService } from '../order-service';
 })
 export class OrderPharmacistComponent implements OnInit {
 
-  orders: any= [
-    {
-      Order_Id : 1,
-      OrderItems:[
-        {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 3
-    },
-    {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 2
-    }
-      ],
-    User :{
-      UserId : 2
-    },
-    Date: new Date(2021, 10, 11),
-    OrderStatus: 'PickUpRequest'
-    },
-    {
-      Order_Id : 2,
-      OrderItems:[
-        {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 2
-    }
-      ],
-    User :{
-      UserId : 2
-    },
-    Date: new Date(2021, 10, 11),
-    OrderStatus: 'OrderRequest'
-    },
-    {
-      Order_Id : 3,
-      OrderItems:[
-        {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 2
-    }
-      ],
-    User :{
-      UserId : 2
-    },
-    Date: new Date(2021, 10, 11),
-    OrderStatus: 'PickUpRequest'
-    },
-   
-  ];
+  orders: any= [];
   constructor(private _orderService: OrderService) { }
 
   getStatus(status : String){
-    if(status == "PickUpRequest") return "Pick up request"
+    if(status == "1") return "Pick up request"
     else return "Order request"
   }
   getButton(status : String){
-    if(status == "PickUpRequest") return "Confirm pick up request"
+    if(status == '1') return "Confirm pick up request"
     else return "Assign courier"
   }
-  orderAgain(order : any){
+  updateStatus(order : any){
      if(confirm("Are you sure you want to confirm request?")){
-        const orderDto = {
-          Order_id : order.Order_Id,
-          OrderStatus : order.OrderStatus
-        }
-        this._orderService.changeStatus(orderDto);
-     }  
+       console.log(order)
+       if(order.Status == '1')order.Status =2;
+       else {order.Status = 3}
+      order.UserId = order.User.UserId
+      this._orderService.changeStatus(order).subscribe(data =>{
+        console.log(data)
+        this.orders=data
+      })
+    }
   }
+  getPrice(orderItems : any) : number{
+    let sum = 0
+    orderItems.forEach(function (orderItem: { PriceForSingleEntity: number; Quantity: number; }) {
+      sum += orderItem.PriceForSingleEntity * orderItem.Quantity
+  });
+  return sum
+}
 
   ngOnInit(): void {
+    this._orderService.getRequests().subscribe(data =>{
+      console.log(data)
+      this.orders = data
+    })
   }
 
 }
