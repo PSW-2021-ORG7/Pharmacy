@@ -30,5 +30,12 @@ namespace backend.Model
         public Boolean deliveryReqired { get; set; }
 
         public Order(){}
+
+        public Order(int id, OrderStatus status)
+        {
+            OrderDate = DateTime.Now;
+            Status = status;
+            Order_Id = id;
+        }
     }
 }

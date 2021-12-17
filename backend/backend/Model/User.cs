@@ -14,7 +14,7 @@ namespace backend.Model
         }
 
         [Key]
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; set; }
 
         [Required]
         [MaxLength(50)]

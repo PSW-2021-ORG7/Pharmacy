@@ -362,7 +362,6 @@ namespace backend.Migrations
                     b.Navigation("OrderItems");
                 });
 
-
             modelBuilder.Entity("backend.Model.ShoppingCart", b =>
                 {
                     b.Navigation("ShoppingCartItem");
@@ -371,5 +370,3 @@ namespace backend.Migrations
         }
     }
 }
-    
-

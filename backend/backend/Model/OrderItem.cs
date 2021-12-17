@@ -9,6 +9,7 @@ namespace backend.Model
 {
     public class OrderItem
     {
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderItemId { get; set; }
@@ -22,6 +23,13 @@ namespace backend.Model
 
         public OrderItem()
         {
+        }
+
+        public OrderItem(OrderItem item)
+        {
+            this.Quantity = item.Quantity;
+            this.Medicine = item.Medicine;
+            this.PriceForSingleEntity = item.PriceForSingleEntity;
         }
 
         public double getPriceForAll()

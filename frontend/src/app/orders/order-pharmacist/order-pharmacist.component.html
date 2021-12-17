@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>History of recent orders</h1>
+    <h1>Order requests:</h1>
     <div *ngFor="let order of orders; index as i;" class="list">
         <div class="wrapper">
              <h5>Ordered:
@@ -7,11 +7,12 @@
                 {{orderItem.Medicine.Name}} x{{orderItem.Quantity}} {{orderItem.Medicine.Dosage}}mg<span *ngIf="!last">,</span>
              </span>
             </h5>
-            <h4>Price: {{getPrice(order.OrderItems)}}</h4>
-            <h6>Order status: {{getStatus(order.Status)}}</h6>
-            <div class="bottom ml-1">Order date: {{changeDate(order.OrderDate)}}
-                <button class="btn btn-primary" (click)="orderAgain(order)">Order again</button>
+            <div><h5>User: {{order.User.FirstName}} {{order.User.LastName}}</h5> </div>
+            <h6>Price: {{getPrice(order.OrderItems)}}</h6>
+            <div class="bottom ml-1">Request type:: {{getStatus(order.Status)}}
+                <button class="btn btn-primary" (click)="updateStatus(order)">{{getButton(order.Status)}}</button>
             </div>
         </div>
     </div>
 </div>
+

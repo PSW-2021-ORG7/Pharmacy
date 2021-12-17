@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using backend.DTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
@@ -20,36 +21,56 @@ namespace backend.Controllers
         private OrdersService ordersService;
 
         private readonly IConfiguration _configuration;
-
+        private readonly IMapper _mapper;
         [HttpGet("test")]
         public IActionResult GetTest()
         {
             return Ok("It works!");
         }
-        public OrdersController(IOrdersRepository ordersRepository, IConfiguration configuration)
+        public OrdersController(IOrdersRepository ordersRepository, IMapper mapper, IUserRepository userRepository, IConfiguration configuration)
         {
+            _mapper = mapper;
             this._configuration = configuration;
-            ordersService = new OrdersService(ordersRepository);
+            ordersService = new OrdersService(ordersRepository,userRepository);
         }
 
         [HttpPut("update-status")]
-        public ActionResult<Boolean> UpdateOrderStatus([FromBody] OrderStatusDto orderStatus)
+        public ActionResult<List<Order>> UpdateOrderStatus([FromBody] OrderWithIdDTO dto)
         {
-            if (orderStatus == null)
+            if (dto == null)
                 throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
-            return Ok(ordersService.UpdateStatus(orderStatus));
+            Order order = _mapper.Map<Order>(dto);
+            order.User.UserId = new Guid(dto.UserId);
+            return Ok(ordersService.UpdateStatus(order));
         }
 
         [HttpGet("history/{id}")]
 
-        public ActionResult<List<Order>> GetRecentOrder(int id)
+        public ActionResult<List<Order>> GetRecentOrder(String id)
         {
-            return Ok(ordersService.GetRecentOrders(id));
+            List<Order> orders = ordersService.GetRecentOrders(id);
+            return Ok(orders);
         }
-        [HttpPut]
+        [HttpPost]
         public ActionResult<Boolean> Save([FromBody] Order order)
         {
             return Ok();
-        } 
+        }
+        [HttpGet("requests")]
+        public ActionResult<List<Order>> GetRequests()
+        {
+            return Ok(ordersService.GetOrdersRequests());
+        }
+
+        [HttpPost("update-reorder")]
+        public ActionResult<List<Order>> UpdateReorder([FromBody] OrderDTO dto)
+        {
+            if (dto == null)
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
+            Order order = _mapper.Map<Order>(dto);
+            order.User.UserId = new Guid(dto.UserId);
+
+            return Ok(ordersService.SaveReorder(order));
+        }
     }
 }

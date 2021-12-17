@@ -1,6 +1,9 @@
 ﻿using backend.Model;
+using backend.Model.Enum;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using static backend.Model.User;
 
 namespace backend.DAL
 {
@@ -28,6 +31,42 @@ namespace backend.DAL
             builder.Entity<Ingredient>()
                 .HasIndex(i => i.Name)
                 .IsUnique();
+            //builder.Entity<Medicine>().HasData(
+            //    new
+            //    {
+            //        Id = 1,
+            //        Name = "Andol",
+            //        Description = "Lek za glavu",
+            //        DosageInMilligrams = 300,
+            //        Manufacturer = "Hemofarm",
+            //        SideEffects = new List<string> { "Mucnina", "glavobolja" },
+            //        PossibleReactions = new List<string> { "Alergija", "Osip" },
+            //        WayOfConsumption = "Pre obroka",
+            //        PotenitalDangers = "",
+            //        Ingredients = new List<Ingredient>()
+            //    }
+            //    ); 
+
+            //builder.Entity<User>().HasData(
+            //    new
+            //    {
+            //        UserId = Guid.NewGuid(),
+            //        FirstName = "Stefan",
+            //        LastName = "Ljubovic",
+            //        Username = "stefan",
+            //        Password = "123456",
+            //        Role = UserRole.Client,
+            //        IsLogicalDeleted = false,
+            //        IsBlocked = false
+            //    }
+            // );
+
+           //builder.Entity<Order>().HasData(
+           //     new { Order_Id = 1, Status = OrderStatus.Delivered, OrderDate = DateTime.Now });
+
+           // builder.Entity<Order>().OwnsOne(o => o.OrderItems).HasData(
+           //         new { Order_Id = 1 }
+           //  );
         }
     }
 }
