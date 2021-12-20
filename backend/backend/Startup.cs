@@ -95,6 +95,7 @@ namespace backend
             services.AddScoped<IMedicineCombinationRepository, MedicineCombinationRepository>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IShoppingCartsRepository, ShoppingCartsRepository>();
+            services.AddScoped<IAdRepository, AdRepository>();
             //Services
             services.AddTransient<Services.UserService>();
             services.AddTransient<Services.ShoppingCartService>();

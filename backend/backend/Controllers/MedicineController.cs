@@ -33,12 +33,6 @@ namespace backend.Controllers
             _medicineCombinationService = new MedicineCombinationService(medicineCombinationRepository);
         }
 
-        [HttpGet("test")]
-        public IActionResult GetTest()
-        {
-            return Ok("It works!");
-        }
-
         [HttpGet]
         public IActionResult Get()
         {
