@@ -22,14 +22,18 @@ namespace backend.Model
         public String Content { get; set; }
 
         [Required]
-        public DateTime CreationDate { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        public DateTime CreationDate { get; set; }
+
+
+        [Required]
+        public DateTime PromotionEndDate { get; set; }
 
         public bool ValidDates()
         {
-            if(CreationDate > EndDate) throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
+            if(CreationDate > PromotionEndDate) throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
             return true;
         }
     }
