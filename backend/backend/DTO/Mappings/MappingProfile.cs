@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.DTO.TenderingDTO;
 using backend.Model;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,6 @@ namespace backend.DTO.Mappings
             CreateMap<OrderWithIdDTO,Order>();
             CreateMap<AdDTO, Ad>();
             CreateMap<ShoppingCart, ShoppingCartFrontDTO>()
-               // .IncludeMembers(s => s.User, s => s.ShoppingCart_Id, s => s.ShoppingCartItem)
                 .ForMember(dest => dest.items, opt => opt.MapFrom(s => s.ShoppingCartItem))
                 .ForMember(dest => dest.ShoppingCart_Id, opt => opt.MapFrom(src => src.ShoppingCart_Id.ToString()))
                 .ForMember(dest => dest.User_Id, opt => opt.MapFrom(src => src.User.UserId.ToString()))
@@ -32,6 +32,22 @@ namespace backend.DTO.Mappings
                 .ForMember(dest => dest.price, opt => opt.MapFrom(src => src.PriceForSingleEntity.ToString()))
                 .ForMember(dest => dest.priceAll, opt => opt.MapFrom(src => src.getPriceForAll().ToString()))
                 .ForMember(dest => dest.quantity, opt => opt.MapFrom(src => src.Quantity.ToString()));
+
+            CreateMap<TenderingOfferItem, TenderingOfferItemDTO>()
+                .ForMember(dest => dest.MedicineName, opt => opt.MapFrom(src => src.Medicine.Name.ToString()))
+                .ForMember(dest => dest.DosageInMilligrams, opt => opt.MapFrom(src => src.Medicine.DosageInMilligrams.ToString()))
+                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom(src => src.Medicine.Manufacturer.ToString()))
+                .ForMember(dest => dest.AvailableQuantity, opt => opt.MapFrom(src => src.AvailableQuantity.ToString()))
+                .ForMember(dest => dest.PriceForSingleEntity, opt => opt.MapFrom(src => src.PriceForSingleEntity.ToString()))
+                .ForMember(dest => dest.PriceForAllAvailableEntity, opt => opt.MapFrom(src => src.GetPriceForAllAvailable().ToString()))
+                .ForMember(dest => dest.PriceForAllRequiredEntity, opt => opt.MapFrom(src => src.GetPriceForAllRequired().ToString()));
+
+            CreateMap<TenderingOffer, TenderingOfferDTO>()
+                .ForMember(dest => dest.tenderingOfferItems, opt => opt.MapFrom(src => src.tenderingOfferItems))
+                .ForMember(dest => dest.PriceForAllAvailable, opt => opt.MapFrom(src => src.GetPriceForAllAvailable().ToString()))
+                .ForMember(dest => dest.PriceForAllRequired, opt => opt.MapFrom(src => src.GetPriceForAllRequired().ToString()))
+                .ForMember(dest => dest.TotalNumberMissingMedicine, opt => opt.MapFrom(src => src.GetTotalMissing().ToString()));
         }
+        
     }
 }

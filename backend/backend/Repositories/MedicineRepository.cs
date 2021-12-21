@@ -81,7 +81,9 @@ namespace backend.Repositories
 
         public bool Save(Medicine medicine)
         {
-            if (_dataContext.Medicine.Any(m => m.Name == medicine.Name && m.DosageInMilligrams == medicine.DosageInMilligrams)) return false;
+            if (_dataContext.Medicine.Any(m => m.Name == medicine.Name 
+                                        && m.DosageInMilligrams == medicine.DosageInMilligrams 
+                                        && m.Manufacturer.Equals(medicine.Manufacturer))) return false;
             ExcludeIngredientDuplicates(medicine);
             _dataContext.Add(medicine);
             _dataContext.SaveChanges();

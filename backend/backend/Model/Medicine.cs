@@ -10,6 +10,8 @@ namespace backend.Model
     [Table("Medicine")]
     public class Medicine
     {
+        private string medicineName;
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
 
@@ -41,5 +43,11 @@ namespace backend.Model
 
         public Medicine() {}
 
+        public Medicine(string medicineName, int dosageInMilligrams, string manufacturer)
+        {
+            this.medicineName = medicineName;
+            DosageInMilligrams = dosageInMilligrams;
+            Manufacturer = manufacturer;
+        }
     }
 }

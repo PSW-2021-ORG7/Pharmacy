@@ -1,4 +1,5 @@
 ﻿using backend.DAL;
+using backend.DTO.TenderingDTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using System;
@@ -45,7 +46,8 @@ namespace backend.Repositories
             if (result != null)
             {
                 result.Quantity = entity.Quantity;
-                if (result.Quantity < 0) return false;
+                result.Price = entity.Price;
+                if (result.Quantity < 0 || result.Price<0) return false;
                 _dataContext.SaveChanges();
                 return true;
             }
@@ -66,7 +68,22 @@ namespace backend.Repositories
             return false;
         }
 
-
-
+        MedicineInventory IMedicineInventoryRepository.FindRequestedMedicineInventory(TenderingItemRequestDTO tenderingItemRequestDTO)
+        {
+            
+                Medicine requiredMedicine = _dataContext.Medicine.Where(m => m.Name.Equals(tenderingItemRequestDTO.MedicineName))
+                    .Where(m => m.DosageInMilligrams.Equals(tenderingItemRequestDTO.DosageInMilligrams))
+                    .SingleOrDefault(m=> m.Manufacturer.Equals(tenderingItemRequestDTO.Manufacturer));
+                if(requiredMedicine == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    MedicineInventory requestedMedicineInventory = _dataContext.MedicineInventory.SingleOrDefault(m => m.MedicineId.Equals(requiredMedicine.Id));
+                    return requestedMedicineInventory;
+                }
+            
+        }
     }
 }
