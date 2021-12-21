@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211219130015_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211221013809_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,6 +192,9 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");

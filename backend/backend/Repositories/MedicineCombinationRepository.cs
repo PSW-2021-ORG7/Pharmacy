@@ -31,9 +31,14 @@ namespace backend.Repositories
 
         public bool Save(MedicineCombination entity)
         {
-            _dataContext.MedicineCombination.Add(entity);
-            _dataContext.SaveChanges();
-            return true;
+            if(entity.FirstMedicineId!=null && entity.SecondMedicineId != null)
+            {
+                _dataContext.MedicineCombination.Add(entity);
+                _dataContext.SaveChanges();
+                return true;
+            }
+            return false;
+            
         }
 
         public bool Update(MedicineCombination entity)

@@ -1,4 +1,5 @@
-﻿using backend.Model;
+﻿using backend.DTO.TenderingDTO;
+using backend.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace backend.Repositories.Interfaces
     {
         public bool CheckMedicineQuantity(MedicineInventory medicineInventory);
         public bool ReduceMedicineQuantity(MedicineInventory entity);
+        public MedicineInventory FindRequestedMedicineInventory(TenderingItemRequestDTO tenderingItemRequestDTO);
     }
 }

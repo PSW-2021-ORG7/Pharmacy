@@ -68,5 +68,14 @@ namespace backend.Services
         {
             return medicineInventoryRepository.GetAll();
         }
+
+        internal object UpdateMedicinePrice(MedicineInventory medicineInventory)
+        {
+            if (medicineInventory.Price >= 0)
+            {
+                return medicineInventoryRepository.Update(medicineInventory);
+            }
+            return false;
+        }
     }
 }
