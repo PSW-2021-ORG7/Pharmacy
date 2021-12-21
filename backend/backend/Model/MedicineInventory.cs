@@ -15,6 +15,12 @@ namespace backend.Model
             MedicineId = medicineId;
             Quantity = 0;
         }
+        public MedicineInventory(int medicineId, int quantity)
+        {
+            this.Price = 0;
+            MedicineId = medicineId;
+            Quantity = quantity;
+        }
         public MedicineInventory(int medicineId, double price)
         {
             this.Price = price;
