@@ -191,6 +191,9 @@ namespace backend.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 

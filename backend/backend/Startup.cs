@@ -99,6 +99,7 @@ namespace backend
             //Services
             services.AddTransient<Services.UserService>();
             services.AddTransient<Services.ShoppingCartService>();
+            services.AddTransient<Services.TenderingService>();
             services.AddTransient<JwtMiddleware>();
         }
 

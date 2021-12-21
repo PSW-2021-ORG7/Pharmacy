@@ -145,9 +145,15 @@ namespace backend.Controllers
         [Route("/inventory/{id}")]
         public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
         {
-            return Ok(_medicineInventoryService.Update(medicineInventory));
+            return Ok(_medicineInventoryService.UpdateMedicinePrice(medicineInventory));
         }
 
+        [HttpPut]
+        [Route("/inventory/change-price")]
+        public IActionResult UpdateMedicinePrice([FromBody] MedicineInventory medicineInventory)
+        {
+            return Ok(_medicineInventoryService.Update(medicineInventory));
+        }
 
         [HttpPut("/inventory/reduce-quantity")]
         public IActionResult ReduceQuantity([FromBody] MedicineInventory medicineInventory)
