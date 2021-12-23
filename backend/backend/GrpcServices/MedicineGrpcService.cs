@@ -26,7 +26,7 @@ namespace backend.GrpcServices
             inventory.Quantity = request.Quantity;
 
             UpdateInventoryResponse response = new UpdateInventoryResponse();
-            response.Response = _medicineInventoryService.Update(inventory);
+            response.Response = _medicineInventoryService.ReduceMedicineQuantity(inventory);
             return Task.FromResult(response);
         }
     }
