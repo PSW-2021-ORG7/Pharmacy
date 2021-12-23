@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211221013809_init")]
-    partial class init
+    [Migration("20211221131647_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace backend.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("PromotionEndDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
@@ -237,6 +237,9 @@ namespace backend.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("AdId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("MedicineId")
                         .HasColumnType("integer");
 
@@ -253,6 +256,8 @@ namespace backend.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("OrderItemId");
+
+                    b.HasIndex("AdId");
 
                     b.HasIndex("MedicineId");
 
@@ -364,6 +369,10 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Model.OrderItem", b =>
                 {
+                    b.HasOne("backend.Model.Ad", null)
+                        .WithMany("OrderItem")
+                        .HasForeignKey("AdId");
+
                     b.HasOne("backend.Model.Medicine", "Medicine")
                         .WithMany()
                         .HasForeignKey("MedicineId");
@@ -386,6 +395,11 @@ namespace backend.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Model.Ad", b =>
+                {
+                    b.Navigation("OrderItem");
                 });
 
             modelBuilder.Entity("backend.Model.Order", b =>

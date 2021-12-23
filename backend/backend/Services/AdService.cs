@@ -29,5 +29,13 @@ namespace backend.Services
         {
             return adRepository.GetAll();
         }
+
+        public void Delete(int id)
+        {
+            Ad ad = adRepository.GetById(id);
+            if(ad == null)
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
+            adRepository.Delete(ad);
+        }
     }
 }

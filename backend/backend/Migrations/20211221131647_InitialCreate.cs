@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
-    public partial class init : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace backend.Migrations
                     Title = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    PromotionEndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,12 +217,19 @@ namespace backend.Migrations
                     MedicineId = table.Column<int>(type: "integer", nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     PriceForSingleEntity = table.Column<double>(type: "double precision", nullable: false),
+                    AdId = table.Column<int>(type: "integer", nullable: true),
                     Order_Id = table.Column<int>(type: "integer", nullable: true),
                     ShoppingCart_Id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItem", x => x.OrderItemId);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_Ad_AdId",
+                        column: x => x.AdId,
+                        principalTable: "Ad",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderItem_Medicine_MedicineId",
                         column: x => x.MedicineId,
@@ -276,6 +283,11 @@ namespace backend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderItem_AdId",
+                table: "OrderItem",
+                column: "AdId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_MedicineId",
                 table: "OrderItem",
                 column: "MedicineId");
@@ -299,9 +311,6 @@ namespace backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Ad");
-
-            migrationBuilder.DropTable(
                 name: "Feedback");
 
             migrationBuilder.DropTable(
@@ -321,6 +330,9 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ingredient");
+
+            migrationBuilder.DropTable(
+                name: "Ad");
 
             migrationBuilder.DropTable(
                 name: "Medicine");

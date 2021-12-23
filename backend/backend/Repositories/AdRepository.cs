@@ -1,6 +1,7 @@
 ﻿using backend.DAL;
 using backend.Model;
 using backend.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,18 @@ namespace backend.Repositories
         public void Delete(Ad ad)
         {
             _dataContext.Ad.Remove(ad);
+            _dataContext.Entry(ad).State = EntityState.Deleted;
             _dataContext.SaveChanges();
         }
 
         public List<Ad> GetAll()
         {
             return _dataContext.Ad.ToList();
+        }
+
+        public Ad GetById(int id)
+        {
+            return _dataContext.Ad.SingleOrDefault(e => e.Id == id);
         }
 
         public bool Save(Ad ad)

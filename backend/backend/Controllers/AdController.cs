@@ -41,10 +41,12 @@ namespace backend.Controllers
         {
             return Ok(adService.GetAll());
         }
-        [HttpGet("test")]
-        public IActionResult GetTest()
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            return Ok("It works!");
+            adService.Delete(id);
+            return Ok();
         }
     }
 }
