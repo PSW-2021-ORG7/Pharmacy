@@ -17,7 +17,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ApiKeyAuth]
+   // [ApiKeyAuth]
     public class MedicineController : Controller
     {
         private readonly IConfiguration _configuration;

@@ -3,14 +3,14 @@
   "Name": "Brufen",
   "Description": "Painkiller",
   "DosageInMilligrams": 400,
-  "Manufacturer": "Mylan",
+  "Manufacturer": "string",
   "SideEffects": [
     "string"
   ],
   "PossibleReactions": [
     "string"
   ],
-  "WayOfConsumption": "Orally",
+  "WayOfConsumption": "string",
   "PotentialDangers": "string",
   "Ingredients": null
 }
