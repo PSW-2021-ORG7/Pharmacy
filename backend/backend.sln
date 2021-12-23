@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyIntegrationTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyUnitTests", "PharmacyUnitTests\PharmacyUnitTests.csproj", "{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicineGrpcService", "MedicineGrpcService\MedicineGrpcService.csproj", "{372B42D8-FDC6-42DA-B395-11A7167E62F7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{372B42D8-FDC6-42DA-B395-11A7167E62F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{372B42D8-FDC6-42DA-B395-11A7167E62F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{372B42D8-FDC6-42DA-B395-11A7167E62F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{372B42D8-FDC6-42DA-B395-11A7167E62F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
