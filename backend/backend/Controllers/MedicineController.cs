@@ -126,9 +126,9 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("/inventory/check")]
-        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
+        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck quantityCheck)
         {
-            if (_medicineService.CheckMedicineQuantity(DTO))
+            if (_medicineService.CheckMedicineQuantity(quantityCheck))
                 return Ok(true);
 
             return Ok(false);
@@ -160,6 +160,14 @@ namespace backend.Controllers
         {
             _medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
             return Ok();
+        }
+
+        //Prescriptions
+
+        [HttpGet("downloadPrescription/{fileName}")]
+        public IActionResult DownloadPrescriptionSFTP(string fileName)
+        {
+            return Ok(_medicineService.DownloadPrescriptionSFTP(fileName));
         }
 
     }
