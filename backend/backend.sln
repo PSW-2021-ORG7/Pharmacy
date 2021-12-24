@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend", "backend\backend.csproj", "{9873C29B-C2EF-4656-84D2-45A5D2652ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyIntegrationTests", "PharmacyIntegrationTests\PharmacyIntegrationTests.csproj", "{A0B75F90-161D-4356-815B-B5DFC64C5D18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyIntegrationTests", "PharmacyIntegrationTests\PharmacyIntegrationTests.csproj", "{A0B75F90-161D-4356-815B-B5DFC64C5D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyUnitTests", "PharmacyUnitTests\PharmacyUnitTests.csproj", "{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyUnitTests", "PharmacyUnitTests\PharmacyUnitTests.csproj", "{B9FB09EF-2019-4C24-A3F3-F052B346BDB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -41,7 +41,7 @@ namespace backend.Services
             {
                 medicine.Quantity -= medicineInventory.Quantity;
                 if (medicine.Quantity < 0) return false;
-                medicineInventoryRepository.Save(medicine);
+                medicineInventoryRepository.Update(medicine);
                 return true;
             }
             return false;

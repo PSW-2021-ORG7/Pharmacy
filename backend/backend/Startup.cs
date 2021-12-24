@@ -14,6 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using static backend.Helpers.JwtMiddleware;
 using System;
+using Grpc.Core;
+using backend.GrpcServices;
+using backend.Protos;
 
 namespace backend
 {
@@ -101,10 +104,15 @@ namespace backend
             services.AddTransient<Services.ShoppingCartService>();
             services.AddTransient<Services.TenderingService>();
             services.AddTransient<JwtMiddleware>();
+
+            //gRPC
+            services.AddGrpc();
         }
 
+        private Server server;
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
         {
 
             //Enable CORS
@@ -125,13 +133,34 @@ namespace backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGrpcService<MedicineGrpcService>().RequireHost("*:5001");
+
             });
+
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Pharmacy API");
             });
+
+            server = new Server
+            {
+                Services = { NetGrpcService.BindService(new MedicineGrpcService()) },
+                Ports = { new ServerPort("localhost", 5001, ServerCredentials.Insecure) }
+            };
+            server.Start();
+
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
+        }
+
+        private void OnShutdown()
+        {
+            if (server != null)
+            {
+                server.ShutdownAsync().Wait();
+            }
 
         }
     }
