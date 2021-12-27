@@ -28,6 +28,14 @@ namespace backend.Controllers
             _userService = userService;
         }
 
+       
+
+        [HttpGet("test")]
+        public IActionResult GetTest()
+        {
+            return Ok("It works!");
+        }
+
         [HttpGet("get-all-users")]
         public IActionResult GetUsers()
         {

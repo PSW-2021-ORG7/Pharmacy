@@ -8,82 +8,46 @@ import { OrderService } from '../order-service';
   providers: [OrderService]
 })
 export class OrderHistoryComponent implements OnInit {
-  orders: any= [
-    {
-      OrderItems:[
-        {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 3
-    },
-    {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 2
-    }
-      ],
-    User :{
-      UserId : 2
-    },
-    Date: new Date(2021, 10, 11),
-    OrderStatus: 'Delivered'
-    },
-    {
-      OrderItems:[
-        {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 2
-    }
-      ],
-    User :{
-      UserId : 2
-    },
-    Date: new Date(2021, 10, 11),
-    OrderStatus: 'Delivered'
-    },
-    {
-      OrderItems:[
-        {
-      Medicine: {
-        Id : 3,
-        Name : 'Andol',
-        Dosage : '300',
-        Description: 'Lek za oralnu upotrebu smanjuje bolove glave'
-      },
-      Quantiy : 2
-    }
-      ],
-    User :{
-      UserId : 2
-    },
-    Date: new Date(2021, 10, 11),
-    OrderStatus: 'Delivered'
-    },
-   
-  ];
+  orders: any= [];
   constructor(private _orderService: OrderService) { }
 
   changeDate(date : Date){
-    return date.toLocaleDateString("sr-RS")
+    let date1 = new Date(date)
+    console.log(date)
+    return date1.toLocaleDateString("sr-RS")
   }
-  orderAgain(order : object){
-    this._orderService.saveOrder(order)
-    alert('Order succesfully created!')
+  getOrder(order : Object){
+    console.log(order)
   }
+
+  orderAgain(order : any){
+    order.Status = 1
+    order.OrderDate =new Date(Date.now())
+    delete order.Order_Id
+    order.UserId = order.User.UserId;
+    this._orderService.updateReorder(order).subscribe(data =>{
+      console.log(data)
+       this.orders = data
+      alert('Order succesfully created!')
+    })
+  }
+  getStatus (status : any){
+    if(status == 6) return 'Delivered';
+    else return 'Requested for delivery!'
+  }
+  getPrice(orderItems : any) : number{
+    let sum = 0
+    orderItems.forEach(function (orderItem: { PriceForSingleEntity: number; Quantity: number; }) {
+      sum += orderItem.PriceForSingleEntity * orderItem.Quantity
+  });
+  return sum
+  }
+
   ngOnInit(): void {
+    this._orderService.getOrderHistory().subscribe(data =>{
+      console.log(data)
+      this.orders = data
+    })
   }
 
 }

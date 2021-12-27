@@ -2,18 +2,22 @@ using AutoMapper;
 using backend.DTO;
 using backend.Model;
 using backend.Model.Enum;
+using backend.Protos;
 using backend.Repositories.Interfaces;
 using backend.Services;
+using Grpc.Core;
+using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    
+    [ApiKeyAuth]
     public class MedicineController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -35,9 +39,11 @@ namespace backend.Controllers
         [HttpGet("test")]
         public IActionResult GetTest()
         {
-            return Ok("It works!");
+           
+            
+            return Ok("It works");
         }
-
+		
         [HttpGet]
         public IActionResult Get()
         {
@@ -128,15 +134,37 @@ namespace backend.Controllers
 
 
         // INVENTORY
-
+        /*
         [HttpPost]
         [Route("/inventory/check")]
-        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck DTO)
+        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck quantityCheck)
         {
-            if (_medicineService.CheckMedicineQuantity(DTO))
+            if (_medicineService.CheckMedicineQuantity(quantityCheck))
                 return Ok(true);
 
-            return Ok(false);
+            return BadRequest(false);
+        }
+        */
+        
+        [HttpPost]
+        [Route("/inventory/check")]
+        public IActionResult CheckIfAvailableGrpc([FromBody] MedicineQuantityCheck DTO)
+        {
+            bool response = false;
+            var input = new MedicineQuantityCheckRequest
+            {
+                Name = DTO.Name,
+                DosageInMg = DTO.DosageInMg,
+                Quantity = DTO.Quantity
+            };
+            var channel = new Channel("localhost:5001/", ChannelCredentials.Insecure);
+            var client = new NetGrpcService.NetGrpcServiceClient(channel);
+            var reply = client.CheckIfAvailable(input);
+            response = reply.Response;
+
+            if (response) return Ok(response);
+            else return BadRequest(response);
+ 
         }
 
         [HttpGet]
@@ -146,19 +174,53 @@ namespace backend.Controllers
             return Ok(_medicineInventoryService.GetAll());
         }
 
+        /*
         [HttpPut]
         [Route("/inventory/{id}")]
         public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
         {
-            return Ok(_medicineInventoryService.Update(medicineInventory));
+            return Ok(_medicineInventoryService.UpdateMedicinePrice(medicineInventory));
         }
 
+        [HttpPut]
+        [Route("/inventory/change-price")]
+        public IActionResult UpdateMedicinePrice([FromBody] MedicineInventory medicineInventory)
+        {
+            return Ok(_medicineInventoryService.Update(medicineInventory));
+        }
+        */
+
+        [HttpPut]
+        [Route("/inventory/{id}")]
+        public IActionResult UpdateInventoryGrpc([FromBody] MedicineInventory medicineInventory)
+        {
+            bool response = false;
+            var input = new UpdateInventoryRequest
+            {
+                MedicineId = medicineInventory.MedicineId,
+                Quantity = medicineInventory.Quantity
+            };
+            var channel = new Channel("localhost:5001/", ChannelCredentials.Insecure);
+            var client = new NetGrpcService.NetGrpcServiceClient(channel);
+            var reply = client.UpdateInventory(input);
+            response = reply.Response;
+
+            return Ok(response);
+        }
 
         [HttpPut("/inventory/reduce-quantity")]
         public IActionResult ReduceQuantity([FromBody] MedicineInventory medicineInventory)
         {
             _medicineInventoryService.ReduceMedicineQuantity(medicineInventory);
             return Ok();
+        }
+
+        //Prescriptions
+
+        [HttpGet("downloadPrescription/{fileName}")]
+        public IActionResult DownloadPrescriptionSFTP(string fileName)
+        {
+            return Ok(_medicineService.DownloadPrescriptionSFTP(fileName));
         }
 
     }

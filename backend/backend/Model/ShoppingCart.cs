@@ -21,6 +21,13 @@ namespace backend.Model
 
         public ShoppingCart() { }
 
+        public ShoppingCart(User u, List<OrderItem> items)
+        {
+            this.User = u;
+            this.ShoppingCartItem = new List<OrderItem>();
+        }
+
+
         public double getFinalPrice()
         {
             double finalPrice = 0;

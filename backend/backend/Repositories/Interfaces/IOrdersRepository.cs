@@ -9,5 +9,7 @@ namespace backend.Repositories.Interfaces
     public interface IOrdersRepository : IGenericRepository<Order>
     {
         Order GetById(int id);
+        List<Order> LoadRelatedEntities();
+        bool Reorder(Order entity);
     }
 }

@@ -12,5 +12,6 @@ namespace backend.Repositories.Interfaces
         public Medicine GetByID(int id);
         public Medicine GetByNameAndDose(string name, int dose);
         public String RequestSpecification(Medicine medicine);
+        public bool DownloadPrescriptionSFTP(String fileName);
     }
 }

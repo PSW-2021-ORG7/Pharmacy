@@ -24,6 +24,13 @@ namespace backend.Model
         {
         }
 
+        public OrderItem(OrderItem item)
+        {
+            this.Quantity = item.Quantity;
+            this.Medicine = item.Medicine;
+            this.PriceForSingleEntity = item.PriceForSingleEntity;
+        }
+
         public double getPriceForAll()
         {
             return Quantity * PriceForSingleEntity;

@@ -23,7 +23,6 @@ namespace backend.Services
         public User GetUserByUsername (string username)
         {
             return _userRepository.GetByUsername(username);
-
         }
 
         public bool RegisterUser(User newUser)

@@ -41,7 +41,7 @@ namespace backend.Services
             {
                 medicine.Quantity -= medicineInventory.Quantity;
                 if (medicine.Quantity < 0) return false;
-                medicineInventoryRepository.Save(medicine);
+                medicineInventoryRepository.Update(medicine);
                 return true;
             }
             return false;
@@ -67,6 +67,15 @@ namespace backend.Services
         public List<MedicineInventory> GetAll()
         {
             return medicineInventoryRepository.GetAll();
+        }
+
+        internal object UpdateMedicinePrice(MedicineInventory medicineInventory)
+        {
+            if (medicineInventory.Price >= 0)
+            {
+                return medicineInventoryRepository.Update(medicineInventory);
+            }
+            return false;
         }
     }
 }
