@@ -26,6 +26,8 @@ jobs:
     name: Deploy on server
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout GitHub actions
+      uses: actions/checkout@v2
     - name: deploy-on-server
       uses: appleboy/ssh-action@master
       with:
