@@ -8,6 +8,8 @@ jobs:
   Build-and-publish-Docker-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout GitHub actions
+        uses: actions/checkout@v2
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
@@ -26,8 +28,6 @@ jobs:
     name: Deploy on server
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout GitHub actions
-      uses: actions/checkout@v2
     - name: deploy-on-server
       uses: appleboy/ssh-action@master
       with:
