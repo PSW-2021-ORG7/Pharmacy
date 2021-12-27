@@ -1,6 +1,8 @@
 name: Pharmacy Build and Test
 
 on:
+  push:
+    branches: [master]
   pull_request:
     branches: [ master, develop ]
       
