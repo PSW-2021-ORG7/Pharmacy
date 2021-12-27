@@ -1,0 +1,43 @@
+name: Deploy to server
+on:
+  workflow_dispatch:
+  push:
+    branches:  [master]
+
+jobs:
+  Build-and-publish-Docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: marijakljestan
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend
+          push: true
+          tags: marijakljestan/pharmacy:latest
+
+  Deploy:
+    name: Deploy on server
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploy-on-server
+      uses: appleboy/ssh-action@master
+      with:
+        command_timeout: 200m
+        host: 79.101.34.218
+        username: student
+        key: ${{ secrets.SSH_KEY }}
+        port: 22215
+        script: |
+          cd DevOps
+          git pull
+          git checkout bugfix/frontend
+          cd docker-compose
+          docker-compose build
+          docker-compose up -d
