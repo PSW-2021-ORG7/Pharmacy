@@ -5,7 +5,7 @@ WORKDIR /app
 RUN groupadd -r user -g 443 && \
     useradd -u 101 -r -g user newuser
 USER newuser
-EXPOSE 8080
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
