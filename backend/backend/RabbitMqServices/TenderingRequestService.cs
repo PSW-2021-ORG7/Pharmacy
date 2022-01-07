@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using AutoMapper;
 using backend.DAL;
 using backend.DTO;
@@ -6,6 +7,9 @@ using backend.Model;
 using backend.Repositories;
 using backend.Services;
 using Microsoft.Extensions.Hosting;
+=======
+﻿using Microsoft.Extensions.Hosting;
+>>>>>>> 2b2804e (feat: Implementation of RabbitMQ consumer service)
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -18,9 +22,12 @@ namespace backend.RabbitMqServices
 {
     public class TenderingRequestService : BackgroundService
     {
+<<<<<<< HEAD
         private const String apiKey = "XYZX";
         private TenderingService _tenderService = new TenderingService(new MedicineInventoryRepository(new DrugStoreContext()), new MedicineRepository(new DrugStoreContext()));
 
+=======
+>>>>>>> 2b2804e (feat: Implementation of RabbitMQ consumer service)
         IConnection connection;
         IModel channel;
         private CancellationToken cancellationToken;
@@ -30,7 +37,11 @@ namespace backend.RabbitMqServices
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
+<<<<<<< HEAD
             channel.QueueDeclare(queue: "tendering-requests-queue",
+=======
+            channel.QueueDeclare(queue: "tendering-queue",
+>>>>>>> 2b2804e (feat: Implementation of RabbitMQ consumer service)
                                     durable: false,
                                     exclusive: false,
                                     autoDelete: false,
@@ -40,6 +51,7 @@ namespace backend.RabbitMqServices
             consumer.Received += (model, ea) =>
             {
                 byte[] body = ea.Body.ToArray();
+<<<<<<< HEAD
                 var jsonBody = Encoding.UTF8.GetString(body);
                 TenderingRequestDTO tenderingRequest = new TenderingRequestDTO();
                 try
@@ -61,6 +73,23 @@ namespace backend.RabbitMqServices
 
             };
             channel.BasicConsume(queue: "tendering-requests-queue",
+=======
+                var jsonMessage = Encoding.UTF8.GetString(body);
+                String message;
+                try
+                {   // try deserialize with default datetime format
+                    message = JsonConvert.DeserializeObject<String>(jsonMessage);
+                }
+                catch (Exception)     // datetime format not default, deserialize with Java format (milliseconds since 1970/01/01)
+                {
+                    message = JsonConvert.DeserializeObject<String>(jsonMessage);
+                }
+
+                String response = message;
+
+            };
+            channel.BasicConsume(queue: "tendering-queue",
+>>>>>>> 2b2804e (feat: Implementation of RabbitMQ consumer service)
                                     autoAck: true,
                                     consumer: consumer);
             return base.StartAsync(cancellationToken);
