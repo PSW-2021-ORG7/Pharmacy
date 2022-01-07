@@ -17,6 +17,7 @@ using System;
 using Grpc.Core;
 using backend.GrpcServices;
 using backend.Protos;
+using backend.RabbitMqServices;
 
 namespace backend
 {
@@ -25,6 +26,7 @@ namespace backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
