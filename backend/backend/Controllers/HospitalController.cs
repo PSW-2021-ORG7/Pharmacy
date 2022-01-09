@@ -9,7 +9,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ApiKeyAuth]
+   // [ApiKeyAuth]
     public class HospitalController : Controller
     {
         private HospitalService hospitalService;

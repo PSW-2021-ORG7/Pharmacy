@@ -1,4 +1,5 @@
-﻿using backend.Model;
+﻿using backend.Events.EventInventoryCheck;
+using backend.Model;
 using backend.Model.Enum;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,10 +24,12 @@ namespace backend.DAL
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<Ad> Ad { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
+        //events
+        public DbSet<InventoryCheck> InventoryCheck { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            String connection = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=psql;";
+            String connection = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=1234;";
             optionsBuilder.UseNpgsql(connection);
         }
 

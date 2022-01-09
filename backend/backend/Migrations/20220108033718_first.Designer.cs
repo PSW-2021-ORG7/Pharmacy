@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20211202155523_Drugstore")]
-    partial class Drugstore
+    [Migration("20220108033718_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,53 @@ namespace backend.Migrations
                     b.HasIndex("MedicinesId");
 
                     b.ToTable("IngredientMedicine");
+                });
+
+            modelBuilder.Entity("backend.Events.EventInventoryCheck.InventoryCheck", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("DosageInMg")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InventoryCheck", "Events");
+                });
+
+            modelBuilder.Entity("backend.Model.Ad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("PromotionEndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ad");
                 });
 
             modelBuilder.Entity("backend.Model.Feedback", b =>
@@ -167,12 +214,96 @@ namespace backend.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.HasKey("MedicineId");
 
                     b.ToTable("MedicineInventory");
+                });
+
+            modelBuilder.Entity("backend.Model.Order", b =>
+                {
+                    b.Property<int>("Order_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("deliveryReqired")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Order_Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("backend.Model.OrderItem", b =>
+                {
+                    b.Property<int>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("AdId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MedicineId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Order_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("PriceForSingleEntity")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ShoppingCart_Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("AdId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("Order_Id");
+
+                    b.HasIndex("ShoppingCart_Id");
+
+                    b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+                {
+                    b.Property<int>("ShoppingCart_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ShoppingCart_Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("backend.Model.User", b =>
@@ -246,6 +377,60 @@ namespace backend.Migrations
                     b.Navigation("FirstMedicine");
 
                     b.Navigation("SecondMedicine");
+                });
+
+            modelBuilder.Entity("backend.Model.Order", b =>
+                {
+                    b.HasOne("backend.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Model.OrderItem", b =>
+                {
+                    b.HasOne("backend.Model.Ad", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("AdId");
+
+                    b.HasOne("backend.Model.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId");
+
+                    b.HasOne("backend.Model.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("Order_Id");
+
+                    b.HasOne("backend.Model.ShoppingCart", null)
+                        .WithMany("ShoppingCartItem")
+                        .HasForeignKey("ShoppingCart_Id");
+
+                    b.Navigation("Medicine");
+                });
+
+            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+                {
+                    b.HasOne("backend.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Model.Ad", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("backend.Model.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("backend.Model.ShoppingCart", b =>
+                {
+                    b.Navigation("ShoppingCartItem");
                 });
 #pragma warning restore 612, 618
         }
