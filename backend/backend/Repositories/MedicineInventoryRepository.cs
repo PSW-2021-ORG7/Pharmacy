@@ -71,6 +71,7 @@ namespace backend.Repositories
         MedicineInventory IMedicineInventoryRepository.FindRequestedMedicineInventory(TenderingItemRequestDTO tenderingItemRequestDTO)
         {
 
+
             Medicine requiredMedicine = _dataContext.Medicine.SingleOrDefault(m => m.Name.ToLower().Equals(tenderingItemRequestDTO.MedicineName.ToLower()) &&
                                         m.DosageInMilligrams.Equals(tenderingItemRequestDTO.DosageInMilligrams));
  
