@@ -11,7 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+
 
 namespace backend.Services
 {
