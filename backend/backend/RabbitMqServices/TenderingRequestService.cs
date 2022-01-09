@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using backend.DAL;
+using backend.DTO.TenderingDTO;
+using backend.Repositories;
+using backend.Services;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -11,6 +15,8 @@ namespace backend.RabbitMqServices
 {
     public class TenderingRequestService : BackgroundService
     {
+        private TenderingService _tenderService = new TenderingService(new MedicineInventoryRepository(new DrugStoreContext()), new MedicineRepository(new DrugStoreContext()));
+
         IConnection connection;
         IModel channel;
         private CancellationToken cancellationToken;
@@ -30,18 +36,18 @@ namespace backend.RabbitMqServices
             consumer.Received += (model, ea) =>
             {
                 byte[] body = ea.Body.ToArray();
-                var jsonMessage = Encoding.UTF8.GetString(body);
-                String message;
+                var jsonBody = Encoding.UTF8.GetString(body);
+                TenderingRequestDTO tenderingRequest = new TenderingRequestDTO();
                 try
                 {   // try deserialize with default datetime format
-                    message = JsonConvert.DeserializeObject<String>(jsonMessage);
+                    tenderingRequest = JsonConvert.DeserializeObject<TenderingRequestDTO>(jsonBody);
                 }
                 catch (Exception)     // datetime format not default, deserialize with Java format (milliseconds since 1970/01/01)
                 {
-                    message = JsonConvert.DeserializeObject<String>(jsonMessage);
+                    tenderingRequest = JsonConvert.DeserializeObject<TenderingRequestDTO>(jsonBody);
                 }
 
-                String response = message;
+                _tenderService.RequestTenderOfffer(tenderingRequest);
 
             };
             channel.BasicConsume(queue: "tendering-queue",
