@@ -35,6 +35,27 @@ namespace backend.Migrations
                     b.ToTable("IngredientMedicine");
                 });
 
+            modelBuilder.Entity("backend.Events.EventInventoryCheck.InventoryCheck", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("DosageInMg")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InventoryCheck", "Events");
+                });
+
             modelBuilder.Entity("backend.Model.Ad", b =>
                 {
                     b.Property<int>("Id")
@@ -368,7 +389,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Model.OrderItem", b =>
                 {
                     b.HasOne("backend.Model.Ad", null)
-                        .WithMany("OrderItem")
+                        .WithMany("OrderItems")
                         .HasForeignKey("AdId");
 
                     b.HasOne("backend.Model.Medicine", "Medicine")
@@ -397,7 +418,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Model.Ad", b =>
                 {
-                    b.Navigation("OrderItem");
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("backend.Model.Order", b =>
