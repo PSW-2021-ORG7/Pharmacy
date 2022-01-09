@@ -1,4 +1,6 @@
-﻿using backend.DAL;
+﻿using AutoMapper;
+using backend.DAL;
+using backend.DTO;
 using backend.DTO.TenderingDTO;
 using backend.Model;
 using backend.Repositories;
@@ -16,6 +18,7 @@ namespace backend.RabbitMqServices
 {
     public class TenderingRequestService : BackgroundService
     {
+        private const String apiKey = "XYZX";
         private TenderingService _tenderService = new TenderingService(new MedicineInventoryRepository(new DrugStoreContext()), new MedicineRepository(new DrugStoreContext()));
 
         IConnection connection;
@@ -27,7 +30,7 @@ namespace backend.RabbitMqServices
             var factory = new ConnectionFactory() { HostName = "localhost" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "tendering-queue",
+            channel.QueueDeclare(queue: "tendering-requests-queue",
                                     durable: false,
                                     exclusive: false,
                                     autoDelete: false,
@@ -43,16 +46,21 @@ namespace backend.RabbitMqServices
                 {   // try deserialize with default datetime format
                     tenderingRequest = JsonConvert.DeserializeObject<TenderingRequestDTO>(jsonBody);
                 }
-                catch (Exception)     // datetime format not default, deserialize with Java format (milliseconds since 1970/01/01)
+                catch (Exception)     
                 {
                     tenderingRequest = JsonConvert.DeserializeObject<TenderingRequestDTO>(jsonBody);
                 }
 
-                TenderingOffer offer = _tenderService.RequestTenderOfffer(tenderingRequest);
-                _tenderService.sendOfferToHospital(offer); //RabbitMQ
+                TenderingOffer offer = _tenderService.RequestTenderOfffer(tenderingRequest);      
+                TenderingOfferDTO offerToSend = Mapping.Mapper.Map<TenderingOfferDTO>(offer);
+                offerToSend.ApiKey = apiKey;
+                offerToSend.TenderKey = tenderingRequest.TenderKey;
+
+
+                _tenderService.sendOfferToHospital(offerToSend); //RabbitMQ
 
             };
-            channel.BasicConsume(queue: "tendering-queue",
+            channel.BasicConsume(queue: "tendering-requests-queue",
                                     autoAck: true,
                                     consumer: consumer);
             return base.StartAsync(cancellationToken);

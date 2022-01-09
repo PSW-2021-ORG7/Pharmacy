@@ -1,14 +1,13 @@
-﻿using backend.DTO;
+﻿using AutoMapper;
+using backend.DTO;
 using backend.DTO.TenderingDTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+
 
 namespace backend.Services
 {
@@ -22,8 +21,6 @@ namespace backend.Services
             this.medicineInventoryRepository = mir;
             this.medicineRepository = mr;
         }
-
-      
 
         public TenderingOffer RequestTenderOfffer(TenderingRequestDTO tenderingRequestDTO)
         {
@@ -65,7 +62,7 @@ namespace backend.Services
             return tenderingOffer;
         }
 
-        public void sendOfferToHospital(TenderingOffer offer)
+        public void sendOfferToHospital(TenderingOfferDTO offer)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
@@ -77,7 +74,7 @@ namespace backend.Services
                                      autoDelete: false,
                                      arguments: null);
 
-                TenderingOffer offerToSend = offer;
+                TenderingOfferDTO offerToSend = offer;
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(offerToSend));
 
                 channel.BasicPublish(exchange: "",
