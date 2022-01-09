@@ -9,7 +9,6 @@ namespace backend.DTO.TenderingDTO
     {
         public String MedicineName { get; set; }
         public int DosageInMilligrams { get; set; }
-        public String Manufacturer { get; set; }
         public int RequiredQuantity { get; set; }
 
         public TenderingItemRequestDTO() { }

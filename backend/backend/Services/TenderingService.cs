@@ -32,7 +32,9 @@ namespace backend.Services
                 TenderingOfferItem newTenderingOfferItem =  new TenderingOfferItem();
                 if(medicineInventory != null)
                 {
-                    newTenderingOfferItem.Medicine = medicineRepository.GetByID(medicineInventory.MedicineId);
+                    Medicine medicine = medicineRepository.GetByID(medicineInventory.MedicineId);
+                    newTenderingOfferItem.MedicineName = medicine.Name;
+                    newTenderingOfferItem.MedicineDosage = medicine.DosageInMilligrams;
                     newTenderingOfferItem.PriceForSingleEntity = medicineInventory.Price;
                     if (requestedItem.RequiredQuantity <= medicineInventory.Quantity)
                     {
@@ -48,7 +50,8 @@ namespace backend.Services
                 }
                 else
                 {
-                    newTenderingOfferItem.Medicine = new Medicine(requestedItem.MedicineName, requestedItem.DosageInMilligrams, requestedItem.Manufacturer);
+                    newTenderingOfferItem.MedicineName = requestedItem.MedicineName;
+                    newTenderingOfferItem.MedicineDosage = requestedItem.DosageInMilligrams;
                     newTenderingOfferItem.MissingQuantity = requestedItem.RequiredQuantity;
                     newTenderingOfferItem.PriceForSingleEntity = 0;
                     newTenderingOfferItem.AvailableQuantity = 0;
