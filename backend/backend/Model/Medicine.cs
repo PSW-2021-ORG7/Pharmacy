@@ -43,11 +43,11 @@ namespace backend.Model
 
         public Medicine() {}
 
-        public Medicine(string medicineName, int dosageInMilligrams, string manufacturer)
+        public Medicine(string medicineName, int dosageInMilligrams)
         {
             this.medicineName = medicineName;
             DosageInMilligrams = dosageInMilligrams;
-            Manufacturer = manufacturer;
+
         }
     }
 }

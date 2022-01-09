@@ -34,9 +34,8 @@ namespace backend.DTO.Mappings
                 .ForMember(dest => dest.quantity, opt => opt.MapFrom(src => src.Quantity.ToString()));
 
             CreateMap<TenderingOfferItem, TenderingOfferItemDTO>()
-                .ForMember(dest => dest.MedicineName, opt => opt.MapFrom(src => src.Medicine.Name.ToString()))
-                .ForMember(dest => dest.DosageInMilligrams, opt => opt.MapFrom(src => src.Medicine.DosageInMilligrams.ToString()))
-                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom(src => src.Medicine.Manufacturer.ToString()))
+                .ForMember(dest => dest.MedicineName, opt => opt.MapFrom(src => src.MedicineName.ToString()))
+                .ForMember(dest => dest.DosageInMilligrams, opt => opt.MapFrom(src => src.MedicineDosage.ToString()))
                 .ForMember(dest => dest.AvailableQuantity, opt => opt.MapFrom(src => src.AvailableQuantity.ToString()))
                 .ForMember(dest => dest.PriceForSingleEntity, opt => opt.MapFrom(src => src.PriceForSingleEntity.ToString()))
                 .ForMember(dest => dest.PriceForAllAvailableEntity, opt => opt.MapFrom(src => src.GetPriceForAllAvailable().ToString()))
