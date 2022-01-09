@@ -7,7 +7,11 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace backend.Services
 {
