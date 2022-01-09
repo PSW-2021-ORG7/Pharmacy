@@ -1,5 +1,6 @@
 ﻿using backend.DAL;
 using backend.DTO.TenderingDTO;
+using backend.Model;
 using backend.Repositories;
 using backend.Services;
 using Microsoft.Extensions.Hosting;
@@ -47,7 +48,8 @@ namespace backend.RabbitMqServices
                     tenderingRequest = JsonConvert.DeserializeObject<TenderingRequestDTO>(jsonBody);
                 }
 
-                _tenderService.RequestTenderOfffer(tenderingRequest);
+                TenderingOffer offer = _tenderService.RequestTenderOfffer(tenderingRequest);
+                _tenderService.sendOfferToHospital(offer); //RabbitMQ
 
             };
             channel.BasicConsume(queue: "tendering-queue",

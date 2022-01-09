@@ -2,9 +2,12 @@
 using backend.DTO.TenderingDTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace backend.Services
@@ -60,6 +63,28 @@ namespace backend.Services
             }
 
             return tenderingOffer;
+        }
+
+        public void sendOfferToHospital(TenderingOffer offer)
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: "tendering-offers-queue",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                TenderingOffer offerToSend = offer;
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(offerToSend));
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: "tendering-offers-queue",
+                                     basicProperties: null,
+                                     body: body);
+            }
         }
     }
 }
