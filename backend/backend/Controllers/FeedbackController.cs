@@ -10,7 +10,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [ApiKeyAuth]
+   // [ApiKeyAuth]
     public class FeedbackController : Controller
     {
         private FeedbackService feedbackService;

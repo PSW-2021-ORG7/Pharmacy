@@ -1,5 +1,7 @@
 using AutoMapper;
 using backend.DTO;
+using backend.Events.EventInventoryCheck;
+using backend.Events.LogEvent;
 using backend.Model;
 using backend.Model.Enum;
 using backend.Protos;
@@ -17,7 +19,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ApiKeyAuth]
+  //  [ApiKeyAuth]
     public class MedicineController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -25,15 +27,17 @@ namespace backend.Controllers
         private MedicineService _medicineService;
         private MedicineInventoryService _medicineInventoryService;
         private MedicineCombinationService _medicineCombinationService;
+        private readonly ILogEventService<InventoryCheckEventParams> _logInventoryCheckEventService;
 
         public MedicineController(IConfiguration configuration, IMapper mapper, IMedicineRepository medicineRepository, 
-            IMedicineInventoryRepository medicineInventoryRepository, IMedicineCombinationRepository medicineCombinationRepository)
+            IMedicineInventoryRepository medicineInventoryRepository, IMedicineCombinationRepository medicineCombinationRepository, ILogEventService<InventoryCheckEventParams> logInventoryCheckEventService)
         {
             _configuration = configuration;
             _mapper = mapper;
             _medicineService = new MedicineService(medicineRepository, medicineInventoryRepository);
             _medicineInventoryService = new MedicineInventoryService(medicineInventoryRepository);
             _medicineCombinationService = new MedicineCombinationService(medicineCombinationRepository);
+            _logInventoryCheckEventService = logInventoryCheckEventService;
         }
 
         [HttpGet("test")]
@@ -150,6 +154,8 @@ namespace backend.Controllers
         [Route("/inventory/check")]
         public IActionResult CheckIfAvailableGrpc([FromBody] MedicineQuantityCheck DTO)
         {
+            var eventparams = new InventoryCheckEventParams(DTO.DosageInMg, DTO.Name);
+            _logInventoryCheckEventService.LogEvent(eventparams);
             bool response = false;
             var input = new MedicineQuantityCheckRequest
             {

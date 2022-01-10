@@ -5,10 +5,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "Events");
+
             migrationBuilder.CreateTable(
                 name: "Feedback",
                 columns: table => new
@@ -47,6 +50,22 @@ namespace backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredient", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InventoryCheck",
+                schema: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    DosageInMg = table.Column<int>(type: "integer", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InventoryCheck", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -250,6 +269,10 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "IngredientMedicine");
+
+            migrationBuilder.DropTable(
+                name: "InventoryCheck",
+                schema: "Events");
 
             migrationBuilder.DropTable(
                 name: "MedicineCombination");

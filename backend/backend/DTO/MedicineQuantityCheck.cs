@@ -7,8 +7,13 @@ namespace backend.DTO
 {
     public class MedicineQuantityCheck
     {
-        public string Name;
-        public int DosageInMg;
-        public int Quantity;
+        public string Name { get; set; }
+        public int DosageInMg { get; set; }
+        public int Quantity
+        {
+            get; set;
+        }
+
+        public MedicineQuantityCheck() { }
     }
 }

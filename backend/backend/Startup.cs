@@ -17,6 +17,8 @@ using System;
 using Grpc.Core;
 using backend.GrpcServices;
 using backend.Protos;
+using backend.Events.EventInventoryCheck;
+using backend.Events.LogEvent;
 
 namespace backend
 {
@@ -104,6 +106,10 @@ namespace backend
             services.AddTransient<Services.ShoppingCartService>();
             services.AddTransient<Services.TenderingService>();
             services.AddTransient<JwtMiddleware>();
+
+            //events
+            services.AddTransient<IInventoryCheckRepository, InventoryCheckDatabase>();
+            services.AddTransient<ILogEventService<InventoryCheckEventParams>, Events.EventInventoryCheck.InventoryCheckEventService>();
 
             //gRPC
             services.AddGrpc();
