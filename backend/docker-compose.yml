@@ -7,7 +7,7 @@ services:
       networks:
         - database
       environment:
-        POSTGRES_PASSWORD: pharmacy
+        POSTGRES_PASSWORD: 1234
         POSTGRES_USER: postgres
         POSTGRES_DB: pharmacy
       volumes:
