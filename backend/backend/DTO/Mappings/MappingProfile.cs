@@ -33,17 +33,14 @@ namespace backend.DTO.Mappings
                 .ForMember(dest => dest.priceAll, opt => opt.MapFrom(src => src.getPriceForAll().ToString()))
                 .ForMember(dest => dest.quantity, opt => opt.MapFrom(src => src.Quantity.ToString()));
 
-            CreateMap<TenderingOfferItem, TenderingOfferItemDTO>()
+			CreateMap<TenderingOfferItem, TenderingOfferItemDTO>()
                 .ForMember(dest => dest.MedicineName, opt => opt.MapFrom(src => src.MedicineName.ToString()))
-<<<<<<< HEAD
                 .ForMember(dest => dest.MedicineDosage, opt => opt.MapFrom(src => src.MedicineDosage.ToString()))
-=======
-                .ForMember(dest => dest.DosageInMilligrams, opt => opt.MapFrom(src => src.MedicineDosage.ToString()))
->>>>>>> d9a6a00 (refactor: Changed parameters in creating offer)
                 .ForMember(dest => dest.AvailableQuantity, opt => opt.MapFrom(src => src.AvailableQuantity.ToString()))
                 .ForMember(dest => dest.PriceForSingleEntity, opt => opt.MapFrom(src => src.PriceForSingleEntity.ToString()))
                 .ForMember(dest => dest.PriceForAllAvailableEntity, opt => opt.MapFrom(src => src.GetPriceForAllAvailable().ToString()))
                 .ForMember(dest => dest.PriceForAllRequiredEntity, opt => opt.MapFrom(src => src.GetPriceForAllRequired().ToString()));
+
 
             CreateMap<TenderingOffer, TenderingOfferDTO>()
                 .ForMember(dest => dest.tenderingOfferItems, opt => opt.MapFrom(src => src.tenderingOfferItems))
