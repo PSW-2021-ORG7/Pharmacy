@@ -46,20 +46,10 @@ namespace backend.Services
                         newTenderingOfferItem.AvailableQuantity = medicineInventory.Quantity;
                         newTenderingOfferItem.MissingQuantity = requestedItem.RequiredQuantity - medicineInventory.Quantity;
                     }
-                    
+
+                    tenderingOffer.tenderingOfferItems.Add(newTenderingOfferItem);
+
                 }
-                else
-                {
-                    newTenderingOfferItem.MedicineName = requestedItem.MedicineName;
-                    newTenderingOfferItem.MedicineDosage = requestedItem.DosageInMilligrams;
-                    newTenderingOfferItem.MissingQuantity = requestedItem.RequiredQuantity;
-                    newTenderingOfferItem.PriceForSingleEntity = 0;
-                    newTenderingOfferItem.AvailableQuantity = 0;
-                }
-                tenderingOffer.tenderingOfferItems.Add(newTenderingOfferItem);
-
-
-
             }
 
             return tenderingOffer;
