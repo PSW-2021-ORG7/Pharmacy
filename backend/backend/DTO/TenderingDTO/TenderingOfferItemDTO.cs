@@ -8,7 +8,7 @@ namespace backend.DTO.TenderingDTO
     public class TenderingOfferItemDTO
     {
         public String MedicineName { get; set; }
-        public String DosageInMilligrams { get; set; }
+        public String MedicineDosage { get; set; }
         public String AvailableQuantity { get; set; }
         public String MissingQuantity { get; set; }
         public String PriceForSingleEntity { get; set; }
