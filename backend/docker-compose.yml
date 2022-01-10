@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+    pharmacy-db:
+      image: postgres:14.1
+      restart: always
+      networks:
+        - database
+      environment:
+        POSTGRES_PASSWORD: pharmacy
+        POSTGRES_USER: postgres
+        POSTGRES_DB: pharmacy
+      ports:
+        - 5432:5432
+
+networks:
+    database:
+      name: database
+      driver: bridge
