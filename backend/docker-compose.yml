@@ -9,7 +9,7 @@ services:
       environment:
         POSTGRES_PASSWORD: 1234
         POSTGRES_USER: postgres
-        POSTGRES_DB: pharmacy
+        POSTGRES_DB: drugstore
       volumes:
         - type: bind
           source: ./init.sql
