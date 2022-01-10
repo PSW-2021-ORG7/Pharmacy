@@ -10,6 +10,10 @@ services:
         POSTGRES_PASSWORD: pharmacy
         POSTGRES_USER: postgres
         POSTGRES_DB: pharmacy
+      volumes:
+        - type: bind
+          source: ./init.sql
+          target: /docker-entrypoint-initdb.d/init.sql
       ports:
         - 5432:5432
 
