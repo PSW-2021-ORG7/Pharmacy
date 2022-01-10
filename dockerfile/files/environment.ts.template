@@ -1,0 +1,4 @@
+export const environment = {
+    production: true,
+    baseUrlPharmacy: '${PHARMACY_API_HOST}'
+};
