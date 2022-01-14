@@ -29,7 +29,7 @@ namespace backend.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            String connection = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=1234;";
+            String connection = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=psql;";
             optionsBuilder.UseNpgsql(connection);
         }
 
