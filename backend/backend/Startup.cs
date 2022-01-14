@@ -20,6 +20,7 @@ using backend.Protos;
 using backend.Events.EventInventoryCheck;
 using backend.Events.LogEvent;
 
+
 namespace backend
 {
     public class Startup
