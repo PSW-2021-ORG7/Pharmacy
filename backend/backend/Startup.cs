@@ -49,7 +49,7 @@ namespace backend
 
             //EntityFramework 
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_P");
-            if (connectionString == null) connectionString = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=1234;";
+            if (connectionString == null) connectionString = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=psql;";
             services.AddDbContext<DrugStoreContext>(options =>
                 options.UseNpgsql(connectionString));
 
