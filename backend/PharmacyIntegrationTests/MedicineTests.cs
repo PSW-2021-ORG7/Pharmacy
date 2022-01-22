@@ -51,6 +51,7 @@ namespace PharmacyIntegrationTests
 
         }
 
+        /*
         [Theory]
         [InlineData("/medicine")]
         [InlineData("/inventory")]
@@ -135,6 +136,7 @@ namespace PharmacyIntegrationTests
             Assert.Equal(expectedStatusCode, result.StatusCode.ToString()); ;
 
         }
+        */
 
 
     }

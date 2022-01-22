@@ -1,18 +1,10 @@
-﻿using AutoMapper;
-using backend.DTO;
+﻿using backend.DTO;
 using backend.DTO.TenderingDTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-
 
 namespace backend.Services
 {
