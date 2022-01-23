@@ -9,16 +9,14 @@ using System;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-   // [ApiKeyAuth]
+    [Route("[controller]")]
+    [ApiKeyAuth]
     public class FeedbackController : Controller
     {
         private FeedbackService feedbackService;
-        private readonly IConfiguration _configuration;
 
         public FeedbackController(IFeedbackRepository feedbackRepository, IConfiguration configuration)
         {
-            this._configuration = configuration;
             feedbackService = new FeedbackService(feedbackRepository);
         }
 
@@ -28,14 +26,11 @@ namespace backend.Controllers
             return Ok(feedbackService.GetAll());
         }
 
-        // POST: api/feedback
         [HttpPost]
         public IActionResult CreateFeedback([FromBody] Feedback feedback)
         {
-            Console.WriteLine("Hit the controller!");
-            feedbackService.Save(feedback);
-            return Ok("Succesfully added feedback!");
-
+            if (feedbackService.Save(feedback)) return Ok(true);
+            else return BadRequest();
         }
     }
 }

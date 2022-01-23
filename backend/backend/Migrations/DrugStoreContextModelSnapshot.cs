@@ -84,16 +84,17 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Model.Feedback", b =>
                 {
-                    b.Property<string>("IdFeedback")
-                        .HasColumnType("text");
+                    b.Property<int>("IdFeedback")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ContentFeedback")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IdHospital")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("IdHospital")
+                        .HasColumnType("integer");
 
                     b.HasKey("IdFeedback");
 

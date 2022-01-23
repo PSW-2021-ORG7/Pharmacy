@@ -11,8 +11,8 @@ using backend.DAL;
 namespace backend.Migrations
 {
     [DbContext(typeof(DrugStoreContext))]
-    [Migration("20220114034835_PharmacyMigration")]
-    partial class PharmacyMigration
+    [Migration("20220123213152_FeedbackMigration")]
+    partial class FeedbackMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,16 +86,17 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Model.Feedback", b =>
                 {
-                    b.Property<string>("IdFeedback")
-                        .HasColumnType("text");
+                    b.Property<int>("IdFeedback")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ContentFeedback")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IdHospital")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("IdHospital")
+                        .HasColumnType("integer");
 
                     b.HasKey("IdFeedback");
 

@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
-    public partial class first : Migration
+    public partial class FeedbackMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,8 +32,9 @@ namespace backend.Migrations
                 name: "Feedback",
                 columns: table => new
                 {
-                    IdFeedback = table.Column<string>(type: "text", nullable: false),
-                    IdHospital = table.Column<string>(type: "text", nullable: false),
+                    IdFeedback = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdHospital = table.Column<int>(type: "integer", nullable: false),
                     ContentFeedback = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>

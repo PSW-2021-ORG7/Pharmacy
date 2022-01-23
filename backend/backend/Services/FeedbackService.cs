@@ -16,6 +16,6 @@ namespace backend.Services
 
         public List<Feedback> GetAll() => feedbackRepository.GetAll();
 
-        public void Save(Feedback feedback) => feedbackRepository.Save(feedback);
+        public bool Save(Feedback feedback) => feedbackRepository.Save(feedback);
     }
 }
