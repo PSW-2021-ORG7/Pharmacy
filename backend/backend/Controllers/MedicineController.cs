@@ -19,7 +19,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-  //  [ApiKeyAuth]
+  //[ApiKeyAuth]
     public class MedicineController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -137,19 +137,7 @@ namespace backend.Controllers
         }
 
 
-        // INVENTORY
-        /*
-        [HttpPost]
-        [Route("/inventory/check")]
-        public IActionResult CheckIfAvailable([FromBody] MedicineQuantityCheck quantityCheck)
-        {
-            if (_medicineService.CheckMedicineQuantity(quantityCheck))
-                return Ok(true);
-
-            return BadRequest(false);
-        }
-        */
-        
+        // INVENTORY    
         [HttpPost]
         [Route("/inventory/check")]
         public IActionResult CheckIfAvailableGrpc([FromBody] MedicineQuantityCheck DTO)
@@ -179,22 +167,6 @@ namespace backend.Controllers
         {
             return Ok(_medicineInventoryService.GetAll());
         }
-
-        /*
-        [HttpPut]
-        [Route("/inventory/{id}")]
-        public IActionResult UpdateInventory([FromBody] MedicineInventory medicineInventory)
-        {
-            return Ok(_medicineInventoryService.UpdateMedicinePrice(medicineInventory));
-        }
-
-        [HttpPut]
-        [Route("/inventory/change-price")]
-        public IActionResult UpdateMedicinePrice([FromBody] MedicineInventory medicineInventory)
-        {
-            return Ok(_medicineInventoryService.Update(medicineInventory));
-        }
-        */
 
         [HttpPut]
         [Route("/inventory/{id}")]
