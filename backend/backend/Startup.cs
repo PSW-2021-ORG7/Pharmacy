@@ -19,6 +19,7 @@ using backend.GrpcServices;
 using backend.Protos;
 using backend.Events.EventInventoryCheck;
 using backend.Events.LogEvent;
+using backend.RabbitMqServices;
 
 namespace backend
 {
@@ -27,6 +28,7 @@ namespace backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -47,7 +49,7 @@ namespace backend
 
             //EntityFramework 
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_P");
-            if (connectionString == null) connectionString = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=1234;";
+            if (connectionString == null) connectionString = "Server=localhost;Port=5432;Database=drugstore;User Id=postgres;Password=psql;";
             services.AddDbContext<DrugStoreContext>(options =>
                 options.UseNpgsql(connectionString));
 

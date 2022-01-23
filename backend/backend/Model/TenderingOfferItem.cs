@@ -12,7 +12,8 @@ namespace backend.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TenderingOfferItemId{ get; set; }
-        public Medicine Medicine { get; set; }
+        public string MedicineName { get; set; }
+        public int MedicineDosage { get; set; }
         [Required]
         public int AvailableQuantity { get; set; }
         [Required]

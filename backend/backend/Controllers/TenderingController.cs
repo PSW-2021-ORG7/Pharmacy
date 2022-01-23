@@ -35,14 +35,14 @@ namespace backend.Controllers
         }
 
         [HttpPost("request_a_tender_offer")]
-        public ActionResult<TenderingOfferDTO> RequestTenderOffer ([FromBody] TenderingRequestDTO tenderingRequestDTO)
+        public ActionResult<TenderingOfferDTO> RequestTenderOffer([FromBody] TenderingRequestDTO tenderingRequestDTO)
         {
-            if(tenderingRequestDTO == null || tenderingRequestDTO.requestedItems.Count == 0)
+            if (tenderingRequestDTO == null || tenderingRequestDTO.requestedItems.Count == 0)
             {
                 throw new System.Web.Http.HttpResponseException(HttpStatusCode.BadRequest);
             }
             TenderingOffer tenderingOffer = tenderingService.RequestTenderOfffer(tenderingRequestDTO);
-            if(tenderingOffer == null)
+            if (tenderingOffer == null)
             {
                 throw new System.Web.Http.HttpResponseException(System.Net.HttpStatusCode.ExpectationFailed);
             }
@@ -50,7 +50,12 @@ namespace backend.Controllers
             return Ok(tenderingOfferDTO);
         }
 
-
+        [HttpPost("message")]
+        public IActionResult TenderResultMessage([FromBody] string tenderMessage)
+        {
+            string message = tenderMessage;
+            return Ok();
+        }
 
         /* [HttpPost("update_quantity")]
          public ActionResult<ShoppingCartFrontDTO> UpdateItemQuantityInCart([FromBody] UpdateShoppingCartsItemQuantityDTO updateShoppingCartsItemQuantityDTO)

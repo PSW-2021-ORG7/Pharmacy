@@ -7,6 +7,7 @@ namespace backend.DTO.TenderingDTO
 {
     public class TenderingRequestDTO
     {
+        public String TenderKey { get; set; }
         public List<TenderingItemRequestDTO> requestedItems { get; set; }
         public TenderingRequestDTO() 
         {

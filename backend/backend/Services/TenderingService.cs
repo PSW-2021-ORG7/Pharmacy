@@ -2,10 +2,9 @@
 using backend.DTO.TenderingDTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using System.Text;
 
 namespace backend.Services
 {
@@ -20,8 +19,6 @@ namespace backend.Services
             this.medicineRepository = mr;
         }
 
-      
-
         public TenderingOffer RequestTenderOfffer(TenderingRequestDTO tenderingRequestDTO)
         {
             TenderingOffer tenderingOffer = new TenderingOffer();
@@ -32,7 +29,9 @@ namespace backend.Services
                 TenderingOfferItem newTenderingOfferItem =  new TenderingOfferItem();
                 if(medicineInventory != null)
                 {
-                    newTenderingOfferItem.Medicine = medicineRepository.GetByID(medicineInventory.MedicineId);
+                    Medicine medicine = medicineRepository.GetByID(medicineInventory.MedicineId);
+                    newTenderingOfferItem.MedicineName = medicine.Name;
+                    newTenderingOfferItem.MedicineDosage = medicine.DosageInMilligrams;
                     newTenderingOfferItem.PriceForSingleEntity = medicineInventory.Price;
                     if (requestedItem.RequiredQuantity <= medicineInventory.Quantity)
                     {
@@ -44,22 +43,35 @@ namespace backend.Services
                         newTenderingOfferItem.AvailableQuantity = medicineInventory.Quantity;
                         newTenderingOfferItem.MissingQuantity = requestedItem.RequiredQuantity - medicineInventory.Quantity;
                     }
-                    
+
+                    tenderingOffer.tenderingOfferItems.Add(newTenderingOfferItem);
+
                 }
-                else
-                {
-                    newTenderingOfferItem.Medicine = new Medicine(requestedItem.MedicineName, requestedItem.DosageInMilligrams, requestedItem.Manufacturer);
-                    newTenderingOfferItem.MissingQuantity = requestedItem.RequiredQuantity;
-                    newTenderingOfferItem.PriceForSingleEntity = 0;
-                    newTenderingOfferItem.AvailableQuantity = 0;
-                }
-                tenderingOffer.tenderingOfferItems.Add(newTenderingOfferItem);
-
-
-
             }
 
             return tenderingOffer;
+        }
+
+        public void sendOfferToHospital(TenderingOfferDTO offer)
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: "tendering-offers-queue",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                TenderingOfferDTO offerToSend = offer;
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(offerToSend));
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: "tendering-offers-queue",
+                                     basicProperties: null,
+                                     body: body);
+            }
         }
     }
 }

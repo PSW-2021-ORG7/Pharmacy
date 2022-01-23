@@ -70,10 +70,11 @@ namespace backend.Repositories
 
         MedicineInventory IMedicineInventoryRepository.FindRequestedMedicineInventory(TenderingItemRequestDTO tenderingItemRequestDTO)
         {
-            
-                Medicine requiredMedicine = _dataContext.Medicine.Where(m => m.Name.Equals(tenderingItemRequestDTO.MedicineName))
-                    .Where(m => m.DosageInMilligrams.Equals(tenderingItemRequestDTO.DosageInMilligrams))
-                    .SingleOrDefault(m=> m.Manufacturer.Equals(tenderingItemRequestDTO.Manufacturer));
+
+
+            Medicine requiredMedicine = _dataContext.Medicine.SingleOrDefault(m => m.Name.ToLower().Equals(tenderingItemRequestDTO.MedicineName.ToLower()) &&
+                                        m.DosageInMilligrams.Equals(tenderingItemRequestDTO.DosageInMilligrams));
+ 
                 if(requiredMedicine == null)
                 {
                     return null;
