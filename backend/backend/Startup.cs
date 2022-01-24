@@ -19,7 +19,6 @@ using backend.GrpcServices;
 using backend.Protos;
 using backend.Events.EventInventoryCheck;
 using backend.Events.LogEvent;
-using backend.RabbitMqServices;
 
 namespace backend
 {

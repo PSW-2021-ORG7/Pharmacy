@@ -8,10 +8,9 @@ using backend.Protos;
 using backend.Repositories.Interfaces;
 using backend.Services;
 using Grpc.Core;
-using Integration_API.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
@@ -130,10 +129,13 @@ namespace backend.Controllers
         }
 
         [HttpGet("request/{name}/{dose}")]
-
         public IActionResult RequestSpecification(string name, int dose)
         {
-            return Ok(JsonConvert.SerializeObject(_medicineService.RequestSpecification(name, dose)));
+            String ret = _medicineService.RequestSpecification(name, dose);
+            if (!ret.Equals(""))
+                return Ok(JsonConvert.SerializeObject(ret));
+            else 
+                return NotFound();
         }
 
 

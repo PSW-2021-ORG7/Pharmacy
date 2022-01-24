@@ -3,13 +3,11 @@ using backend.DTO;
 using backend.Model;
 using backend.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using PdfDocument = PdfSharp.Pdf.PdfDocument;
@@ -53,19 +51,6 @@ namespace backend.Repositories
 
         public String RequestSpecification(Medicine medicine)
         {
-            /* string medicineJsonString = JsonConvert.SerializeObject(medicine, Formatting.Indented);
-             try
-             {
-
-                 string fileName = medicine.Name + "_" + medicine.DosageInMilligrams + ".pdf";
-                 File.WriteAllText("Output/" + fileName, medicineJsonString);
-                 upload(fileName);
-                 return fileName;
-             }catch (Exception e)
-             {
-                 throw (e);
-             }*/
-
             try
             {
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -112,7 +97,7 @@ namespace backend.Repositories
 
         public void upload(string fileName)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.1.3", "tester", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
             {
                 client.Connect();
                 string sourceFile = Path.Combine(Environment.CurrentDirectory, @"Output\", fileName);
