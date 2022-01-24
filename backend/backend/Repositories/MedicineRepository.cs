@@ -105,7 +105,7 @@ namespace backend.Repositories
             }
             catch (Exception e)
             {
-                throw (e);
+                return "";
             }
             
         }
