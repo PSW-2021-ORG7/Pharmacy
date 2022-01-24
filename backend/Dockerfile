@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
 RUN groupadd -r user -g 443 && \
     useradd -u 101 -r -g user newuser
-ENV ASPNET_URLS=http://+:8080    
+ENV ASPNETCORE_URLS=http://+:8080    
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
