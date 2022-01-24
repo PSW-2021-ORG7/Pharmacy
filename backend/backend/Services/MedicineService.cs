@@ -5,7 +5,6 @@ using backend.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace backend.Services
 {
@@ -90,9 +89,9 @@ namespace backend.Services
 
         public String RequestSpecification(string name, int dose)
         {
+
             Medicine medicine = GetByNameAndDose(name, dose);
             return medicineRepository.RequestSpecification(medicine);
-
         }
 
         public bool DownloadPrescriptionSFTP(String fileName)

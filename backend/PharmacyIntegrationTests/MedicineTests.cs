@@ -1,14 +1,9 @@
 ﻿using backend;
-using backend.DAL;
-using backend.DTO;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace PharmacyIntegrationTests
