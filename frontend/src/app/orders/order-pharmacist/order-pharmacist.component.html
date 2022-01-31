@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Order requests:</h1>
+    <h2 style="margin-top: 3%; margin-left: 20%;">Order requests:</h2>
     <div *ngFor="let order of orders; index as i;" class="list">
         <div class="wrapper">
              <h5>Ordered:
@@ -10,7 +10,7 @@
             <div><h5>User: {{order.User.FirstName}} {{order.User.LastName}}</h5> </div>
             <h6>Price: {{getPrice(order.OrderItems)}}</h6>
             <div class="bottom ml-1">Request type:: {{getStatus(order.Status)}}
-                <button class="btn btn-primary" (click)="updateStatus(order)">{{getButton(order.Status)}}</button>
+                <button class="btn" style="background-color: #214975; color: white;" (click)="updateStatus(order)">{{getButton(order.Status)}}</button>
             </div>
         </div>
     </div>

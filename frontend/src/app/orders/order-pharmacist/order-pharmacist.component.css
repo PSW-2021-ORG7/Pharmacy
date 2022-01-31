@@ -1,8 +1,10 @@
 .wrapper{
     width: 40vw;
-    height: 30vh;
-    background-color: white;
     border-radius: 3px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
     margin: 3vh;
 }
 .list{
@@ -11,7 +13,7 @@
     flex:1; 
 }
 h1{
-    color: white;
+    color: black;
 }
 .bottom{
     flex: 1;

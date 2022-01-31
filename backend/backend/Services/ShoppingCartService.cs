@@ -63,7 +63,7 @@ namespace backend.Services
                 
             }
             
-            return successfullyUpdated;
+            return true;
         }
 
         public ShoppingCart MakeAnOrder(MakeAnOrderDTO makeAnOrderDTO)

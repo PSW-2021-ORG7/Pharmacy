@@ -6,7 +6,6 @@ import { OrderHistoryComponent } from './orders/order-history/order-history.comp
 import { OrderPharmacistComponent } from './orders/order-pharmacist/order-pharmacist.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
-
 const routes: Routes = [
   {path: 'home', component:HomeComponent }, 
   {path: 'register-medicine', component:RegisterMedicineComponent },

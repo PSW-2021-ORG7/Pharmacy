@@ -20,7 +20,7 @@ export class OrderService{
 
     getOrderHistory() : Observable<Object>{
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.get<Object>(this._serverUrl+'/history/b0bc0a9c-e6bd-462c-ad3e-e6a8238c5858')
+        return this._http.get<Object>(this._serverUrl+'/history/61d2dad3-e02f-43a1-83d0-8ca6ef191255')
     }
 
     getRequests() : Observable<Object>{

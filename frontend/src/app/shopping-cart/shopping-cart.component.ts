@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import {ShoppingCartService} from "../service/shopping-cart-service"
 import { ShoppingCart } from '../model/shopping-cart';
+import Swal from 'sweetalert2'
+
 
 
 @Component({
@@ -27,6 +29,11 @@ export class ShoppingCartComponent implements OnInit {
       "delivery" : this.selected_pickup
     }
     this._shoppingCartService.makeAnOrder(makeAnOrder).subscribe(data => this.shoppingCart = data)
+    Swal.fire(
+      'Success!',
+      'Order is successfully created!',
+      'success'
+    )
   }
 
   change_quantity(id_item : number){
@@ -37,5 +44,6 @@ export class ShoppingCartComponent implements OnInit {
       "ShoppingCartsItem_Id" : id_item
     }
     this._shoppingCartService.updateQuantity(changeQuantity).subscribe(data => this.shoppingCart = data)
+    
   }
 }

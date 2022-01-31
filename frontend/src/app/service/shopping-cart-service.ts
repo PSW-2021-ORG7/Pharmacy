@@ -15,17 +15,14 @@ export class ShoppingCartService{
 
  getShoppingCart(LoggedUserId: string) : Observable<ShoppingCart>{
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        alert(this.base_url+"/e3d01b16-53ec-42f9-a6f6-010d7bfb1e7c");
-        return this._http.get<ShoppingCart>(this.base_url+"/b0bc0a9c-e6bd-462c-ad3e-e6a8238c5858")
+        return this._http.get<ShoppingCart>(this.base_url+"/79a5e866-8b08-427f-a436-ac6b22ff7da5")
         
     }
 makeAnOrder(order : any) : Observable<ShoppingCart>{
-    alert("Making an order")
     return this._http.post<ShoppingCart>(this.base_url+"/make_an_order", order);
 }
 
 updateQuantity(UpdateQu : any) : Observable<ShoppingCart>{
-    alert("Updating quantity")
     
     return this._http.post<ShoppingCart>(this.base_url+"/update_quantity", UpdateQu);
 }

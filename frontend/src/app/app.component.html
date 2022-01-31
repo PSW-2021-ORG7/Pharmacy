@@ -1,4 +1,35 @@
 <div class="appContainer">
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #214975;">  
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">OASIS-Pharmacy</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/Home">Home Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/register-medicine">Register medicine</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/shopping-cart">Shopping cart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/order-pharmacist">Orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/order-history">Order history</a>
+            </li>
+          </ul>
+          
+        </ul>
+      </div>
+      <ul class="nav navbar-nav navbar-right" style="margin-right: 2%;">
+        <li><button type="button" routerLink="/integration/urgent-request" class="btn btn-danger btn-sm">Logout</button></li>
+      </ul>
+    </nav>
+    
+  </div>
     <div>
         <router-outlet></router-outlet>
     </div>

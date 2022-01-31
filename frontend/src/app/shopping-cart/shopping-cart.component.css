@@ -3,12 +3,12 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600);
 
 .scart{
-  margin-top: 70px;
+  margin-top: 5%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 .scart html,
 .scart html a {
-  -webkit-font-smoothing: antialiased;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
 }
 
@@ -23,11 +23,11 @@
 }
 
 .scart p {
-  margin: 0.75rem 0 0;
+  margin: 1.0rem 0 0;
 }
 
 .scart h1 {
-  font-size: 0.75rem;
+  font-size: 1.0rem;
   font-weight: normal;
   margin: 0;
   padding: 0;
@@ -40,13 +40,14 @@
 }
 
 .scart button {
-  background-color: #666;
+  background-color: #214975;
   color: #fff;
+  border-radius: 20px;
 }
 
 .scart button:hover,
 .scart button:focus {
-  background-color: #555;
+  background-color: #366da8;
 }
 
 .scart img,
@@ -89,7 +90,7 @@ button,
 
 main {
   clear: both;
-  font-size: 0.75rem;
+  font-size: 1.0rem;
   margin: 0 auto;
   overflow: hidden;
   padding: 1rem 0;
@@ -209,7 +210,7 @@ li.subtotal:before {
   background-color: #ccc;
   border: 1px solid #aaa;
   border-radius: 4px;
-  font-size: 0.625rem;
+  font-size: 0.7rem;
   padding: 2px;
   width: 3.75rem;
 }
@@ -233,7 +234,7 @@ aside {
 
 .summary-total-items {
   color: #666;
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   text-align: center;
 }
 
@@ -312,7 +313,7 @@ aside {
   border: 1px solid #aaa;
   border-radius: 4px;
   display: block;
-  font-size: 0.625rem;
+  font-size: 0.8rem;
   height: 34px;
   width: 100%;
 }

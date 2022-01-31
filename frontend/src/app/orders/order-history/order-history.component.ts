@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { OrderService } from '../order-service';
 
 @Component({
@@ -28,7 +29,11 @@ export class OrderHistoryComponent implements OnInit {
     this._orderService.updateReorder(order).subscribe(data =>{
       console.log(data)
        this.orders = data
-      alert('Order succesfully created!')
+       Swal.fire(
+        'Success!',
+        'The order is successfully created!',
+        'success'
+      )
     })
   }
   getStatus (status : any){

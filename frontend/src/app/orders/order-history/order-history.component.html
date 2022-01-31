@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>History of recent orders</h1>
+    <h2 style="margin-top: 3%; margin-left: 20%;">History of recent orders</h2>
     <div *ngFor="let order of orders; index as i;" class="list">
         <div class="wrapper">
              <h5>Ordered:
@@ -10,7 +10,7 @@
             <h4>Price: {{getPrice(order.OrderItems)}}</h4>
             <h6>Order status: {{getStatus(order.Status)}}</h6>
             <div class="bottom ml-1">Order date: {{changeDate(order.OrderDate)}}
-                <button class="btn btn-primary" (click)="orderAgain(order)">Order again</button>
+                <button class="btn" style="background-color: #214975; color: white;" (click)="orderAgain(order)">Order again</button>
             </div>
         </div>
     </div>

@@ -1,6 +1,11 @@
 import { Component} from '@angular/core';
 import { RegisterService } from './register.service';
 import { IMedicine } from '../model/medicine';
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.all.min.js'
+
+
+
 @Component({
   selector: 'app-register-medicine',
   templateUrl: './register-medicine.component.html',
@@ -64,6 +69,12 @@ export class RegisterMedicineComponent {
       .subscribe(data => console.log(data));
     
     console.log(JSON.stringify(Medicine))
+
+    Swal.fire(
+      'Success!',
+      'Medicine successfully registered!',
+      'success'
+    )
   }
 
 }
